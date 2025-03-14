@@ -26,7 +26,7 @@
         <div class="py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Company Info -->
             <div>
-                <h4 class="text-stone-800 font-medium mb-4">ELEGANCE</h4>
+                <h4 class="text-stone-800 font-medium mb-4">SOLIXMEN'z</h4>
                 <p class="text-stone-600 mb-4">Timeless fashion for the modern individual. Quality craftsmanship and sustainable practices.</p>
                 <div class="flex space-x-4">
                     <a href="#" class="text-stone-600 hover:text-stone-900">
@@ -98,7 +98,7 @@
         
         <!-- Bottom Footer -->
         <div class="py-6 border-t border-stone-200 flex flex-col md:flex-row justify-between items-center">
-            <p class="text-stone-600 text-sm mb-4 md:mb-0">&copy; {{ date('Y') }} ELEGANCE. All rights reserved.</p>
+            <p class="text-stone-600 text-sm mb-4 md:mb-0">&copy; {{ date('Y') }} SOLIXLEN'z. All rights reserved.</p>
             <div class="flex flex-wrap justify-center gap-4 text-sm">
                 <a href="/privacy-policy" class="text-stone-600 hover:text-stone-900">Privacy Policy</a>
                 <a href="/terms-of-service" class="text-stone-600 hover:text-stone-900">Terms of Service</a>

@@ -3,17 +3,15 @@
         <div class="flex justify-between items-center h-16">
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
-                <a href="/" class="text-stone-800 font-serif text-xl font-medium">ELEGANCE</a>
+                <a href="/" class="text-stone-800 font-serif text-xl font-medium">SOLIXMEN'z</a>
             </div>
             
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex space-x-8">
                 <a href="/" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Home</a>
-                <a href="/collections" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Collections</a>
-                <a href="/women" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Women</a>
-                <a href="/men" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Men</a>
-                <a href="/accessories" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Accessories</a>
-                <a href="/about" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">About</a>
+                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Women</a>
+                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Men</a>
+                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Accessories</a>
             </nav>
             
             <!-- Right side icons -->
@@ -71,7 +69,7 @@
                     </div>
                 </div>
                 <div class="mt-3 px-2 space-y-1">
-                    <a href="/account" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Your Account</a>
+                    <a href="/profile" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Your Account</a>
                     <a href="/orders" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Orders</a>
                     <a href="/wishlist" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Wishlist</a>
                     <a href="/logout" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Sign out</a>

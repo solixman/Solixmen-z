@@ -15,15 +15,63 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/test',function (){
-    return view('partials.home');
+    return view('client.partials.home');
 });
 
 
 
-Route::get('/men',function (){
-    return view('partials.men');
+Route::get('/cart',function (){
+    return view('client.partials.cart');
+});
+
+
+Route::get('/checkout',function (){
+    return view('client.partials.checkout');
+});
+
+
+Route::get('/login',function (){
+    return view('client.partials.login');
+});
+
+
+Route::get('/product',function (){
+    return view('client.partials.product_details');
+});
+
+
+Route::get('/listing',function (){
+    return view('client.partials.product_listing');
+});
+
+
+Route::get('/register',function (){
+    return view('client.partials.register');
+});
+
+
+Route::get('/admin',function (){
+    return view('admin.partials.dashboard');
+});
+
+
+Route::get('/admin/customers',function (){
+    return view('admin.partials.customers');
+});
+
+Route::get('/admin/order/details',function (){
+    return view('admin.partials.order_details');
+});
+Route::get('/admin/orders',function (){
+    return view('admin.partials.orders');
+});
+Route::get('/admin/product/form',function (){
+    return view('admin.partials.product_form');
+});
+Route::get('/admin/products',function (){
+    return view('admin.partials.products');
+});
+
+Route::get('account',function (){
+    return view('admin.partials.customer_profile');
 });

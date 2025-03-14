@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('client.layout')
 
 @section('title', 'Checkout | ELEGANCE')
 
@@ -20,7 +20,7 @@
                                 <input 
                                     type="email" 
                                     id="email" 
-                                    class="w-full border-stone-300 rounded-md focus:border-stone-500 focus:ring-stone-500"
+                                    class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                     required
                                 >
                             </div>
@@ -29,7 +29,7 @@
                                 <input 
                                     type="tel" 
                                     id="phone" 
-                                    class="w-full border-stone-300 rounded-md focus:border-stone-500 focus:ring-stone-500"
+                                    class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                     required
                                 >
                             </div>
@@ -45,7 +45,7 @@
                                 <input 
                                     type="text" 
                                     id="first-name" 
-                                    class="w-full border-stone-300 rounded-md focus:border-stone-500 focus:ring-stone-500"
+                                    class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                     required
                                 >
                             </div>
@@ -54,7 +54,7 @@
                                 <input 
                                     type="text" 
                                     id="last-name" 
-                                    class="w-full border-stone-300 rounded-md focus:border-stone-500 focus:ring-stone-500"
+                                    class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                     required
                                 >
                             </div>
@@ -63,7 +63,7 @@
                                 <input 
                                     type="text" 
                                     id="address" 
-                                    class="w-full border-stone-300 rounded-md focus:border-stone-500 focus:ring-stone-500"
+                                    class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                     required
                                 >
                             </div>
@@ -72,7 +72,7 @@
                                 <input 
                                     type="text" 
                                     id="apartment" 
-                                    class="w-full border-stone-300 rounded-md focus:border-stone-500 focus:ring-stone-500"
+                                    class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                 >
                             </div>
                             <div>
@@ -80,7 +80,7 @@
                                 <input 
                                     type="text" 
                                     id="city" 
-                                    class="w-full border-stone-300 rounded-md focus:border-stone-500 focus:ring-stone-500"
+                                    class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                     required
                                 >
                             </div>
@@ -88,7 +88,7 @@
                                 <label for="country" class="block text-sm font-medium mb-1">Country</label>
                                 <select 
                                     id="country" 
-                                    class="w-full border-stone-300 rounded-md focus:border-stone-500 focus:ring-stone-500"
+                                    class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                     required
                                 >
                                     <option value="">Select Country</option>
@@ -103,7 +103,7 @@
                                 <input 
                                     type="text" 
                                     id="state" 
-                                    class="w-full border-stone-300 rounded-md focus:border-stone-500 focus:ring-stone-500"
+                                    class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                     required
                                 >
                             </div>
@@ -112,7 +112,7 @@
                                 <input 
                                     type="text" 
                                     id="postal-code" 
-                                    class="w-full border-stone-300 rounded-md focus:border-stone-500 focus:ring-stone-500"
+                                    class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                     required
                                 >
                             </div>
@@ -129,7 +129,7 @@
                                     id="standard-shipping" 
                                     name="shipping-method" 
                                     value="standard" 
-                                    class="h-4 w-4 text-stone-800 focus:ring-stone-500 border-stone-300"
+                                    class="h-4 w-4 text-stone-800 focus:ring-stone-500 border-stone-300 border-2 shadow-sm"
                                     checked
                                 >
                                 <label for="standard-shipping" class="ml-3 flex flex-1 justify-between">
@@ -143,7 +143,7 @@
                                     id="express-shipping" 
                                     name="shipping-method" 
                                     value="express" 
-                                    class="h-4 w-4 text-stone-800 focus:ring-stone-500 border-stone-300"
+                                    class="h-4 w-4 text-stone-800 focus:ring-stone-500 border-stone-300 border-2 shadow-sm"
                                 >
                                 <label for="express-shipping" class="ml-3 flex flex-1 justify-between">
                                     <span class="font-medium">Express Shipping (1-2 business days)</span>
@@ -162,7 +162,7 @@
                                 <input 
                                     type="text" 
                                     id="card-number" 
-                                    class="w-full border-stone-300 rounded-md focus:border-stone-500 focus:ring-stone-500"
+                                    class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                     placeholder="1234 5678 9012 3456"
                                     required
                                 >
@@ -173,7 +173,7 @@
                                     <input 
                                         type="text" 
                                         id="expiration" 
-                                        class="w-full border-stone-300 rounded-md focus:border-stone-500 focus:ring-stone-500"
+                                        class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                         placeholder="MM / YY"
                                         required
                                     >
@@ -183,7 +183,7 @@
                                     <input 
                                         type="text" 
                                         id="cvv" 
-                                        class="w-full border-stone-300 rounded-md focus:border-stone-500 focus:ring-stone-500"
+                                        class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                         placeholder="123"
                                         required
                                     >
@@ -194,7 +194,7 @@
                                 <input 
                                     type="text" 
                                     id="name-on-card" 
-                                    class="w-full border-stone-300 rounded-md focus:border-stone-500 focus:ring-stone-500"
+                                    class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                     required
                                 >
                             </div>
@@ -207,7 +207,7 @@
                             <input 
                                 type="checkbox" 
                                 id="same-address" 
-                                class="h-4 w-4 text-stone-800 focus:ring-stone-500 border-stone-300"
+                                class="h-4 w-4 text-stone-800 focus:ring-stone-500 border-stone-300 border-2 shadow-sm"
                                 checked
                             >
                             <label for="same-address" class="ml-2 text-sm">Billing address is the same as shipping address</label>

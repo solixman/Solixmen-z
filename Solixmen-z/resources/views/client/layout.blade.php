@@ -54,18 +54,15 @@
 </head>
 <body class="bg-stone-50 text-stone-800 min-h-screen flex flex-col">
     <!-- Header -->
-    @include('partials.header')
+    @include('client.partials.header')
     
-
-
-
     <!-- Main Content -->
     <main class="flex-grow">
         @yield('content')
     </main>
     
     <!-- Footer -->
-    @include('partials.footer')
+    @include('client.partials.footer')
     
     <!-- Scripts -->
     @yield('scripts')
