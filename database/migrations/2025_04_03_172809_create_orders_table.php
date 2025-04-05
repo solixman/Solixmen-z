@@ -15,6 +15,13 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('status');
+            $table->date('orderDate');
+            $table->float('totalPrice');
+            $table->integer('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('address_id');
+            $table->foreign('address_id')->constrained()->references('id')->on('addresses');
             $table->timestamps();
         });
     }

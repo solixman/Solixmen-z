@@ -26,7 +26,7 @@ public function categorie(){
     return $this->hasone(Categorie::class);
 }
 public function orderProducts(){
-    return $this->hasmany(OrderProduct::class);
+    return $this->hasmany(order_product::class);
 }
 
 }

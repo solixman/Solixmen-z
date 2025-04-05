@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\JWTAuthController;
+use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,9 +47,9 @@ Route::get('/listing',function (){
 });
 
 
-Route::get('/register',function (){
-    return view('client.partials.register');
-});
+// Route::get('/register',function (){
+//     return view('client.partials.register');
+// });
 
 
 Route::get('/admin',function (){
@@ -74,4 +76,13 @@ Route::get('/admin/products',function (){
 
 Route::get('account',function (){
     return view('admin.partials.customer_profile');
+});
+
+
+Route::post('register', [JWTAuthController::class, 'register']);
+Route::post('login', [JWTAuthController::class, 'login']);
+
+Route::middleware([JwtMiddleware::class])->group(function () {
+    Route::get('user', [JWTAuthController::class, 'getUser']);
+    Route::post('logout', [JWTAuthController::class, 'logout']);
 });
