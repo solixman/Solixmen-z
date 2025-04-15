@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Exception;
+use GuzzleHttp\Psr7\Request;
 
 class ProductController extends Controller
 {
@@ -15,7 +17,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $products = Product::all();
+            if ($products == null) {
+                throw new Exception('there are no products');
+            }
+            return response()->json(['Products' => $products]);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -23,9 +33,15 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+       
+
+
+        try {
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -36,7 +52,10 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        try {
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -47,7 +66,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        try {
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -58,7 +80,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        try {
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -70,7 +95,10 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        try {
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -81,6 +109,9 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        try {
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
     }
 }

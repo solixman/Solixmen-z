@@ -15,6 +15,14 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
+            $table->text('image')->default('https://t4.ftcdn.net/jpg/02/19/05/03/240_F_219050396_Bq6bVwDQ6vvA2Dp64RAgWZnCTmcZ2Gf4.jpg');
+            $table->string('phone')->nullable();
+            $table->string('status')->default('active');
+            $table->integer('user_id');
+            $table->foreign('user_id')->constrained()->references('id')->on('users');
+            $table->integer('address_id');
+            $table->foreign('address_id')->constrained()->references('id')->on('addresses');
+            
             $table->timestamps();
         });
     }
