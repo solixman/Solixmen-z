@@ -16,11 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('client.partials.home');
 });
 
 
+Route::get('/register',function (){
+    return view('client.partials.register');
+});
 
 Route::get('/cart',function (){
     return view('client.partials.cart');
@@ -47,9 +51,6 @@ Route::get('/listing',function (){
 });
 
 
-// Route::get('/register',function (){
-//     return view('client.partials.register');
-// });
 
 
 Route::get('/admin',function (){
@@ -79,8 +80,8 @@ Route::get('account',function (){
 });
 
 
-Route::post('register', [JWTAuthController::class, 'register']);
-Route::post('login', [JWTAuthController::class, 'login']);
+Route::post('auth/register', [JWTAuthController::class, 'register']);
+Route::post('auth/login', [JWTAuthController::class, 'login']);
 
 Route::middleware([JwtMiddleware::class])->group(function () {
     Route::get('user', [JWTAuthController::class, 'getUser']);

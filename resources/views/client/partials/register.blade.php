@@ -8,31 +8,25 @@
         <div class="max-w-md mx-auto">
             <h1 class="text-3xl font-serif text-center mb-8">Create Account</h1>
             
-            <form class="space-y-6">
-                <div class="grid grid-cols-2 gap-4">
+            <form class="space-y-6" action="/auth/register" method="post">
+                @csrf
+                    
                     <div>
-                        <label for="first-name" class="block text-sm font-medium mb-1">First Name</label>
+                        <label  for="name" class="block text-sm font-medium mb-1">full Name</label>
                         <input 
+                        name="name"
                             type="text" 
-                            id="first-name" 
+                            id="name" 
                             class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                             required
                         >
                     </div>
-                    <div>
-                        <label for="last-name" class="block text-sm font-medium mb-1">Last Name</label>
-                        <input 
-                            type="text" 
-                            id="last-name" 
-                            class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
-                            required
-                        >
-                    </div>
-                </div>
+            
                 
                 <div>
                     <label for="email" class="block text-sm font-medium mb-1">Email Address</label>
                     <input 
+                    name="email"
                         type="email" 
                         id="email" 
                         class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
@@ -43,6 +37,7 @@
                 <div>
                     <label for="password" class="block text-sm font-medium mb-1">Password</label>
                     <input 
+                    name="password"
                         type="password" 
                         id="password" 
                         class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
@@ -54,6 +49,7 @@
                 <div>
                     <label for="confirm-password" class="block text-sm font-medium mb-1">Confirm Password</label>
                     <input 
+                        name="password_confirmation"
                         type="password" 
                         id="confirm-password" 
                         class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
@@ -61,28 +57,9 @@
                     >
                 </div>
                 
-                <div class="flex items-center">
-                    <input 
-                        type="checkbox" 
-                        id="newsletter" 
-                        class="h-4 w-4 text-stone-800 focus:ring-stone-500 border-stone-300 border-2 shadow-sm"
-                        checked
-                    >
-                    <label for="newsletter" class="ml-2 text-sm text-stone-600">Subscribe to our newsletter for updates on new arrivals and special offers.</label>
-                </div>
-                
-                <div>
-                    <p class="text-xs text-stone-500">
-                        By creating an account, you agree to our 
-                        <a href="/terms" class="text-stone-800 hover:underline">Terms of Service</a> and 
-                        <a href="/privacy" class="text-stone-800 hover:underline">Privacy Policy</a>.
-                    </p>
-                </div>
-                
                 <button 
                     type="submit" 
-                    class="w-full bg-stone-800 text-white py-3 px-6 rounded-md hover:bg-stone-900 transition duration-150 ease-in-out"
-                >
+                    class="w-full bg-stone-800 text-white py-3 px-6 rounded-md hover:bg-stone-900 transition duration-150 ease-in-out">
                     Create Account
                 </button>
             </form>
