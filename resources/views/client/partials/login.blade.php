@@ -8,11 +8,14 @@
         <div class="max-w-md mx-auto">
             <h1 class="text-3xl font-serif text-center mb-8">Sign In</h1>
             
-            <form class="space-y-6">
+            <form method="post" action="/auth/login" class="space-y-6">
+                @csrf
                 <div>
                     <label for="email" class="block text-sm font-medium mb-1">Email Address</label>
                     <input 
-                        type="email" 
+                    
+                    name="email" 
+                    type="email" 
                         id="email" 
                         class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                         required
@@ -22,6 +25,7 @@
                 <div>
                     <label for="password" class="block text-sm font-medium mb-1">Password</label>
                     <input 
+                    name="password"
                         type="password" 
                         id="password" 
                         class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
@@ -30,14 +34,7 @@
                 </div>
                 
                 <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <input 
-                            type="checkbox" 
-                            id="remember-me" 
-                            class="h-4 w-4 text-stone-800 focus:ring-stone-500 border-stone-300 border-2 shadow-sm"
-                        >
-                        <label for="remember-me" class="ml-2 text-sm text-stone-600">Remember me</label>
-                    </div>
+                    
                     <a href="/forgot-password" class="text-sm text-stone-600 hover:text-stone-900">Forgot password?</a>
                 </div>
                 
