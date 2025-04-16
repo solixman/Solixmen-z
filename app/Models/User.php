@@ -22,15 +22,19 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'phone',
+        'image',
+        'status'
     ];
 
     public function role(){
         return $this ->hasOne(Role::class);
     }
 
-    public function profile(){
-        return $this->hasOne(Profile::class);
+    public function address(){
+        return $this ->hasone(Address::class);
     }
+
 
     public function products(){
         return $this->hasMany(Product::class);
