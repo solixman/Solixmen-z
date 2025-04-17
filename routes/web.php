@@ -77,6 +77,14 @@ Route::get('/admin/products',function (){
 });
 
 
+
+
+
+
+Route::get('/profile',function (){
+    return view('client.partials.profile');
+});
+
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 

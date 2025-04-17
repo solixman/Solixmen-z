@@ -64,15 +64,16 @@ class UserController extends Controller
 
 
 
-    public function profile(Request $request){
-        try{
-            $user=User::find($request['id']);
+    // public function profile(Request $request){
+    //     try{
+
+        
            
-            return view('client/partials/profile', compact('user'));
-        }catch(Exception $e){
-            return back()->with('error',$e->getMessage());
-        }
-    }
+    //         return view('client/partials/profile', compact('user'));
+    //     }catch(Exception $e){
+    //         return back()->with('error',$e->getMessage());
+    //     }
+    // }
 
     public function Update(Request $request){
 
