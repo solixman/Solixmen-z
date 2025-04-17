@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('password');
             $table->integer('role_id')->default(2);
             $table->foreign ('role_id')->constrained()->references('id')->on('roles');
-            $table->bigInteger('phoneNumber')->nullable();
-            $table->text('image')->nullable();
+            $table->bigInteger('phoneNumber')->default(00000000000);
+            $table->text('image')->default('https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg');
             $table->string('status')->nullable();
             $table->rememberToken();
             $table->timestamps();

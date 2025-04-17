@@ -49,6 +49,7 @@
     </style>
     
     @yield('styles')
+    
 </head>
 <body class="bg-stone-50 text-stone-800">
     <div class="flex min-h-screen">
@@ -115,12 +116,24 @@
             </nav>
         </div>
 
+
         <!-- Main Content -->
-        <main class="flex-1 md:ml-64 pt-4 md:pt-0">
             <div class="p-6 md:mt-0 mt-16">
                 <div class="mb-6">
-                    <h1 class="text-3xl font-serif">@yield('title', 'Dashboard')</h1>
+                    <h1 class="text-3xl font-serif">@yield('admin-title','Dashboard')</h1>
                 </div>
+                <main class="flex-1 md:ml-64 pt-4 md:pt-0">
+                    @if (session('success'))
+                    <div class="row">
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    </div>
+                @endif
+            
+                @if (session('error'))
+                    <div class="row">
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    </div>
+                @endif
                 
                 @yield('admin-content')
             </div>

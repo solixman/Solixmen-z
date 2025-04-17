@@ -1,6 +1,6 @@
 @extends('client.layout')
 
-@section('title', 'Shopping Cart | SOLIXMEN-z')
+@section('title', "Shopping Cart | SOLIXMEN'z")
 
 @section('content')
 <div class="bg-white">

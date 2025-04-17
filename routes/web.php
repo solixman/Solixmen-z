@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\JWTAuthController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\JwtMiddleware;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,9 +60,8 @@ Route::get('/admin',function (){
 });
 
 
-Route::get('/admin/customers',function (){
-    return view('admin.partials.customers');
-});
+Route::get('/admin/customers',[UserController::class,'index']);
+
 
 Route::get('/admin/order/details',function (){
     return view('admin.partials.order_details');
@@ -75,15 +76,16 @@ Route::get('/admin/products',function (){
     return view('admin.partials.products');
 });
 
-Route::get('account',function (){
+Route::get('/admin/profile',function (){
     return view('admin.partials.customer_profile');
 });
 
 
-Route::post('auth/register', [JWTAuthController::class, 'register']);
-Route::post('auth/login', [JWTAuthController::class, 'login']);
+Route::post('auth/register', [AuthController::class, 'register']);
+Route::post('auth/login', [AuthController::class, 'login']);
 
 Route::middleware([JwtMiddleware::class])->group(function () {
-    Route::get('user', [JWTAuthController::class, 'getUser']);
-    Route::get('logout', [JWTAuthController::class, 'logout']);
+    Route::get('user', [AuthController::class, 'getUser']);
+    Route::get('logout', [AuthController::class, 'logout']);
 });
+

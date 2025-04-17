@@ -1,6 +1,6 @@
 @extends('client.layout')
 
-@section('title', 'Create Account |Solixmen Z')
+@section('title', 'Create Account |SOLIXLENz')
 
 @section('content')
 <div class="bg-white py-12 md:py-24">
