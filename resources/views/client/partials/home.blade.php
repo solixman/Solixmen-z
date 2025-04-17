@@ -1,6 +1,6 @@
 @extends('client.layout')
 
-@section('title', 'ELEGANCE - Timeless Fashion for the Modern Individual')
+@section('title', "SOLIXMEN'z - Timeless Fashion for the Modern Individual")
 
 @section('content')
 <div>
@@ -15,7 +15,7 @@
             <div class="absolute inset-0 bg-stone-900/30"></div>
             <div class="absolute inset-0 flex items-center justify-center">
                 <div class="text-center text-white px-4 sm:px-6 max-w-3xl">
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-medium mb-4">Timeless Elegance</h1>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-medium mb-4">Timeless SOLIXMENz</h1>
                     <p class="text-lg md:text-xl mb-8">Discover our new collection of sophisticated designs crafted for the modern individual</p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
                         <a href="/collections/new" class="bg-white text-stone-800 hover:bg-stone-100 px-6 py-3 rounded-md font-medium transition duration-150 ease-in-out">Shop New Arrivals</a>
