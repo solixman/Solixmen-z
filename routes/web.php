@@ -88,3 +88,4 @@ Route::middleware([JwtMiddleware::class])->group(function () {
 Route::post('/admin/customer/suspend',[UserController::class,'suspend']);
 Route::post('/admin/customer/Role/Change',[UserController::class,'changeRole']);
 Route::get('/admin/profile',[UserController::class,'profileAdmin']);
+Route::post('/customer/modify',[UserController::class,'update']);

@@ -9,13 +9,18 @@
         <div class="lg:col-span-1">
             <div class="bg-white rounded-lg shadow-sm border border-stone-100 overflow-hidden">
                 <div class="p-6 text-center border-b border-stone-100">
-                    <div
-                        class="h-24 w-24 rounded-full bg-stone-200 mx-auto mb-4 flex items-center justify-center text-stone-600 text-2xl font-medium">
-                        <span>AJ</span>
+                    <div class="h-24 w-24 rounded-full bg-stone-200 mx-auto mb-4 overflow-hidden">
+                
+                            <img src="{{$user->image}}" alt="{{$user->name}}" class="h-full w-full object-cover rounded-full">
+            
+                            <div class="h-full w-full flex items-center justify-center text-stone-600 text-2xl font-medium">
+                                <span>{{ strtoupper(substr($user->name, 0, 2)) }}</span>
+                            </div>
+                        
                     </div>
-                    <h3 class="text-lg font-medium">Admin Johnson</h3>
-                    <p class="text-sm text-stone-500">admin@elegance.com</p>
-                    <p class="text-sm text-stone-500 mt-1">Administrator</p>
+                    <h3 class="text-lg font-medium">{{$user->name}}</h3>
+                    <p class="text-sm text-stone-500">{{$user->email}}</p>
+                    <p class="text-sm text-stone-500 mt-1">{{$user->role->name}}</p>
 
                     <div class="mt-4">
                         <button class="text-sm text-stone-600 hover:text-stone-900">
@@ -54,7 +59,8 @@
                     <h3 class="font-medium">Personal Information</h3>
                 </div>
                 <div class="p-6">
-                    <form>
+                    <form action="/customer/modify" method="POST">
+                        @csrf
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <div>
                                 <label for="name" class="block text-sm font-medium text-stone-700 mb-1">Name</label>
@@ -63,12 +69,12 @@
                             </div>
 
                             <div>
-                                <label for="role" class="block text-sm font-medium text-stone-700 mb-1">Role</label>
-                                <select id="role" name="role"
+                                <label for="role"    class="block text-sm font-medium text-stone-700 mb-1">Role</label>
+                                <select id="role" name="role" 
                                     class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">
                                     @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}"
-                                            {{ $user->role->id == $role->id ? 'selected' : '' }}>
+                                        <option value="{{ $role->name }}"
+                                            {{ $user->role->name == $role->name ? 'selected' : '' }}>
                                             {{ $role->name }}
                                         </option>
                                     @endforeach
@@ -77,13 +83,13 @@
                             <div>
                                 <label for="email" class="block text-sm font-medium text-stone-700 mb-1">Email
                                     Address</label>
-                                <input type="email" id="email" name="email" value="admin@elegance.com"
+                                <input type="email" id="email" name="email" value="{{$user->email}}"
                                     class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">
                             </div>
                             <div>
                                 <label for="phone" class="block text-sm font-medium text-stone-700 mb-1">Phone
                                     Number</label>
-                                <input type="tel" id="phone" name="phone" value="+1 (555) 123-4567"
+                                <input type="tel" id="phone" name="phone" value="{{$user->phoneNumber}}"
                                     class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">
                             </div>
                         </div>
@@ -91,7 +97,11 @@
                         <div class="mb-6">
                             <label for="bio" class="block text-sm font-medium text-stone-700 mb-1">Bio</label>
                             <textarea id="bio" name="bio" rows="3"
-                                class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">Administrator at ELEGANCE, managing the online store and product catalog.</textarea>
+                                class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">{{$user->bio}}</textarea>
+                        </div>
+
+                        <div>
+                            <input type="hidden" name="userId" value={{$user->id}}>
                         </div>
 
                         <div class="flex justify-end">

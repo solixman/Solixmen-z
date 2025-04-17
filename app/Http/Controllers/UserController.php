@@ -74,8 +74,25 @@ class UserController extends Controller
         }
     }
 
-    public function Update(){
-        
+    public function Update(Request $request){
+
+        $user=User::find($request['userId']);
+        if($user->role->name != $request['role']){
+        $role=Role::where('name',$request['role'])->first();
+        $user->role_id = $role->id;
+    }
+    
+    $user->name=$request['name'];
+    $user->email=$request['email'];
+    $user->bio=$request['bio'];
+    $user->phoneNumber=$request['phone'];
+
+
+
+    $user->save();
+
+        return back()->with('success','Personal Information Updated Succesfully');
+
     }
 
 
