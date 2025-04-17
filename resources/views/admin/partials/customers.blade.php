@@ -64,8 +64,21 @@
                 <td class="px-6 py-4 whitespace-nowrap text-sm">{{$user->role->name}}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm">{{$user->created_at}}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm">
-                    <div class="flex space-x-2">
-                        <a href="/admin/profile" class="text-stone-600 hover:text-stone-900">View/edit</a>
+                    <div class="flex space-x-4">
+                        <form action="/admin/profile" method="get" class="inline">
+                            @csrf
+                            <input type="hidden" name="id" value={{$user->id}} />
+                            <button type="submit" class="text-stone-600 hover:text-stone-900 transition-colors bg-transparent border-0 p-0 m-0 cursor-pointer font-sans text-sm font-normal appearance-none focus:outline-none">
+                              View/Edit
+                            </button>
+                        </form>
+                        <form action="customer/suspend" method="POST" class="inline">
+                            @csrf
+                            <input type="hidden" name="id" value={{$user->id}} />
+                            <button type="submit" class="text-stone-600 hover:text-stone-900 transition-colors bg-transparent border-0 p-0 m-0 cursor-pointer font-sans text-sm font-normal appearance-none focus:outline-none">
+                                Suspend
+                            </button>
+                        </form>
                     </div>
                 </td>
             </tr>

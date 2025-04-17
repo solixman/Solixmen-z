@@ -76,16 +76,15 @@ Route::get('/admin/products',function (){
     return view('admin.partials.products');
 });
 
-Route::get('/admin/profile',function (){
-    return view('admin.partials.customer_profile');
-});
 
-
-Route::post('auth/register', [AuthController::class, 'register']);
-Route::post('auth/login', [AuthController::class, 'login']);
+Route::post('/auth/register', [AuthController::class, 'register']);
+Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::middleware([JwtMiddleware::class])->group(function () {
-    Route::get('user', [AuthController::class, 'getUser']);
-    Route::get('logout', [AuthController::class, 'logout']);
+    Route::get('/user', [AuthController::class, 'getUser']);
+    Route::get('/logout', [AuthController::class, 'logout']);
 });
 
+Route::post('/admin/customer/suspend',[UserController::class,'suspend']);
+Route::post('/admin/customer/Role/Change',[UserController::class,'changeRole']);
+Route::get('/admin/profile',[UserController::class,'profileAdmin']);

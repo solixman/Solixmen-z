@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -25,6 +26,57 @@ class UserController extends Controller
     }
     }
 
-    // public function c
+    public function suspend(Request $request){
+        try{
+            $user = User::find($request['id']);
+            $user->status = 'suspended';
+            $user->save();
+            return back()->with('success',"user suspended succesfully :(  " );
+        }catch(Exception $e){
+            return back()->with('error',$e->getMessage());
+        }
+    }
+
+    public function changeRole(Request $request){
+
+    $user= User::find($request['id']);
+    dd($user->role);
+    $user->role = Role::find($request['rolename']);
+
+
+
+    }
+
+
+    public function profileAdmin(Request $request){
+        try{
+            $user=User::find($request['id']);
+            if( $user == null){
+                return back()->with('error','something is wrong with this user account');
+            }
+
+            $roles=Role::all();
+            return view('admin/partials/profile', compact('user','roles'));
+        }catch(Exception $e){
+            return back()->with('error',$e->getMessage());
+        }
+    }
+
+
+
+    public function profile(Request $request){
+        try{
+            $user=User::find($request['id']);
+           
+            return view('client/partials/profile', compact('user'));
+        }catch(Exception $e){
+            return back()->with('error',$e->getMessage());
+        }
+    }
+
+    public function Update(){
+        
+    }
+
 
 }
