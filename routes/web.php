@@ -40,7 +40,7 @@ Route::get('/checkout',function (){
 
 Route::get('/login',function (){
     return view('client.partials.login');
-});
+})->name('login');
 
 
 Route::get('/product',function (){
@@ -80,10 +80,13 @@ Route::get('/admin/products',function (){
 
 
 
+Route::middleware(['auth'])->group(function (){
 
-Route::get('/profile',function (){
-    return view('client.partials.profile');
+    Route::get('/profile',function (){
+        return view('client.partials.profile');
+    });
 });
+
 
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
