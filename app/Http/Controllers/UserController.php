@@ -63,20 +63,8 @@ class UserController extends Controller
     }
 
 
-
-    // public function profile(Request $request){
-    //     try{
-
-        
-           
-    //         return view('client/partials/profile', compact('user'));
-    //     }catch(Exception $e){
-    //         return back()->with('error',$e->getMessage());
-    //     }
-    // }
-
     public function Update(Request $request){
-
+try{
         $user=User::find($request['userId']);
         if($user->role->name != $request['role']){
         $role=Role::where('name',$request['role'])->first();
@@ -93,7 +81,9 @@ class UserController extends Controller
     $user->save();
 
         return back()->with('success','Personal Information Updated Succesfully');
-
+}catch(Exception $e){
+    return back()->with('error','something went wrong');
+}
     }
 
 
