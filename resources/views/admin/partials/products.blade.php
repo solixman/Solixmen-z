@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    <a href="/admin/products/create" class="bg-stone-800 hover:bg-stone-900 text-white px-4 py-2 rounded-md transition duration-150 ease-in-out inline-flex items-center">
+    <a href="/product/create" class="bg-stone-800 hover:bg-stone-900 text-white px-4 py-2 rounded-md transition duration-150 ease-in-out inline-flex items-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
         </svg>
@@ -45,131 +45,44 @@
                     <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Category</th>
                     <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Price</th>
                     <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Stock</th>
-                    <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Status</th>
+                    {{-- <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Status</th> --}}
                     <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-stone-100">
+                @forEach($products as $product)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                             <div class="h-10 w-10 rounded bg-stone-100 mr-3"></div>
                             <div>
-                                <div class="text-sm font-medium">Tailored Wool Blazer</div>
-                                <div class="text-xs text-stone-500">Classic fit, premium fabric</div>
+                                <div class="text-sm font-medium">{{$product->titre}}</div>
+                                <div class="text-xs text-stone-500">{{$product->type}}</div>
                             </div>
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm">BLZ-001</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Women</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">$189.00</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">42</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
-                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">{{$product->categorie->name}}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">${{$product->price}}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">{{$product->quantity}}</td>
+
                     <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        {{-- <div class="flex space-x-2">
-                            <a href="{{ route('admin.products.edit', 1) }}" class="text-stone-600 hover:text-stone-900">Edit</a>
-                            <button class="text-red-600 hover:text-red-900">Delete</button>
-                        </div> --}}
+                        <form action="/product/update" method="post" class="inline">
+                            @csrf
+                            <input type="hidden" for="id" name="id" value=1 />
+                            <button type="submit" class="text-stone-600 hover:text-stone-900 transition-colors bg-transparent border-0 p-0 m-0 cursor-pointer font-sans text-sm font-normal appearance-none focus:outline-none">
+                              View/Edit
+                            </button>
+                        </form>
+                        <form action="/product/delete" method="post" class="inline">
+                            @csrf
+                            <input type="hidden" for="id" name="id" value={{$product->id}} />
+                            <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                        </form>
                     </td>
                 </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                            <div class="h-10 w-10 rounded bg-stone-100 mr-3"></div>
-                            <div>
-                                <div class="text-sm font-medium">Silk Midi Dress</div>
-                                <div class="text-xs text-stone-500">Elegant drape, natural fabric</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">DRS-002</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Women</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">$165.00</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">28</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        {{-- <div class="flex space-x-2">
-                            <a href="{{ route('admin.products.edit', 2) }}" class="text-stone-600 hover:text-stone-900">Edit</a>
-                            <button class="text-red-600 hover:text-red-900">Delete</button>
-                        </div> --}}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                            <div class="h-10 w-10 rounded bg-stone-100 mr-3"></div>
-                            <div>
-                                <div class="text-sm font-medium">Cashmere Sweater</div>
-                                <div class="text-xs text-stone-500">Soft texture, timeless design</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">SWT-003</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Men</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">$220.00</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">15</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Low Stock</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        {{-- <div class="flex space-x-2">
-                            <a href="{{ route('admin.products.edit', 3) }}" class="text-stone-600 hover:text-stone-900">Edit</a>
-                            <button class="text-red-600 hover:text-red-900">Delete</button>
-                        </div> --}}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                            <div class="h-10 w-10 rounded bg-stone-100 mr-3"></div>
-                            <div>
-                                <div class="text-sm font-medium">Leather Tote Bag</div>
-                                <div class="text-xs text-stone-500">Handcrafted, premium leather</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">BAG-004</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Accessories</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">$175.00</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">32</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        {{-- <div class="flex space-x-2">
-                            <a href="{{ route('admin.products.edit', 4) }}" class="text-stone-600 hover:text-stone-900">Edit</a>
-                            <button class="text-red-600 hover:text-red-900">Delete</button>
-                        </div> --}}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                            <div class="h-10 w-10 rounded bg-stone-100 mr-3"></div>
-                            <div>
-                                <div class="text-sm font-medium">Linen Shirt</div>
-                                <div class="text-xs text-stone-500">Breathable fabric, relaxed fit</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">SHT-005</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Men</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">$95.00</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">0</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Out of Stock</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        {{-- <div class="flex space-x-2">
-                            <a href="{{ route('admin.products.edit', 5) }}" class="text-stone-600 hover:text-stone-900">Edit</a>
-                            <button class="text-red-600 hover:text-red-900">Delete</button>
-                        </div> --}}
-                    </td>
-                </tr>
+                @endforeach
+               
             </tbody>
         </table>
     </div>

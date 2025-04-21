@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Categorie;
 use Exception;
-use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Message;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -22,9 +24,9 @@ class ProductController extends Controller
             if ($products == null) {
                 throw new Exception('there are no products');
             }
-            return response()->json(['Products' => $products]);
+            return view('admin/partials/products', compact('products'));
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
+            return  back()->with('error', $e->getMessage());
         }
     }
 
@@ -35,12 +37,12 @@ class ProductController extends Controller
      */
     public function create(Request $request)
     {
-       
-
 
         try {
+            $categories = Categorie::all();
+            return view('admin/partials/product_form', compact('categories'));
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
+            return back()->with('error', 'something went wrong');
         }
     }
 
@@ -50,11 +52,27 @@ class ProductController extends Controller
      * @param  \App\Http\Requests\StoreProductRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
+// dd($request['categorie']);
         try {
+            if ($request['id'] == null) {
+                $product = new Product();
+            } else {
+                $product = Product::first($request['id']);
+            }
+
+            $product->titre = $request['titre'];
+            $product->image = $request['image'];
+            $product->price = $request['price'];
+            $product->type = $request['type'];
+            $product->quantity = $request['quantity'];
+            $product->description = $request['description'];
+            $product->categorie_id = $request['categorie'];
+            $product->save();
+            return back()->with('success', 'product stored succesfully');
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
+            return back()->with('error', $e->getMessage());
         }
     }
 
@@ -64,6 +82,7 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
+
     public function show(Product $product)
     {
         try {
@@ -78,11 +97,15 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Request $request)
     {
         try {
+            $product = product::find($request['id']);
+            $categories = Categorie::all();
+
+            return view('admin/partials/product_form', compact('categories'), compact('product'));
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
+            return back()->with('error', $e->getMessage());
         }
     }
 

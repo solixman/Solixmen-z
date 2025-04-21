@@ -23,7 +23,7 @@ public function admin(){
 }
 
 public function categorie(){
-    return $this->hasone(Categorie::class);
+    return $this->belongsto(Categorie::class);
 }
 public function orderProducts(){
     return $this->hasmany(Order_product::class);
