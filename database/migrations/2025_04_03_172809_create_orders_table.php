@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('orderDate');
             $table->float('totalPrice');
             $table->integer('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->constrained()->references('id')->on('users');
             $table->integer('address_id');
             $table->foreign('address_id')->constrained()->references('id')->on('addresses');
             $table->timestamps();

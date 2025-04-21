@@ -14,6 +14,10 @@
 
 <form action="/product/store" method="POST" enctype="multipart/form-data">
     @csrf
+
+    @if(isset($product))
+    <input type="hidden" name="id" value="{{$product->id}}">
+    @endif
   
 
     <div class="bg-white rounded-lg shadow-sm border border-stone-100 p-6 mb-6">
@@ -35,14 +39,14 @@
             <!-- Type -->
             <div>
                 <label for="categorie" class="block text-sm font-medium text-stone-700 mb-1">categorie</label>
-                <select id="categorie" name="categorie" class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">
-                    <option value="">Select categorie</option>
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}" {{ (isset($product) && $product->category_id == $category->id) ? 'selected' : '' }}>
-                            {{ $category->name }}
-                        </option>
+                <select class="form-select" name='categorie' aria-label="Default select example">
+                    @if(isset($product))
+                    <option name='categorie_id' value="{{$product->categorie->id}}" selected>{{ $product->categorie->name }}</option>
+                    @endif
+                    @foreach($categories as $categorie)
+                    <option name='categorie_id'  value="{{$categorie->id}}">{{$categorie ->name}}</option>
                     @endforeach
-                </select>
+                  </select>
             </div>
             
             <!-- Price -->
@@ -59,7 +63,7 @@
             <!-- Quantity -->
             <div>
                 <label for="quantity" class="block text-sm font-medium text-stone-700 mb-1">Quantity</label>
-                <input type="number" id="quantity" name="quantity" value="{{ isset($product) ? $product->stock : old('quantity') }}" class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md" required>
+                <input type="number" id="quantity" name="quantity" value="{{ isset($product) ? $product->quantity : old('quantity') }}" class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md" required>
             </div>
 
             <div>
@@ -70,7 +74,7 @@
             <!-- Image -->
             <div>
                 <label for="image" class="block text-sm font-medium text-stone-700 mb-1">Product Image</label>
-                <input type="text" id="image" name="image" value="{{ isset($product) ? $product->stock : old('image') }}" class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md" required>
+                <input type="text" id="image" name="image" value="{{ isset($product) ? $product->image : old('image') }}" class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md" required>
 
                 
                 @if(isset($product) && isset($product->image))

@@ -14,7 +14,7 @@ class UserController extends Controller
     {
         try
         {
-        $users=User::paginate(5);
+        $users=User::paginate(7);
     
         if(count($users)==1){
             throw new Exception('you have no customers now');

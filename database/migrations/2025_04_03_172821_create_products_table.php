@@ -22,9 +22,9 @@ return new class extends Migration
             $table->integer('quantity');
             $table->text('description');
             $table->integer('categorie_id')->nullable();
-            $table->foreign('categorie_id')->references('id')->on('categories');
+            $table->foreign('categorie_id')->constrained()->references('id')->on('categories');
             $table->integer('admin_id')->nullable();
-            $table->foreign('admin_id')->references('id')->on('users');
+            $table->foreign('admin_id')->constrained()->references('id')->on('users');
             $table->timestamps();
         });
     }

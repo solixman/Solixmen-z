@@ -20,7 +20,7 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $products = Product::all();
+            $products = Product::paginate(7);
             if ($products == null) {
                 throw new Exception('there are no products');
             }
@@ -52,16 +52,17 @@ class ProductController extends Controller
      * @param  \App\Http\Requests\StoreProductRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store( Request $request)
     {
-// dd($request['categorie']);
         try {
-            if ($request['id'] == null) {
-                $product = new Product();
+            // dd($request['id']);
+            if ($request['id'] != null) {
+                $product = Product::find($request['id']);
+                
             } else {
-                $product = Product::first($request['id']);
+                
+                $product = new Product();
             }
-
             $product->titre = $request['titre'];
             $product->image = $request['image'];
             $product->price = $request['price'];
@@ -70,7 +71,7 @@ class ProductController extends Controller
             $product->description = $request['description'];
             $product->categorie_id = $request['categorie'];
             $product->save();
-            return back()->with('success', 'product stored succesfully');
+            return redirect('/admin/products')->with('success', 'product stored succesfully');
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -86,8 +87,13 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         try {
+            $products = Product::paginate(10);
+            if ($products == null) {
+                throw new Exception('there are no products');
+            }
+            return view('client/partials/product_listing', compact('products'));
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
+            return  back()->with('error', $e->getMessage());
         }
     }
 
@@ -109,32 +115,21 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateProductRequest  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateProductRequest $request, Product $product)
-    {
-        try {
-        } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
-        }
-    }
-
+    
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Request $request)
     {
         try {
+            $product=Product::find($request->id)->first();
+            $product->delete();
+            return back()->with('success','product deleted succesfully');
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
+            return  back()->with('error',$e->getMessage());
         }
     }
 }
