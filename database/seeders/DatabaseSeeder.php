@@ -25,17 +25,17 @@ class DatabaseSeeder extends Seeder
    
         $admin = User::create([
             'name' => 'solix',
-            'email' => 'admin@example.com',
+            'email' => 'admin2@example.com',
             'password' => Hash::make('password'),
             'role_id' => $admin->id,
         ]);
 
-        $customer = User::create([
-            'name' => 'hamid',
-            'email' => 'customer@example.com',
-            'password' => Hash::make('password'),
-            'role_id' => $Client->id,
-        ]);
+        // $customer = User::create([
+        //     'name' => 'hamid',
+        //     'email' => 'customer@example.com',
+        //     'password' => Hash::make('password'),
+        //     'role_id' => $Client->id,
+        // ]);
 
         $address = Address::create([
             'country' => 'maroc',
@@ -46,13 +46,6 @@ class DatabaseSeeder extends Seeder
             'zipCode' => 99999,
         ]);
        
-        Profile::create([
-            'image' => 'profile1.jpg',
-            'phone' => '123456789',
-            'status' => 'Activ',
-            'address_id' => $address->id,
-            'user_id' => 1,
-        ]);
 
     
         $categorie1 = Categorie::create([

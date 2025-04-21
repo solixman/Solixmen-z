@@ -34,7 +34,19 @@
                         {{ $cartCount ?? 0 }}
                     </span>
                 </a>
+                @if(Auth::user() !== null)
+                @if(Auth::user()->role->name=='Admin')
+             
+                <a href="/admin" class="text-stone-600 hover:text-stone-900 relative">
+                    <img src="https://imgs.search.brave.com/4TYTWCI1WyH_b-MDbqndlsy2u2vewEQDX84XB4A4S4M/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzEwLzQxLzIzLzM0/LzM2MF9GXzEwNDEy/MzM0NDJfT1BuVnZS/YkszVENIaXNjblJV/SVdGV1dReUdtbkJz/WEwuanBn" 
+                    class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" alt="partie admin">
+                </a>
+                
+                @endif
+                @endif
             </div>
+
+           
             
             <!-- Mobile menu button -->
             <div class="md:hidden flex items-center">

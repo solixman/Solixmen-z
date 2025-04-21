@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\JwtMiddleware;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -69,12 +71,8 @@ Route::get('/admin/order/details',function (){
 Route::get('/admin/orders',function (){
     return view('admin.partials.orders');
 });
-Route::get('/admin/product/form',function (){
-    return view('admin.partials.product_form');
-});
-Route::get('/admin/products',function (){
-    return view('admin.partials.products');
-});
+
+
 
 
 
@@ -100,3 +98,12 @@ Route::post('/admin/customer/suspend',[UserController::class,'suspend']);
 Route::post('/admin/customer/Role/Change',[UserController::class,'changeRole']);
 Route::get('/admin/profile',[UserController::class,'profileAdmin']);
 Route::post('/customer/modify',[UserController::class,'update']);
+
+Route::get('/admin/products',[ProductController::class,'index']);
+//to show the form
+Route::get('/product/create',[ProductController::class,'create']);
+Route::post('/product/update',[ProductController::class,'edit']);
+//to store product for all cases
+Route::post('/product/store',[ProductController::class,'store']);
+//to destroy product
+Route::post('/product/delete',[ProductController::class,'destroy']);
