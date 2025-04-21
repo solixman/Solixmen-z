@@ -55,10 +55,12 @@ class ProductController extends Controller
     public function store( Request $request)
     {
         try {
-            if (Product::exists($request['id'])) {
+            // dd($request['id']);
+            if ($request['id'] != null) {
                 $product = Product::find($request['id']);
-
+                
             } else {
+                
                 $product = new Product();
             }
             $product->titre = $request['titre'];
@@ -85,8 +87,13 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         try {
+            $products = Product::paginate(10);
+            if ($products == null) {
+                throw new Exception('there are no products');
+            }
+            return view('client/partials/product_listing', compact('products'));
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
+            return  back()->with('error', $e->getMessage());
         }
     }
 

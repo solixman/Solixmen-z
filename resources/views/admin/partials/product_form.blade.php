@@ -40,7 +40,9 @@
             <div>
                 <label for="categorie" class="block text-sm font-medium text-stone-700 mb-1">categorie</label>
                 <select class="form-select" name='categorie' aria-label="Default select example">
+                    @if(isset($product))
                     <option name='categorie_id' value="{{$product->categorie->id}}" selected>{{ $product->categorie->name }}</option>
+                    @endif
                     @foreach($categories as $categorie)
                     <option name='categorie_id'  value="{{$categorie->id}}">{{$categorie ->name}}</option>
                     @endforeach

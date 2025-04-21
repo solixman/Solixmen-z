@@ -50,19 +50,13 @@ Route::get('/product',function (){
 });
 
 
-Route::get('/listing',function (){
-    return view('client.partials.product_listing');
-});
-
-
-
 
 Route::get('/admin',function (){
     return view('admin.partials.dashboard');
 });
 
 
-Route::get('/admin/customers',[UserController::class,'index']);
+
 
 
 Route::get('/admin/order/details',function (){
@@ -78,13 +72,13 @@ Route::get('/admin/orders',function (){
 
 
 
+
 Route::middleware(['auth'])->group(function (){
 
     Route::get('/profile',function (){
         return view('client.partials.profile');
     });
 });
-
 
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
@@ -94,6 +88,8 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
 });
 
+
+Route::get('/admin/customers',[UserController::class,'index']);
 Route::post('/admin/customer/suspend',[UserController::class,'suspend']);
 Route::post('/admin/customer/Role/Change',[UserController::class,'changeRole']);
 Route::get('/admin/profile',[UserController::class,'profileAdmin']);
@@ -107,3 +103,6 @@ Route::post('/product/update',[ProductController::class,'edit']);
 Route::post('/product/store',[ProductController::class,'store']);
 //to destroy product
 Route::post('/product/delete',[ProductController::class,'destroy']);
+
+//show peoducts for customer
+Route::get('/listing',[ProductController::class,'show']);
