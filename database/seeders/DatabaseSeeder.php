@@ -30,12 +30,12 @@ class DatabaseSeeder extends Seeder
             'role_id' => $admin->id,
         ]);
 
-        // $customer = User::create([
-        //     'name' => 'hamid',
-        //     'email' => 'customer@example.com',
-        //     'password' => Hash::make('password'),
-        //     'role_id' => $Client->id,
-        // ]);
+        $customer = User::create([
+            'name' => 'hamid',
+            'email' => 'customer@example.com',
+            'password' => Hash::make('password'),
+            'role_id' => $Client->id,
+        ]);
 
         $address = Address::create([
             'country' => 'maroc',

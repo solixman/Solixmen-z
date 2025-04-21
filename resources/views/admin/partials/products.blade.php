@@ -85,20 +85,8 @@
                
             </tbody>
         </table>
+        {{$products->links()}}
     </div>
-    <div class="px-6 py-4 border-t border-stone-100 bg-stone-50">
-        <div class="flex items-center justify-between">
-            <div class="text-sm text-stone-600">
-                Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">48</span> results
-            </div>
-            <div class="flex space-x-2">
-                <button class="px-3 py-1 border border-stone-300 rounded-md text-sm bg-white text-stone-500 hover:bg-stone-50">Previous</button>
-                <button class="px-3 py-1 border border-stone-300 rounded-md text-sm bg-stone-800 text-white">1</button>
-                <button class="px-3 py-1 border border-stone-300 rounded-md text-sm bg-white text-stone-500 hover:bg-stone-50">2</button>
-                <button class="px-3 py-1 border border-stone-300 rounded-md text-sm bg-white text-stone-500 hover:bg-stone-50">3</button>
-                <button class="px-3 py-1 border border-stone-300 rounded-md text-sm bg-white text-stone-500 hover:bg-stone-50">Next</button>
-            </div>
-        </div>
-    </div>
+   
 </div>
 @endsection

@@ -19,9 +19,9 @@ return new class extends Migration
             $table->integer('quantity');
             $table->float('subtotal');
             $table->integer('product_id');
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('product_id')->constrained()->references('id')->on('products');
             $table->integer('order_id');
-            $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreign('order_id')->constrained()->references('id')->on('orders');
             $table->timestamps();
         });
     }
