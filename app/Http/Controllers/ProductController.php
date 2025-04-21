@@ -52,16 +52,15 @@ class ProductController extends Controller
      * @param  \App\Http\Requests\StoreProductRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store( Request $request)
     {
-// dd($request['categorie']);
         try {
-            if ($request['id'] == null) {
-                $product = new Product();
-            } else {
-                $product = Product::first($request['id']);
-            }
+            if (Product::exists($request['id'])) {
+                $product = Product::find($request['id']);
 
+            } else {
+                $product = new Product();
+            }
             $product->titre = $request['titre'];
             $product->image = $request['image'];
             $product->price = $request['price'];
@@ -70,7 +69,7 @@ class ProductController extends Controller
             $product->description = $request['description'];
             $product->categorie_id = $request['categorie'];
             $product->save();
-            return back()->with('success', 'product stored succesfully');
+            return redirect('/admin/products')->with('success', 'product stored succesfully');
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
