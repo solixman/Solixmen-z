@@ -45,9 +45,7 @@ Route::get('/login',function (){
 })->name('login');
 
 
-Route::get('/product',function (){
-    return view('client.partials.product_details');
-});
+
 
 
 
@@ -106,3 +104,5 @@ Route::post('/product/delete',[ProductController::class,'destroy']);
 
 //show peoducts for customer
 Route::get('/listing',[ProductController::class,'show']);
+//show product details
+Route::get('/product',[ProductController::class,'showDetails']);

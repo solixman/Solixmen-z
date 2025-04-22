@@ -129,6 +129,11 @@
                     class="block py-2.5 px-4 text-stone-300 hover:text-white hover:bg-stone-700 rounded transition">
                     Logout
                 </a>
+
+                <a href="/"
+                    class="block py-2.5 px-4 text-stone-300 hover:text-white hover:bg-stone-700 rounded transition">
+                    Client view
+                </a>
             </div>
         </aside>
 

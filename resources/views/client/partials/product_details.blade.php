@@ -47,43 +47,20 @@ photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWd
                 <div class="grid grid-cols-4 gap-4">
                     <button class="overflow-hidden rounded-lg border-2 border-stone-800">
                         <img 
-                            src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80" 
+                            src="{{$product->image}}"
                             alt="Cashmere Sweater - Front" 
                             class="w-full h-24 object-cover"
                             onclick="document.getElementById('main-image').src = this.src"
                         >
                     </button>
-                    <button class="overflow-hidden rounded-lg border border-stone-200 hover:border-stone-800">
-                        <img 
-                            src="https://images.unsplash.com/photo-1586078130702-d208859b6223?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" 
-                            alt="Cashmere Sweater - Side" 
-                            class="w-full h-24 object-cover"
-                            onclick="document.getElementById('main-image').src = this.src"
-                        >
-                    </button>
-                    <button class="overflow-hidden rounded-lg border border-stone-200 hover:border-stone-800">
-                        <img 
-                            src="https://images.unsplash.com/photo-1551163943-3f7253a97449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                            alt="Cashmere Sweater - Detail" 
-                            class="w-full h-24 object-cover"
-                            onclick="document.getElementById('main-image').src = this.src"
-                        >
-                    </button>
-                    <button class="overflow-hidden rounded-lg border border-stone-200 hover:border-stone-800">
-                        <img 
-                            src="https://images.unsplash.com/photo-1608234807905-4466023792f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" 
-                            alt="Cashmere Sweater - Back" 
-                            class="w-full h-24 object-cover"
-                            onclick="document.getElementById('main-image').src = this.src"
-                        >
-                    </button>
+                   
                 </div>
             </div>
             
             <!-- Product Info -->
             <div>
-                <h1 class="text-3xl font-serif mb-2">Cashmere Sweater</h1>
-                <p class="text-2xl font-medium mb-4">$220.00</p>
+                <h1 class="text-3xl font-serif mb-2">{{$product->titre}}</h1>
+                <p class="text-2xl font-medium mb-4">{{$product->price}}</p>
                 
                 <div class="flex items-center mb-4">
                     <div class="flex text-stone-800">

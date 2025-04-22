@@ -69,14 +69,14 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm">
                         <form action="/product/update" method="post" class="inline">
                             @csrf
-                            <input type="hidden" for="id" name="id" value=1 />
+                            <input type="hidden" for="id" name="id" value={{$product->id}} />
                             <button type="submit" class="text-stone-600 hover:text-stone-900 transition-colors bg-transparent border-0 p-0 m-0 cursor-pointer font-sans text-sm font-normal appearance-none focus:outline-none">
                               View/Edit
                             </button>
                         </form>
                         <form action="/product/delete" method="post" class="inline">
                             @csrf
-                            <input type="hidden" for="id" name="id" value={{$product->id}} />
+                            <input type="hidden" for="id" name="id" value="{{$product->id}}" />
                             <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
                         </form>
                     </td>
