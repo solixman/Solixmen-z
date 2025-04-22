@@ -17,10 +17,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index() 
     {
         try {
-            $products = Product::paginate(7);
+            $products = Product::where('deleted_at',null)->paginate(7);
             if ($products == null) {
                 throw new Exception('there are no products');
             }
@@ -87,7 +87,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         try {
-            $products = Product::paginate(10);
+            $products = Product::where('deleted_at',null)->paginate(10);
             if ($products == null) {
                 throw new Exception('there are no products');
             }
@@ -125,11 +125,30 @@ class ProductController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $product=Product::find($request->id)->first();
-            $product->delete();
+            $product=Product::find($request->id);
+            $product->deleted_at=now();
+            $product->save();
             return back()->with('success','product deleted succesfully');
         } catch (Exception $e) {
             return  back()->with('error',$e->getMessage());
         }
     }
+
+    public function showDetails(Request $request)
+    {
+        try {
+            $product = Product::find($request['id']);
+            if ($product == null) {
+                throw new Exception('there are no products');
+            }
+            return view('client/partials/product_details', compact('product'));
+        } catch (Exception $e) {
+            return  back()->with('error', $e->getMessage());
+        }
+    }
+
+
 }
+
+
+

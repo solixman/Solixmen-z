@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OrderProduct;
-use App\Http\Requests\StoreOrderProductRequest;
-use App\Http\Requests\UpdateOrderProductRequest;
+use App\Models\Order_product;
+use App\Http\Requests\StoreOrder_productRequest;
+use App\Http\Requests\UpdateOrder_productRequest;
+use Illuminate\Http\Request;
 
-class OrderProductController extends Controller
+class Order_productController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +32,10 @@ class OrderProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreOrderProductRequest  $request
+     * @param  \App\Http\Requests\StoreOrder_productRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreOrderProductRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -42,10 +43,10 @@ class OrderProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\OrderProduct  $orderProduct
+     * @param  \App\Models\Order_product  $order_product
      * @return \Illuminate\Http\Response
      */
-    public function show(OrderProduct $orderProduct)
+    public function show(Order_product $order_product)
     {
         //
     }
@@ -53,10 +54,10 @@ class OrderProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\OrderProduct  $orderProduct
+     * @param  \App\Models\Order_product  $order_product
      * @return \Illuminate\Http\Response
      */
-    public function edit(OrderProduct $orderProduct)
+    public function edit(Order_product $order_product)
     {
         //
     }
@@ -64,11 +65,11 @@ class OrderProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateOrderProductRequest  $request
-     * @param  \App\Models\OrderProduct  $orderProduct
+     * @param  \App\Http\Requests\UpdateOrder_productRequest  $request
+     * @param  \App\Models\Order_product  $order_product
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateOrderProductRequest $request, OrderProduct $orderProduct)
+    public function update(Request $request, Order_product $order_product)
     {
         //
     }
@@ -76,10 +77,10 @@ class OrderProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\OrderProduct  $orderProduct
+     * @param  \App\Models\Order_product  $order_product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OrderProduct $orderProduct)
+    public function destroy(Order_product $order_product)
     {
         //
     }

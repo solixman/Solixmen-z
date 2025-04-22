@@ -25,8 +25,8 @@ public function admin(){
 public function categorie(){
     return $this->belongsto(Categorie::class);
 }
-public function orderProducts(){
-    return $this->hasmany(Order_product::class);
+public function order_products(){
+    return $this->hasMany(Order_product::class);
 }
 
 }
