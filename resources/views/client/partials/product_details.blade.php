@@ -68,7 +68,7 @@
                     <div class="mb-6">
                         <p class="text-stone-600">{{ $product->description }}</p>
                     </div>
-                    <form action="/product/add/cart" method="Post">
+                    <form action="/product/add/cart" method="get">
                         @csrf
                         <!-- Color Selection -->
                         <div class="mb-6">

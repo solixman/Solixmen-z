@@ -164,23 +164,11 @@ class ProductController extends Controller
 
 
     public function addToCart(Request $request){
-        {
-        // try {
-        //     $fields=$request->validate([
-        //         'quantity'=>'required|numeric|min:1',
-        //         'color'=>'required|string',
-        //         'price'=>'required|numeric|min:1',
-        //         'size'=>'required|string'
-
-        //     ]);
-
-        // } catch (\Exception $e) {
-        //     return back()->with('error',$e->getMessage());
-        // }
-
-
+        
+     
         if(!isset($request['quantity'])){
         $quantity=1;
+        
         }else{
             $quantity=$request['quantity'];
         }
@@ -199,11 +187,10 @@ class ProductController extends Controller
             try {
             // Session::forget('cart');
             $id = $request['id'];
-            // dd($id);
             $product = Product::findOrFail($id);
             $cart = session()->get('cart', []);
             if(isset($cart[$id])) {
-                $cart[$id]['quantity']+$request['quantity'];
+                $cart[$id]['quantity']+=$request['quantity'];
             } else {
                 $cart[$id] = [
                     "id"=> $product->id,
@@ -215,38 +202,28 @@ class ProductController extends Controller
                     "image" => $product->image
                 ];
             }
-
-
+            
             session()->put('cart', $cart);
-
+            // dd($cart[$id]['quantity']);
+            // dd(session()->get('cart'));
             return  back()->with('success', 'Product added to cart successfully!');
         } catch (Exception $e) {
             return back()->with('error',$e->getMessage());
         }
         }
-     }
+     
 
      public function RemoveFromCart(Request $request) {
         try {
-            
-      
             $cart = session()->get('cart');
-
             if(isset($cart[$request->id])) {
-
                 unset($cart[$request->id]);
-
                 session()->put('cart', $cart);
-
             }
-
             return back()->with('success', 'Product removed successfully');
         } catch (Exception $e) {
             return back()->with('succes',$e->getMessage());
         }
-
-        
-    return back();
 }
 
 }
