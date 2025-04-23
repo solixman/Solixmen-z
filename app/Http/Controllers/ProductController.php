@@ -164,38 +164,59 @@ class ProductController extends Controller
 
 
     public function addToCart(Request $request){
-        {try {
-            $fields=$request->validate([
-                'quantity'=>'required|numeric|min:1',
-                'color'=>'required|string',
-                'price'=>'required|numeric|min:1',
-                'size'=>'required|string'
+        {
+        // try {
+        //     $fields=$request->validate([
+        //         'quantity'=>'required|numeric|min:1',
+        //         'color'=>'required|string',
+        //         'price'=>'required|numeric|min:1',
+        //         'size'=>'required|string'
 
-            ]);
+        //     ]);
 
-        } catch (\Exception $e) {
-            return back()->with('error',$e->getMessage());
+        // } catch (\Exception $e) {
+        //     return back()->with('error',$e->getMessage());
+        // }
+
+
+        if(!isset($request['quantity'])){
+        $quantity=1;
+        }else{
+            $quantity=$request['quantity'];
+        }
+
+        if(!isset($request['color'])){
+        $color='not chosen';
+        }else{
+            $color=$request['color'];
+        }
+        if(!isset($request['size'])){
+            $size='M';
+        }else{
+            $size=$request['size'];
         }
 
             try {
             // Session::forget('cart');
             $id = $request['id'];
+            // dd($id);
             $product = Product::findOrFail($id);
             $cart = session()->get('cart', []);
             if(isset($cart[$id])) {
-                $cart[$id]['quantity']+$fields['quantity'];
+                $cart[$id]['quantity']+$request['quantity'];
             } else {
-                $cart[$id]=[
+                $cart[$id] = [
                     "id"=> $product->id,
                     "name" => $product->titre,
-                    "quantity" => $fields['quantity'],
-                    "color"=>$fields['color'],
-                    "size"=>$fields['size'],
+                    "quantity" => $quantity,
+                    "color"=>$color,
+                    "size"=>$size,
                     "price" => $product->price,
                     "image" => $product->image
                 ];
             }
-            $product->quantity-=$fields['quantity'];
+
+
             session()->put('cart', $cart);
 
             return  back()->with('success', 'Product added to cart successfully!');

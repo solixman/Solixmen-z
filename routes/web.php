@@ -107,4 +107,4 @@ Route::get('/listing',[ProductController::class,'show']);
 //show product details
 Route::get('/product',[ProductController::class,'showDetails']);
 //add to cart
-Route::get('/product/add/cart',[ProductController::class,'addToCart']);
+Route::post('/product/add/cart',[ProductController::class,'addToCart']);
