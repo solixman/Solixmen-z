@@ -106,3 +106,5 @@ Route::post('/product/delete',[ProductController::class,'destroy']);
 Route::get('/listing',[ProductController::class,'show']);
 //show product details
 Route::get('/product',[ProductController::class,'showDetails']);
+//add to cart
+Route::get('/product/add/cart',[ProductController::class,'addToCart']);

@@ -9,6 +9,7 @@ use App\Models\Categorie;
 use Exception;
 use Illuminate\Http\Message;
 use Illuminate\Http\Request;
+use Lcobucci\JWT\Validation\Constraint\ValidAt;
 
 class ProductController extends Controller
 {
@@ -35,7 +36,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
 
         try {
@@ -52,12 +53,26 @@ class ProductController extends Controller
      * @param  \App\Http\Requests\StoreProductRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store( Request $request)
+    public function store(Request $request)
     {
         try {
-            // dd($request['id']);
+            $fields=$request->validate([
+              'titre'=>'required|string|max:255',
+              'image'=>'required|string|',
+              'price'=>'required|numeric',
+              'type'=>'required|string|max:255',
+              'quantity','required|integer|min:1',
+              'description'=>'required|',
+              'categorie'=>'required|numeric|min:1'
+
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        try {
             if ($request['id'] != null) {
-                $product = Product::find($request['id']);
+                $product = Product::findOrFail($request['id']);
                 
             } else {
                 
@@ -106,7 +121,7 @@ class ProductController extends Controller
     public function edit(Request $request)
     {
         try {
-            $product = product::find($request['id']);
+            $product = product::findOrFail($request['id']);
             $categories = Categorie::all();
 
             return view('admin/partials/product_form', compact('categories'), compact('product'));
@@ -125,7 +140,7 @@ class ProductController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $product=Product::find($request->id);
+            $product=Product::findOrFail($request->id);
             $product->deleted_at=now();
             $product->save();
             return back()->with('success','product deleted succesfully');
@@ -137,7 +152,7 @@ class ProductController extends Controller
     public function showDetails(Request $request)
     {
         try {
-            $product = Product::find($request['id']);
+            $product = Product::findOrFail($request['id']);
             if ($product == null) {
                 throw new Exception('there are no products');
             }
@@ -147,6 +162,71 @@ class ProductController extends Controller
         }
     }
 
+
+    public function addToCart(Request $request){
+        {try {
+            $fields=$request->validate([
+                'quantity'=>'required|numeric|min:1',
+                'color'=>'required|string',
+                'price'=>'required|numeric|min:1',
+                'size'=>'required|string'
+
+            ]);
+
+        } catch (\Exception $e) {
+            return back()->with('error',$e->getMessage());
+        }
+
+            try {
+            // Session::forget('cart');
+            $id = $request['id'];
+            $product = Product::findOrFail($id);
+            $cart = session()->get('cart', []);
+            if(isset($cart[$id])) {
+                $cart[$id]['quantity']+$fields['quantity'];
+            } else {
+                $cart[$id]=[
+                    "id"=> $product->id,
+                    "name" => $product->titre,
+                    "quantity" => $fields['quantity'],
+                    "color"=>$fields['color'],
+                    "size"=>$fields['size'],
+                    "price" => $product->price,
+                    "image" => $product->image
+                ];
+            }
+            $product->quantity-=$fields['quantity'];
+            session()->put('cart', $cart);
+
+            return  back()->with('success', 'Product added to cart successfully!');
+        } catch (Exception $e) {
+            return back()->with('error',$e->getMessage());
+        }
+        }
+     }
+
+     public function RemoveFromCart(Request $request) {
+        try {
+            
+      
+            $cart = session()->get('cart');
+
+            if(isset($cart[$request->id])) {
+
+                unset($cart[$request->id]);
+
+                session()->put('cart', $cart);
+
+            }
+
+            return back()->with('success', 'Product removed successfully');
+        } catch (Exception $e) {
+            return back()->with('succes',$e->getMessage());
+        }
+
+        
+    return back();
+}
 
 }
 
