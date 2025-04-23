@@ -43,6 +43,7 @@
             <div class="group">
                 <div class="relative overflow-hidden rounded-lg mb-4">
                     <a href="/product/{{($product->id)}}">
+                        @csrf
                         <img 
                             src="{{ $product->image }}" 
                             alt="{{ $product->titre }}" 
@@ -50,7 +51,10 @@
                     </a>
                     <div class="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/10 transition duration-300"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white bg-opacity-90">
+                        <form action="/product/add/cart">
+                            <input type="hidden" name="id" value="{{$product->id}}">
                         <button class="w-full py-2 bg-stone-800 text-white hover:bg-stone-900 transition duration-150 ease-in-out rounded">Add to Cart</button>
+                    </form>
                     </div>
                     <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white flex items-center justify-center text-stone-600 hover:text-stone-900 focus:outline-none">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,7 +62,7 @@
                         </svg>
                     </button>
                     
-                    {{-- @if($loop->index % 8 == 0)
+                    @if($loop->index % 8 == 0)
                     <div class="absolute top-3 left-3">
                         <span class="inline-block bg-stone-800 text-white text-xs px-2 py-1 rounded">New</span>
                     </div>
@@ -66,7 +70,7 @@
                     <div class="absolute top-3 left-3">
                         <span class="inline-block bg-stone-700 text-white text-xs px-2 py-1 rounded">Sale</span>
                     </div>
-                    @endif --}}
+                    @endif
                 </div>
                 <h3 class="font-medium mb-1">
                     <a href="/product?id={{$product->id}}" class="hover:underline">{{ $product->titre }}</a>
