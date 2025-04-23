@@ -84,9 +84,7 @@ photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWd
                 </div>
                 
                 <div class="mb-6">
-                    <p class="text-stone-600">
-                        Luxuriously soft and warm, our premium cashmere sweater is crafted from the finest grade A Mongolian cashmere. This timeless piece features a classic crew neck design, ribbed cuffs and hem, and a relaxed yet flattering fit that drapes beautifully.
-                    </p>
+                    <p class="text-stone-600">{{$product->description}}</p>
                 </div>
                 
                 <!-- Color Selection -->
