@@ -18,7 +18,7 @@
                             </div>
                         
                     </div>
-                    <h3 class="text-lg font-medium">{{$user->name}}</h3>
+                    <h3 class="text-lg font-medium">{{$user->firstName }} {{$user->lastName }} </h3>
                     <p class="text-sm text-stone-500">{{$user->email}}</p>
                     <p class="text-sm text-stone-500 mt-1">{{$user->role->name}}</p>
 

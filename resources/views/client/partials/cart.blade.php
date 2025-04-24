@@ -120,12 +120,14 @@
                         
                         <!-- Checkout Button -->
                         <div class="mt-6">
-                            <a 
-                                href="/checkout" 
-                                class="block w-full bg-stone-800 text-white text-center py-3 px-6 rounded-md hover:bg-stone-900 transition duration-150 ease-in-out"
-                            >
-                                Proceed to Checkout
-                            </a>
+                            <form action="/order/create" method="GET">
+                                <button 
+                                    type="submit"
+                                    class="block w-full bg-stone-800 text-white text-center py-3 px-6 rounded-md hover:bg-stone-900 transition duration-150 ease-in-out"
+                                >
+                                    Proceed to Checkout
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

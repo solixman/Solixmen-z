@@ -39,9 +39,35 @@ class OrderController extends Controller
      * @param  \App\Http\Requests\StoreOrderRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreOrderRequest $request)
+    public function store(Request $request)
     {
-        //
+        $total = 0;
+
+        //creating the order
+        $order = new Order();
+        $user = Auth::user();
+        $order->user_id = Auth::user()->id;
+        $order->status = 'pending';
+        $order->orderDate = now();
+        $order->address_id = 1;
+        $order->save();
+        
+        //create order_products from session
+        $cart = Session::get('cart');
+        foreach ($cart as $cart) {
+            $OP = new Order_product;
+            $OP->quantity = $cart['quantity'];
+            $OP->priceAtMoment  = $cart['price'];
+            $OP->product_id = $cart['id'];
+            $OP->subtotal = $cart['price'] * $cart['quantity'];
+            $OP->order_id = $order->id;
+            $OP->save();
+            dd($OP->product);
+            $total = $order->Total + $OP->subtotal;
+        }
+        $order->save();
+
+        return view('client.');
     }
 
     /**
@@ -89,82 +115,51 @@ class OrderController extends Controller
         //
     }
 
-    public function checkout(){
-        $order= new Order();
-        $user=Auth::user();
-        $order->user_id=$user->id ;
-        $order->status='pending';
-        $order->orderDate=now();
-        $order->address_id=1;
-        $order->total=0;
-        $order->save();
-        $cart=Session::get('cart');
-    
-        foreach($cart as $cart){
-            $OP=new Order_product;
-            $OP->quantity=$cart['quantity'];
-            $OP->priceAtMoment  =$cart['price'];
-            $OP->product_id=$cart['id'];
-            $OP->subtotal=$cart['price']*$cart['quantity'];
-            $OP->order_id=$order->id;
-            $OP->save();
-            // dd($OP->product);
-            $order->Total = $order->Total + $OP->subtotal;
-        }
-        // $order->save();
-        return view('Order',compact('order'));
-        }
-    
-        // public function ShowMyOders(){
-        //     $user=Auth::user();
-        //     var_dump($user->Orders);
-            
-        // }
-    
-    
-        // public function ProcessOrder(Request $request){
-      
-        //     $order = Order::find($request['order_id']);
-        // return view('Payement', compact('order'));
-        // }
-    
-    
-    
-    
-        // public function ShowAllorders(){
-        //   $orders=Order::with('User')->get();
-        // //   dd($orders);
-        //   return view('AdminOrders',compact('orders'));
-        // }
-    
-        // public function ShowAllordersClient(){
-        //    $user=Auth::user();
-        //     $orders=Order::where('user_id',$user->id)->get();
-        //     return view('ClientOrders',compact('orders'));
-        // }
-    
+
+
+    // public function ProcessOrder(Request $request){
+
+    //     $order = Order::find($request['order_id']);
+    // return view('Payement', compact('order'));
+    // }
+
+
+
+
+    // public function ShowAllorders(){
+    //   $orders=Order::with('User')->get();
+    // //   dd($orders);
+    //   return view('AdminOrders',compact('orders'));
+    // }
+
+    // public function ShowAllordersClient(){
+    //    $user=Auth::user();
+    //     $orders=Order::where('user_id',$user->id)->get();
+    //     return view('ClientOrders',compact('orders'));
+    // }
+
     //     public function cancelOrder($id)
     // {   
     //     $order = Order::findOrFail($id);
-    
+
     //     if($order->status == 'completed'){
-          
+
     //         return back()->with('error','Order already completed');
-            
+
     //     }else if($order->status != 'completed'){
-            
+
     //     $order->status = 'cancelled';
     //     $order->save();
     //     return redirect()->back()->with('success', 'Order cancelled successfully.');
     //     }
     // }
-    
+
     // public function updateOrderStatus(Request $request, $id)
     // {
     //     $order = Order::findOrFail($id);
     //     $order->status = $request->input('status');
     //     $order->save();
-    
+
     //     return redirect()->back()->with('success', 'Order status updated successfully.');
     // }
 

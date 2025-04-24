@@ -56,7 +56,7 @@
                         <div class="h-10 w-10 rounded-full bg-stone-200 flex items-center justify-center text-stone-600 mr-3">
                             <img src="{{$user->image}}">
                         </div>
-                        <div class="text-sm font-medium">{{$user->name}}</div>
+                        <div class="text-sm font-medium">{{$user->firstName }} {{$user->lastName}} </div>
                     </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm">{{$user->email}}</td>
