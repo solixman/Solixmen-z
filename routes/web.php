@@ -28,7 +28,7 @@ Route::get('/', function () {
 
 
 Route::get('/register',function (){
-    return view('client.partials.register');
+    return view('comon.register');
 });
 
 Route::get('/cart',function (){
@@ -42,7 +42,7 @@ Route::get('/checkout',function (){
 
 
 Route::get('/login',function (){
-    return view('client.partials.login');
+    return view('comon.login');
 })->name('login');
 
 
@@ -59,11 +59,11 @@ Route::get('/admin',function (){
 
 
 Route::get('/admin/order/details',function (){
-    return view('admin.partials.order_details');
+    return view('comon.order_details');
 });
 Route::get('/admin/orders',function (){
     return view('admin.partials.orders');
-});
+})->name('admin.orders');
 
 
 
@@ -75,7 +75,7 @@ Route::get('/admin/orders',function (){
 Route::middleware(['auth'])->group(function (){
 
     Route::get('/profile',function (){
-        return view('client.partials.profile');
+        return view('comon.profile');
     });
 });
 
@@ -109,6 +109,8 @@ Route::get('/listing',[ProductController::class,'show']);
 Route::get('/product',[ProductController::class,'showDetails']);
 //add to cart
 Route::get('/product/add/cart',[ProductController::class,'addToCart']);
+//remove from cart
+Route::get('/product/remove/cart',[ProductController::class,'removeFromCart']);
 
 //create order
 Route::get('/order/create',[OrderController::class,'store']);

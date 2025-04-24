@@ -52,6 +52,8 @@ class AuthController extends Controller
             $user = Auth::user();
     
             return redirect('/')->with('welcome', 'Welcome back, ' . $user->firstName . '!');
+        }else{
+            return back()->with('error','wrong credentials');
         }
     }
 

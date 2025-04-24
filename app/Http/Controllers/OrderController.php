@@ -49,7 +49,6 @@ class OrderController extends Controller
         $order->user_id = Auth::user()->id;
         $order->status = 'pending';
         $order->orderDate = now();
-        $order->address_id = 1;
         $order->save();
         
         //create order_products from session
@@ -62,9 +61,9 @@ class OrderController extends Controller
             $OP->subtotal = $cart['price'] * $cart['quantity'];
             $OP->order_id = $order->id;
             $OP->save();
-            dd($OP->product);
             $total = $order->Total + $OP->subtotal;
         }
+        dd($order);
         $order->save();
 
         return view('client.');

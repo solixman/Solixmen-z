@@ -216,6 +216,7 @@ class ProductController extends Controller
      public function RemoveFromCart(Request $request) {
         try {
             $cart = session()->get('cart');
+
             if(isset($cart[$request->id])) {
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
