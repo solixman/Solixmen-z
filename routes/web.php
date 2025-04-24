@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\JwtMiddleware;
@@ -108,3 +109,6 @@ Route::get('/listing',[ProductController::class,'show']);
 Route::get('/product',[ProductController::class,'showDetails']);
 //add to cart
 Route::get('/product/add/cart',[ProductController::class,'addToCart']);
+
+//create order
+Route::get('/order/create',[OrderController::class,'store']);

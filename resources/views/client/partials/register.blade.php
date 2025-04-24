@@ -10,16 +10,27 @@
             
             <form class="space-y-6" action="/auth/register" method="post">
                 @csrf
-                    
+                    <div style="    display: grid; grid-template-columns: 1fr 1fr;">
                     <div>
-                        <label  for="name" class="block text-sm font-medium mb-1">full Name</label>
+                        <label  for="firstName" class="block text-sm font-medium mb-1">firstName</label>
                         <input 
-                        name="name"
+                        name="firstName"
                             type="text" 
-                            id="name" 
+                            id="firstName" 
                             class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                             required
                         >
+                    </div>
+                    <div>
+                        <label  for="lastName" class="block text-sm font-medium mb-1">lastName</label>
+                        <input 
+                        name="lastName"
+                            type="text" 
+                            id="lastName" 
+                            class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
+                            required
+                        >
+                    </div>
                     </div>
             
                 

@@ -56,7 +56,7 @@
                         <div class="flex items-center">
                             <div class="h-10 w-10 rounded bg-stone-100 mr-3"></div>
                             <div>
-                                <div class="text-sm font-medium">{{$product->titre}}</div>
+                                <div class="text-sm font-medium">{{$product->name}}</div>
                                 <div class="text-xs text-stone-500">{{$product->type}}</div>
                             </div>
                         </div>

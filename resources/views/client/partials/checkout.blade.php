@@ -20,6 +20,10 @@
                                 <input 
                                     type="email" 
                                     id="email" 
+                                    name="email"
+                                    @if(Auth::User())
+                                    value="{{Auth::User()->email}}"   
+                                    @endif
                                     class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                     required
                                 >
@@ -28,7 +32,11 @@
                                 <label for="phone" class="block text-sm font-medium mb-1">Phone Number</label>
                                 <input 
                                     type="tel" 
-                                    id="phone" 
+                                    id="phone"
+                                    @if(Auth::User())
+                                    value="{{Auth::User()->phone}}"   
+                                    @endif
+                                    name="phone" 
                                     class="w-full border-stone-300 border-2 rounded-md bg-stone-50 shadow-sm focus:border-stone-500 focus:ring-stone-500 focus:shadow-md transition-all duration-200"
                                     required
                                 >

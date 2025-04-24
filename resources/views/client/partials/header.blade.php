@@ -8,10 +8,10 @@
             
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex space-x-8">
-                <a href="/" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Home</a>
-                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Women</a>
-                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Men</a>
-                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Accessories</a>
+                <a href="/" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium {{request()->is('/') ? 'active':'' }}">Home</a>
+                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium {{request()->is('listing') ? 'active':'' }}" >Women</a>
+                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium {{request()->is('listing2') ? 'active':'' }}">Men</a>
+                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium {{request()->is('/listing1') ? 'active':'' }}">Accessories</a>
             </nav>
             
             <!-- Right side icons -->
