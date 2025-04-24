@@ -15,12 +15,13 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-
+     
         // dd($request['email']);
 
         
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -30,14 +31,15 @@ class AuthController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->get('name'),
+            'firstName' => $request->get('firstName'),
+            'lastName' => $request->get('lastName'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
         ]);
 
         Auth::login($user);
 
-        return redirect("/")->with('welcome', 'Welcome, ' . $user->name . '!');
+        return redirect("/")->with('welcome', 'Welcome, ' . $user->firstName . '!');
     }
 
 
@@ -49,10 +51,8 @@ class AuthController extends Controller
             
             $user = Auth::user();
     
-            return redirect('/')->with('welcome', 'Welcome back, ' . $user->name . '!');
+            return redirect('/')->with('welcome', 'Welcome back, ' . $user->firstName . '!');
         }
-    
-        return back()->with('error','Invalid credentials. Please check your email and password.')->withInput();
     }
 
 

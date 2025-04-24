@@ -57,7 +57,7 @@ class ProductController extends Controller
     {
         try {
             $fields=$request->validate([
-              'titre'=>'required|string|max:255',
+              'name'=>'required|string|max:255',
               'image'=>'required|string|',
               'price'=>'required|numeric',
               'type'=>'required|string|max:255',
@@ -78,7 +78,7 @@ class ProductController extends Controller
                 
                 $product = new Product();
             }
-            $product->titre = $request['titre'];
+            $product->name = $request['name'];
             $product->image = $request['image'];
             $product->price = $request['price'];
             $product->type = $request['type'];
@@ -194,7 +194,7 @@ class ProductController extends Controller
             } else {
                 $cart[$id] = [
                     "id"=> $product->id,
-                    "name" => $product->titre,
+                    "name" => $product->name,
                     "quantity" => $quantity,
                     "color"=>$color,
                     "size"=>$size,

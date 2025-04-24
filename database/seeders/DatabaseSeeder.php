@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // Create roles
-        $admin = Role::create(['name' => 'Admin', 'description' => 'Administrator']);
-        $Client = Role::create(['name' => 'Client', 'description' => 'Regular Customer']);
+        // $admin = Role::create(['name' => 'Admin', 'description' => 'Administrator']);
+        // $Client = Role::create(['name' => 'Client', 'description' => 'Regular Customer']);
 
 
         $admin = User::create([
@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             'firstName' => 'jfr',
             'email' => 'admin2@example.com',
             'password' => Hash::make('password'),
-            'role_id' => $admin->id,
+            'role_id' => 1,
         ]);
 
         $customer = User::create([
@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             'firstName' => 's9alli',
             'email' => 'customer@example.com',
             'password' => Hash::make('password'),
-            'role_id' => $Client->id,
+            'role_id' => 2  ,
         ]);
 
         $address = Address::create([
@@ -69,7 +69,7 @@ class DatabaseSeeder extends Seeder
             'price' => 1200.50,
             'quantity' => 10,
             'description' => 'High-performance laptop',
-            'admin_id' => 1,
+            
             'categorie_id' => $categorie1->id,
         ]);
 
@@ -81,7 +81,7 @@ class DatabaseSeeder extends Seeder
             'price' => 25.99,
             'quantity' => 50,
             'description' => 'Cotton t-shirt',
-            'admin_id' => 1,
+            // 'admin_id' => 1,
             'categorie_id' => $categorie2->id,
         ]);
 
