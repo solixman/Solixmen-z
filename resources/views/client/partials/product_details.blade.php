@@ -22,12 +22,12 @@
                 <!-- Product Images -->
                 <div>
                     <div class="mb-4 overflow-hidden rounded-lg">
-                        <img src="{{ $product->image }}" alt="{{ $product->titre }}" class="w-full h-auto object-cover"
+                        <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-auto object-cover"
                             id="main-image">
                     </div>
                     <div class="grid grid-cols-4 gap-4">
                         <button class="overflow-hidden rounded-lg border-2 border-stone-800">
-                            <img src="{{ $product->image }}" alt="{{ $product->titre }}" class="w-full h-24 object-cover"
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-24 object-cover"
                                 onclick="document.getElementById('main-image').src = this.src">
                         </button>
 
@@ -36,7 +36,7 @@
 
                 <!-- Product Info -->
                 <div>
-                    <h1 class="text-3xl font-serif mb-2">{{ $product->titre }}</h1>
+                    <h1 class="text-3xl font-serif mb-2">{{ $product->name }}</h1>
                     <p class="text-2xl font-medium mb-4">{{ $product->price }}</p>
 
                     <div class="flex items-center mb-4">

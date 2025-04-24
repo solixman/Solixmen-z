@@ -46,7 +46,7 @@
                         @csrf
                         <img 
                             src="{{ $product->image }}" 
-                            alt="{{ $product->titre }}" 
+                            alt="{{ $product->name }}" 
                             class="w-full h-80 object-cover transition duration-500 group-hover:scale-105">
                     </a>
                     <div class="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/10 transition duration-300"></div>
@@ -73,7 +73,7 @@
                     @endif
                 </div>
                 <h3 class="font-medium mb-1">
-                    <a href="/product?id={{$product->id}}" class="hover:underline">{{ $product->titre }}</a>
+                    <a href="/product?id={{$product->id}}" class="hover:underline">{{ $product->name }}</a>
                 </h3>
                 <p class="text-stone-600 mb-2">{{ $product->type }}</p>
                 <p class="font-medium">${{ number_format($product->price, 2) }}</p>
