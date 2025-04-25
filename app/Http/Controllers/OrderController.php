@@ -7,9 +7,11 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order_product;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Symfony\Component\HttpKernel\Attribute\WithLogLevel;
 
 class OrderController extends Controller
 {
@@ -20,7 +22,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::paginate(7);
+        return view('admin.partials.orders',compact('orders'));
     }
 
     /**
@@ -41,11 +44,10 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $total = 0;
+        // $total = 0;
 
         //creating the order
         $order = new Order();
-        $user = Auth::user();
         $order->user_id = Auth::user()->id;
         $order->status = 'pending';
         $order->orderDate = now();
@@ -61,12 +63,12 @@ class OrderController extends Controller
             $OP->subtotal = $cart['price'] * $cart['quantity'];
             $OP->order_id = $order->id;
             $OP->save();
-            $total = $order->Total + $OP->subtotal;
+            // dd($OP);
+            // $total = $total + $OP->subtotal;
         }
-        dd($order);
-        $order->save();
+        // dd($order->order_products);
+        return $this->show($order);
 
-        return view('client.');
     }
 
     /**
@@ -77,7 +79,8 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        
+        return view('comon.order_details',compact('order'));
     }
 
     /**
@@ -114,28 +117,24 @@ class OrderController extends Controller
         //
     }
 
+    
+    public function ShowOrdersClient(){
+        try{
+        if($user=Auth::user()){
+            $orders=Order::where('user_id',$user->id)->get();
+            return view('client.partials.orders',compact('orders'));
+        }else{
+            return back()->with('error','something went wrong');
+        }
+         }catch(Exception $e){
+            return back()->With('error',$e->getMessage());
+         }
+
+    }
 
 
-    // public function ProcessOrder(Request $request){
-
-    //     $order = Order::find($request['order_id']);
-    // return view('Payement', compact('order'));
-    // }
 
 
-
-
-    // public function ShowAllorders(){
-    //   $orders=Order::with('User')->get();
-    // //   dd($orders);
-    //   return view('AdminOrders',compact('orders'));
-    // }
-
-    // public function ShowAllordersClient(){
-    //    $user=Auth::user();
-    //     $orders=Order::where('user_id',$user->id)->get();
-    //     return view('ClientOrders',compact('orders'));
-    // }
 
     //     public function cancelOrder($id)
     // {   

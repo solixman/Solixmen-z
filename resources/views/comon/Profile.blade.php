@@ -50,6 +50,10 @@ $roles=Role::All();
                             class="block py-2 px-4 rounded-md text-stone-600 hover:bg-stone-50 hover:text-stone-800">
                             Account Activity
                         </a>
+                        <a href="client/orders"
+                            class="block py-2 px-4 rounded-md text-stone-600 hover:bg-stone-50 hover:text-stone-800">
+                            my orders
+                        </a>
                     </nav>
                 </div>
             </div>

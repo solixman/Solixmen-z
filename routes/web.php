@@ -61,9 +61,6 @@ Route::get('/admin',function (){
 Route::get('/admin/order/details',function (){
     return view('comon.order_details');
 });
-Route::get('/admin/orders',function (){
-    return view('admin.partials.orders');
-})->name('admin.orders');
 
 
 
@@ -114,3 +111,19 @@ Route::get('/product/remove/cart',[ProductController::class,'removeFromCart']);
 
 //create order
 Route::get('/order/create',[OrderController::class,'store']);
+
+Route::get('order/details',[OrderController::class,'show'])->name('order.details');
+
+Route::get('/order/update',[OrderController::class,'update'])->name('admin.orders.update');
+
+Route::get('/order/abandon',[OrderController::class,'destroy'])->name('order.abandon');
+//checkout 
+Route::get('/checkout',[OrderController::class,'checkout'])->name('order.checkout');
+
+//show orders for admin
+Route::get('/admin/orders',[OrderController::class,'index'])->name('admin.orders');
+//show orders for client
+Route::get('/client/orders',[OrderController::class,'ShowOrdersClient'])->name('client.orders');
+
+
+
