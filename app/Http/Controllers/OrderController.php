@@ -66,6 +66,7 @@ class OrderController extends Controller
             // dd($OP);
             // $total = $total + $OP->subtotal;
         }
+        Session::forget('cart');
         // dd($order->order_products);
         return $this->show($order);
 

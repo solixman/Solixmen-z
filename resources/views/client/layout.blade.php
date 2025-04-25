@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    <style>
+        a{
+            text-decoration: none;
+        }
+    </style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,22 +58,7 @@
         rel="stylesheet">
 
     <!-- Additional Styles -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
-        a{
-            text-decoration: none;
-        }
-    </style>
+    <link rel="stylesheet" href="{{asset("css/app.css")}}">
 
     @yield('styles')
 </head>
