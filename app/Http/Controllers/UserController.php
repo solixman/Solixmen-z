@@ -59,11 +59,12 @@ class UserController extends Controller
 
         try {
             $fields = $request->validate([
-               'name' =>'required|string|max:255',
+               'firstName' =>'required|string|max:255',
+               'lastName' =>'required|string|max:255',
                'role'=>'required|string|max:255',
                'email'=>'required|string|email|max:255',
                'bio'=>'required|string|',
-               'phone'=>'numeric|required|digits:11'
+               'phone'=>'numeric|required|min:10'
             ]);
         } catch (Exception $e) {
                  return back()->with('error',$e->getMessage());
@@ -73,24 +74,24 @@ class UserController extends Controller
                 try {
             
 
-            $user = User::findOrFail($fields['userId']);
+            $user = User::findOrFail($request['userId']);
             if ($user->role->name != $fields['role']) {
                 $role = Role::where('name', $fields['role'])->first();
                 $user->role_id = $role->id;
             }
 
-            $user->name = $fields['name'];
-            $user->email = $fields['email'];
+            $user->firstName = $fields['firstName'];
+            $user->lastName = $fields['lastName'];
             $user->bio = $fields['bio'];
             $user->phoneNumber = $fields['phone'];
-
-
-
-            $user->save();
+            // dd($user);
+            $user ->save();
+            
+             
 
             return back()->with('success', 'Personal Information Updated Succesfully');
         } catch (Exception $e) {
-            return back()->with('error', 'something went wrong');
+            return back()->with('error', $e->getMessage());
         }
     }
 }

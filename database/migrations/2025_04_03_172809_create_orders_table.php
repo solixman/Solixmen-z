@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('status');
             $table->date('orderDate');
-            $table->float('totalPrice');
-            $table->integer('user_id');
+            // $table->float('totalPrice');
+            $table->integer('user_id')->nullable();
             $table->foreign('user_id')->constrained()->references('id')->on('users');
-            $table->integer('address_id');
+            $table->integer('address_id')->nullable();
             $table->foreign('address_id')->constrained()->references('id')->on('addresses');
             $table->timestamps();
         });

@@ -8,10 +8,10 @@
             
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex space-x-8">
-                <a href="/" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Home</a>
-                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Women</a>
-                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Men</a>
-                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Accessories</a>
+                <a href="/" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium {{request()->is('/') ? 'active':'' }}">Home</a>
+                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium {{request()->is('listing') ? 'active':'' }}" >Women</a>
+                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium {{request()->is('listing2') ? 'active':'' }}">Men</a>
+                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium {{request()->is('/listing1') ? 'active':'' }}">Accessories</a>
             </nav>
             
             <!-- Right side icons -->
@@ -31,7 +31,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
                     <span class="absolute -top-1 -right-1 bg-stone-800 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                        {{ $cartCount ?? 0 }}
+                        {{ count(Session()->get('cart',[])) }}
                     </span>
                 </a>
                 @if(Auth::user() !== null)

@@ -19,7 +19,8 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'firstName',
+        'lastName',
         'email',
         'password',
         'phone',
@@ -33,7 +34,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function address(){
-        return $this ->hasone(Address::class);
+        return $this ->belongsTo(Address::class);
     }
 
 
@@ -47,7 +48,7 @@ class User extends Authenticatable implements JWTSubject
     public function reviews(){
         return $this->hasMany(Review::class);
     }
-    
+
 
     /**
      * The attributes that should be hidden for serialization.

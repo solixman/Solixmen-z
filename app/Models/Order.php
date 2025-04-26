@@ -12,17 +12,16 @@ class Order extends Model
     protected $fillable=[
         'orderDate',
         'status',
-        'totalPrice'
     ];
     
     public function user(){
         return $this->belongsTo(User::class);
     }
-    public function orderProducts(){
-        return $this->hasmany(OrderProduct::class);
+    public function order_products(){
+        return $this->hasmany(Order_product::class);
     }
     public function address(){
-        return $this->hasone(Address::class);
+        return $this->belongsTo(Address::class);
     }
 
 }

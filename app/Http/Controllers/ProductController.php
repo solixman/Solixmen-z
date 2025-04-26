@@ -57,7 +57,7 @@ class ProductController extends Controller
     {
         try {
             $fields=$request->validate([
-              'titre'=>'required|string|max:255',
+              'name'=>'required|string|max:255',
               'image'=>'required|string|',
               'price'=>'required|numeric',
               'type'=>'required|string|max:255',
@@ -78,7 +78,7 @@ class ProductController extends Controller
                 
                 $product = new Product();
             }
-            $product->titre = $request['titre'];
+            $product->name = $request['name'];
             $product->image = $request['image'];
             $product->price = $request['price'];
             $product->type = $request['type'];
@@ -164,17 +164,24 @@ class ProductController extends Controller
 
 
     public function addToCart(Request $request){
-        {try {
-            $fields=$request->validate([
-                'quantity'=>'required|numeric|min:1',
-                'color'=>'required|string',
-                'price'=>'required|numeric|min:1',
-                'size'=>'required|string'
+        
+     
+        if(!isset($request['quantity'])){
+        $quantity=1;
+        
+        }else{
+            $quantity=$request['quantity'];
+        }
 
-            ]);
-
-        } catch (\Exception $e) {
-            return back()->with('error',$e->getMessage());
+        if(!isset($request['color'])){
+        $color='not chosen';
+        }else{
+            $color=$request['color'];
+        }
+        if(!isset($request['size'])){
+            $size='M';
+        }else{
+            $size=$request['size'];
         }
 
             try {
@@ -183,49 +190,41 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
             $cart = session()->get('cart', []);
             if(isset($cart[$id])) {
-                $cart[$id]['quantity']+$fields['quantity'];
+                $cart[$id]['quantity']+=$request['quantity'];
             } else {
-                $cart[$id]=[
+                $cart[$id] = [
                     "id"=> $product->id,
-                    "name" => $product->titre,
-                    "quantity" => $fields['quantity'],
-                    "color"=>$fields['color'],
-                    "size"=>$fields['size'],
+                    "name" => $product->name,
+                    "quantity" => $quantity,
+                    "color"=>$color,
+                    "size"=>$size,
                     "price" => $product->price,
                     "image" => $product->image
                 ];
             }
-            $product->quantity-=$fields['quantity'];
+            
             session()->put('cart', $cart);
-
+            // dd($cart[$id]['quantity']);
+            // dd(session()->get('cart'));
             return  back()->with('success', 'Product added to cart successfully!');
         } catch (Exception $e) {
             return back()->with('error',$e->getMessage());
         }
         }
-     }
+     
 
      public function RemoveFromCart(Request $request) {
         try {
-            
-      
             $cart = session()->get('cart');
 
             if(isset($cart[$request->id])) {
-
                 unset($cart[$request->id]);
-
                 session()->put('cart', $cart);
-
             }
-
             return back()->with('success', 'Product removed successfully');
         } catch (Exception $e) {
             return back()->with('succes',$e->getMessage());
         }
-
-        
-    return back();
 }
 
 }

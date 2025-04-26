@@ -56,7 +56,7 @@
                         <div class="flex items-center">
                             <div class="h-10 w-10 rounded bg-stone-100 mr-3"></div>
                             <div>
-                                <div class="text-sm font-medium">{{$product->titre}}</div>
+                                <div class="text-sm font-medium">{{$product->name}}</div>
                                 <div class="text-xs text-stone-500">{{$product->type}}</div>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm">{{$product->quantity}}</td>
 
                     <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        <form action="/product/update" method="post" class="inline">
+                        <form action="/product/update" method="get" class="inline">
                             @csrf
                             <input type="hidden" for="id" name="id" value={{$product->id}} />
                             <button type="submit" class="text-stone-600 hover:text-stone-900 transition-colors bg-transparent border-0 p-0 m-0 cursor-pointer font-sans text-sm font-normal appearance-none focus:outline-none">

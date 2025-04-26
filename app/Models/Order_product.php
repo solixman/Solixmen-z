@@ -12,6 +12,10 @@ class Order_product extends Model
     protected $fillable=[
         'quantity',
         'priceAtMoment',
+        'color',
+        'name',
+        'size',
+        'subtotal'
         
     ];
 
