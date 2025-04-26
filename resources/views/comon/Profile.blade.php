@@ -1,5 +1,5 @@
 @php
-    use App\Models\Role;
+use App\Models\Role;
 
 $roles=Role::All();
 @endphp
@@ -8,7 +8,7 @@ $roles=Role::All();
 @section('client-title', 'My Account')
 
 @section('content')
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" style="margin: 2%">
         <!-- Profile Sidebar -->    
         <div class="lg:col-span-1">
             <div class="bg-white rounded-lg shadow-sm border border-stone-100 overflow-hidden">

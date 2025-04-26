@@ -100,6 +100,7 @@ class DatabaseSeeder extends Seeder
             'quantity' => 1,
             'priceAtMoment' => 1200.50,
             'subtotal' => 1200.50,
+            'name'=>$product1->name,
         ]);
 
         Order_product::create([
@@ -108,6 +109,7 @@ class DatabaseSeeder extends Seeder
             'quantity' => 1,
             'priceAtMoment' => 25.99,
             'subtotal' => 25.99,
+            'name'=>$product2->name,
         ]);
     }
 }

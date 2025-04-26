@@ -23,7 +23,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::paginate(7);
-        return view('admin.partials.orders',compact('orders'));
+        return view('admin.partials.orders', compact('orders'));
     }
 
     /**
@@ -44,32 +44,35 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // $total = 0;
+        try {
+            $cart = Session::get('cart');
+            if ($cart != null && count($cart) > 0) {
+                //creating the order
+                $order = new Order();
+                $order->user_id = Auth::user()->id;
+                $order->status = 'pending';
+                $order->orderDate = now();
+                $order->save();
 
-        //creating the order
-        $order = new Order();
-        $order->user_id = Auth::user()->id;
-        $order->status = 'pending';
-        $order->orderDate = now();
-        $order->save();
-        
-        //create order_products from session
-        $cart = Session::get('cart');
-        foreach ($cart as $cart) {
-            $OP = new Order_product;
-            $OP->quantity = $cart['quantity'];
-            $OP->priceAtMoment  = $cart['price'];
-            $OP->product_id = $cart['id'];
-            $OP->subtotal = $cart['price'] * $cart['quantity'];
-            $OP->order_id = $order->id;
-            $OP->save();
-            // dd($OP);
-            // $total = $total + $OP->subtotal;
+                //create order_products from session
+                foreach ($cart as $cart) {
+                    $OP = new Order_product;
+                    $OP->quantity = $cart['quantity'];
+                    $OP->priceAtMoment  = $cart['price'];
+                    $OP->product_id = $cart['id'];
+                    $OP->subtotal = $cart['price'] * $cart['quantity'];
+                    $OP->order_id = $order->id;
+                    $OP->save();
+                }
+            } else {
+                return back()->with('error', 'something went wrong');
+            }
+
+            Session::forget('cart');
+            return $this->show($order);
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
         }
-        Session::forget('cart');
-        // dd($order->order_products);
-        return $this->show($order);
-
     }
 
     /**
@@ -80,8 +83,14 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        
-        return view('comon.order_details',compact('order'));
+
+        return view('comon.order_details', compact('order'));
+    }
+
+    public function showOrder(Request $request)
+    {
+        $order = Order::find($request['id']);
+        return $this->show($order);
     }
 
     /**
@@ -118,19 +127,27 @@ class OrderController extends Controller
         //
     }
 
-    
-    public function ShowOrdersClient(){
-        try{
-        if($user=Auth::user()){
-            $orders=Order::where('user_id',$user->id)->get();
-            return view('client.partials.orders',compact('orders'));
-        }else{
-            return back()->with('error','something went wrong');
-        }
-         }catch(Exception $e){
-            return back()->With('error',$e->getMessage());
-         }
 
+
+    public function checkout(Request $request){
+        $order=Order::find($request['id']);
+      dd($order);
+     return view('client.partials.checkout',compact('order'));
+    }
+
+
+    public function ShowOrdersClient()
+    {
+        try {
+            if ($user = Auth::user()) {
+                $orders = Order::where('user_id', $user->id)->get();
+                return view('client.partials.orders', compact('orders'));
+            } else {
+                return back()->with('error', 'something went wrong');
+            }
+        } catch (Exception $e) {
+            return back()->With('error', $e->getMessage());
+        }
     }
 
 

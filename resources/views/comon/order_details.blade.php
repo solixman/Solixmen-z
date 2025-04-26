@@ -1,8 +1,13 @@
+
+@if(Auth::user()->role->name==="Admin")
 @extends('admin.layout')
+@endif
+
 
 @section('admin-title', 'Order Details')
 
 @section('admin-content')
+
     <div class="mb-6">
         <a href="{{ route('admin.orders') }}" class="text-stone-600 hover:text-stone-900 inline-flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -141,7 +146,8 @@
                                 <div>
                                     <h4 class="text-sm font-medium">Order Delivered</h4>
                                     <p class="text-xs text-stone-500">
-                                        {{ $order->deliveryDate ? $order->deliveryDate->format('M d, Y \a\t g:i A') : 'Date not available' }}
+                                        {{-- {{ $order->deliveryDate ? $order->deliveryDate->format('M d, Y \a\t g:i A') : 'Date not available' }} --}}
+                                        {{$order->deliveryDate}}     
                                     </p>
                                     <p class="text-sm mt-1">Package was delivered to the customer.</p>
                                 </div>
@@ -218,7 +224,8 @@
                             <div>
                                 <h4 class="text-sm font-medium">Order Placed</h4>
                                 <p class="text-xs text-stone-500">
-                                    {{ $order->orderDate ? $order->orderDate->format('M d, Y \a\t g:i A') : 'Date not available' }}
+                                    {{-- {{ $order->orderDate ? $order->orderDate->format('M d, Y \a\t g:i A') : 'Date not available' }} --}}
+                                    {{ $order->orderDate}}
                                 </p>
                                 <p class="text-sm mt-1">Order was placed by the customer.</p>
                             </div>
@@ -242,7 +249,8 @@
                     <div>
                         <div class="text-sm text-stone-500">Date Placed</div>
                         <div>
-                            {{ $order->orderDate ? $order->orderDate->format('M d, Y \a\t g:i A') : 'Date not available' }}
+                            {{-- {{ $order->orderDate ? $order->orderDate->format('M d, Y \a\t g:i A') : 'Date not available' }} --}}
+                            {{ $order->orderDate}}
                         </div>
                     </div>
                     <div>
@@ -327,8 +335,9 @@
                     </div>
                     <div class="p-6">
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <form action="{{ route('order.checkout', $order->id) }}" method="POST" class="flex-1">
+                            <form action="/checkout" class="flex-1">
                                 @csrf
+                                <input type="hidden" name="id" value="{{$order->id}}">
                                 <button type="submit"
                                     class="w-full px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-md font-medium">
                                     Checkout

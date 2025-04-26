@@ -112,18 +112,24 @@ Route::get('/product/remove/cart',[ProductController::class,'removeFromCart']);
 //create order
 Route::get('/order/create',[OrderController::class,'store']);
 
-Route::get('order/details',[OrderController::class,'show'])->name('order.details');
+Route::get('/order/details/',[OrderController::class,'showOrder'])->name('order.details');
 
 Route::get('/order/update',[OrderController::class,'update'])->name('admin.orders.update');
 
 Route::get('/order/abandon',[OrderController::class,'destroy'])->name('order.abandon');
 //checkout 
-Route::get('/checkout',[OrderController::class,'checkout'])->name('order.checkout');
+
 
 //show orders for admin
 Route::get('/admin/orders',[OrderController::class,'index'])->name('admin.orders');
 //show orders for client
 Route::get('/client/orders',[OrderController::class,'ShowOrdersClient'])->name('client.orders');
+
+// Route::post('/checkout/page',[OrderController::class,'checkout'])->name('order.checkout');
+
+Route::get('/checkout', 'App\Http\Controllers\StripeController@checkout')->name('Checkout');
+Route::post('/session', 'App\Http\Controllers\StripeController@session')->name('session');
+Route::get('/success', 'App\Http\Controllers\StripeController@success')->name('success');
 
 
 

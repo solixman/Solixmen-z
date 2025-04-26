@@ -84,7 +84,7 @@
                                         <div class="text-sm text-stone-600">{{ $order->order_products->count() }} items</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <a href="/account/orders/{{ $order }}" class="text-stone-600 hover:text-stone-900">View</a>
+                                        <a href="/order/details?id={{ $order->id }}" class="text-stone-600 hover:text-stone-900">View</a>
                                         @if($order->status == 'pending' || $order->status == 'processing')
                                         <span class="mx-2 text-stone-300">|</span>
                                         <a href="#" class="text-stone-600 hover:text-stone-900">Cancel</a>

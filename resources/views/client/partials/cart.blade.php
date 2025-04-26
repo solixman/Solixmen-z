@@ -59,7 +59,7 @@
                             </svg>
                             <h2 class="mt-4 text-xl font-medium">Your cart is empty</h2>
                             <p class="mt-2 text-stone-600">Looks like you haven't added any items to your cart yet.</p>
-                            <a href="/collections"
+                            <a href="/listing"
                                 class="mt-6 inline-block bg-stone-800 text-white py-3 px-6 rounded-md hover:bg-stone-900 transition duration-150 ease-in-out">Continue
                                 Shopping</a>
                         </div>
@@ -68,7 +68,7 @@
                     <!-- Continue Shopping -->
                     @if (session()->has('cart') && count(session('cart')) > 0)
                         <div class="mt-8">
-                            <a href="/collections" class="text-stone-600 hover:text-stone-900 flex items-center">
+                            <a href="/listing" class="text-stone-600 hover:text-stone-900 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
