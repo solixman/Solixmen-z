@@ -46,7 +46,7 @@ class StripeController extends Controller
         $session = \Stripe\Checkout\Session::create([
             'line_items' => $lineItems,
             'mode' => 'payment',
-            'success_url' => route('checkout.success'),
+            'success_url' => route('checkout.success',['id'=>$order->id]),
             'cancel_url' => route('Checkout'),
         ]);
         
@@ -55,7 +55,8 @@ class StripeController extends Controller
 
     public function success(Request $request)
     {
-        dd($request);
+        // dd($request);
+
         Mail::to(Auth::user()->name)->send(new OrderEmail());
         return back()->with("succes", "Thanks for you order, You have just completed your payment. you'll find the receipt in your email");
     }

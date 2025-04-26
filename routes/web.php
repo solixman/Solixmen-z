@@ -116,7 +116,7 @@ Route::get('/order/details/',[OrderController::class,'showOrder'])->name('order.
 
 Route::get('/order/update',[OrderController::class,'update'])->name('admin.orders.update');
 
-Route::get('/order/abandon',[OrderController::class,'destroy'])->name('order.abandon');
+Route::get('/order/cancel',[OrderController::class,'cancelOrder'])->name('order.cancel');
 //checkout 
 
 

@@ -125,25 +125,32 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(Request $request)
     {
-        //
+        $order = Order::find($request['id']);
+      
+        $order->delete();
+        return back()->with('order deleted succesfully');
+
     }
 
 
 
-    public function checkout(Request $request){
-        $order=Order::find($request['id']);
-      dd($order);
-     return view('client.partials.checkout',compact('order'));
-    }
-
+    // public function checkout(Request $request){
+    //     try{
+    //     $order=Order::find($request['id']);
+    //   dd($order);
+    //  return view('client.partials.checkout',compact('order'));
+    //     }catch(Exception $e){
+    //         return back()->with('error','something went wrong');
+    //     }
+    // }
 
     public function ShowOrdersClient()
     {
         try {
             if ($user = Auth::user()) {
-                $orders = Order::where('user_id', $user->id)->get();
+                $orders = Order::where('user_id', $user->id)->where('status','!=','cancelled')->paginate(10);
                 return view('client.partials.orders', compact('orders'));
             } else {
                 return back()->with('error', 'something went wrong');
@@ -153,25 +160,26 @@ class OrderController extends Controller
         }
     }
 
+    public function cancelOrder(Request $request )
+    {   
+        try{
+        $order = Order::findOrFail($request['id']);
 
+        if($order->status == 'payed'){
 
+            return back()->with('error','Order already payed');
 
+        }else if($order->status != 'completed'){
 
-    //     public function cancelOrder($id)
-    // {   
-    //     $order = Order::findOrFail($id);
+        $order->status='cancelled';
+        $order->save();
+        return back()->with('success', 'Order cancelled successfully.');
+        }
+    }catch(Exception $e){
+        return back()->with('error','failed to cancel','something went wrong');
+    }
+    }
 
-    //     if($order->status == 'completed'){
-
-    //         return back()->with('error','Order already completed');
-
-    //     }else if($order->status != 'completed'){
-
-    //     $order->status = 'cancelled';
-    //     $order->save();
-    //     return redirect()->back()->with('success', 'Order cancelled successfully.');
-    //     }
-    // }
 
     // public function updateOrderStatus(Request $request, $id)
     // {

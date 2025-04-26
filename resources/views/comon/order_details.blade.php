@@ -344,10 +344,9 @@
                                 </button>
                             </form>
                 
-                            <form action="{{ route('order.abandon', $order->id) }}" method="POST" class="flex-1"
-                                onsubmit="return confirm('Are you sure you want to abandon this order?');">
+                            <form action="/order/cancel" method="get" class="flex-1">
                                 @csrf
-                                @method('DELETE')
+                                <input type="hidden" name="id" value="{{$order->id}}">
                                 <button type="submit"
                                     class="w-full px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-md font-medium">
                                     cancel
