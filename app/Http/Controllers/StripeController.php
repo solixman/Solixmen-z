@@ -53,9 +53,10 @@ class StripeController extends Controller
         return redirect()->away($session->url);
     }
 
-    public function success()
+    public function success(Request $request)
     {
-        Mail::to('sousouja07@gmail.com')->send(new OrderEmail());
+        dd($request);
+        Mail::to(Auth::user()->name)->send(new OrderEmail());
         return back()->with("succes", "Thanks for you order, You have just completed your payment. you'll find the receipt in your email");
     }
 }
