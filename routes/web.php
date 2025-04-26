@@ -129,7 +129,7 @@ Route::get('/client/orders',[OrderController::class,'ShowOrdersClient'])->name('
 
 Route::get('/checkout', 'App\Http\Controllers\StripeController@checkout')->name('Checkout');
 Route::post('/session', 'App\Http\Controllers\StripeController@session')->name('session');
-Route::get('/success', 'App\Http\Controllers\StripeController@success')->name('success');
+Route::get('/success', 'App\Http\Controllers\StripeController@success')->name('checkout.success');
 
 
 

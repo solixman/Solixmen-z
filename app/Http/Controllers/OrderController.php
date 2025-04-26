@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order_product;
+use App\Models\Product;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -60,9 +61,11 @@ class OrderController extends Controller
                     $OP->quantity = $cart['quantity'];
                     $OP->priceAtMoment  = $cart['price'];
                     $OP->product_id = $cart['id'];
+                    $OP->name=Product::find($cart['id'])->name;
                     $OP->subtotal = $cart['price'] * $cart['quantity'];
                     $OP->order_id = $order->id;
                     $OP->save();
+                    // dd($OP);
                 }
             } else {
                 return back()->with('error', 'something went wrong');

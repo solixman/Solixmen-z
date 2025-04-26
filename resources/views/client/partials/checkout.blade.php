@@ -133,32 +133,6 @@
                         <input type="hidden" name="total" value="{{ $total }}">
                         <input type="hidden" name="order_id" value="{{ $order->id }}">
                         
-                        <!-- Payment Options -->
-                        <div class="space-y-4">
-                            <div class="flex items-center">
-                                <input id="card" name="paymentMethod" type="radio" checked class="h-4 w-4 text-stone-800 focus:ring-stone-500 border-stone-300">
-                                <label for="card" class="ml-3 block text-sm font-medium text-stone-800">
-                                    Credit / Debit Card
-                                </label>
-                            </div>
-                            
-                            <div class="flex items-center">
-                                <input id="paypal" name="paymentMethod" type="radio" class="h-4 w-4 text-stone-800 focus:ring-stone-500 border-stone-300">
-                                <label for="paypal" class="ml-3 block text-sm font-medium text-stone-800">
-                                    PayPal
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <!-- Card Logos -->
-                        <div class="flex space-x-4">
-                            <div class="h-8 w-12 bg-stone-800 rounded flex items-center justify-center text-white text-xs font-bold">VISA</div>
-                            <div class="h-8 w-12 bg-stone-800 rounded flex items-center justify-center text-white text-xs font-bold">MC</div>
-                            <div class="h-8 w-12 bg-stone-800 rounded flex items-center justify-center text-white text-xs font-bold">AMEX</div>
-                            <div class="h-8 w-12 bg-stone-800 rounded flex items-center justify-center text-white text-xs font-bold">DISC</div>
-                        </div>
-                        
-                        <!-- Actions -->
                         <div class="flex flex-col-reverse sm:flex-row justify-between items-center space-y-4 space-y-reverse sm:space-y-0 sm:space-x-4">
                             <a href="{{ url('/cart') }}" class="w-full sm:w-auto inline-flex justify-center items-center px-6 py-3 border border-stone-300 shadow-sm text-sm font-medium rounded-md text-stone-700 bg-white hover:bg-stone-50 focus:outline-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
