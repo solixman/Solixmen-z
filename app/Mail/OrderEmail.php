@@ -12,15 +12,16 @@ use Illuminate\Queue\SerializesModels;
 class OrderEmail extends Mailable
 {
     use Queueable, SerializesModels;
+    private $order;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($order)
     {
-        //
+        $this->order=$order;
     }
 
     /**
@@ -44,6 +45,9 @@ class OrderEmail extends Mailable
     {
         return new Content(
             view: 'OrderMail',
+            with: [
+                'order' => $this->order, // pass the variable here
+            ],
         );
     }
 

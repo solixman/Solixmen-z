@@ -23,10 +23,21 @@ return new class extends Migration
             $table->text('description');
             $table->integer('categorie_id')->nullable();
             $table->foreign('categorie_id')->constrained()->references('id')->on('categories');
-            $table->integer('admin_id')->nullable();
-            $table->foreign('admin_id')->constrained()->references('id')->on('users');
             $table->timestamps();
         });
+
+        Schema::create('images', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->text('path');
+        });
+
+        Schema::create('product_images', function (Blueprint $table) {
+            $table->foreignId('product_id')->constrained();
+            $table->foreignId('image_id')->constrained();
+        });
+
+
     }
 
     /**

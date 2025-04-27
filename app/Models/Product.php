@@ -18,9 +18,6 @@ class Product extends Model
         'description'
     ];
 
-public function admin(){
-    return $this->belongsto(User::class);
-}
 
 public function categorie(){
     return $this->belongsto(Categorie::class);

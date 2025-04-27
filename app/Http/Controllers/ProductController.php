@@ -78,13 +78,13 @@ class ProductController extends Controller
                 
                 $product = new Product();
             }
-            $product->name = $request['name'];
-            $product->image = $request['image'];
-            $product->price = $request['price'];
-            $product->type = $request['type'];
-            $product->quantity = $request['quantity'];
-            $product->description = $request['description'];
-            $product->categorie_id = $request['categorie'];
+            $product->name = $fields['name'];
+            $product->image = $fields['image'];
+            $product->price = $fields['price'];
+            $product->type = $fields['type'];
+            $product->quantity = $fields['quantity'];
+            $product->description = $fields['description'];
+            $product->categorie_id = $fields['categorie'];
             $product->save();
             return redirect('/admin/products')->with('success', 'product stored succesfully');
         } catch (Exception $e) {
@@ -92,12 +92,12 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+   
+    // public function women(){
+    //     try{
+    //     $products= Product::
+    //     }
+    // }
 
     public function show(Product $product)
     {

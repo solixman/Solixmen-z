@@ -26,58 +26,68 @@ class DatabaseSeeder extends Seeder
         $admin = User::create([
             'lastName' => 'solix',
             'firstName' => 'jfr',
-            'email' => 'admin2@example.com',
-            'password' => Hash::make('password'),
+            'email' => 'solix@gmail.com',
+            'password' => Hash::make('123123'),
             'role_id' => 1,
         ]);
 
         $customer = User::create([
             'lastName' => 'hamid',
             'firstName' => 's9alli',
-            'email' => 'customer@example.com',
-            'password' => Hash::make('password'),
+            'email' => 'hamid@s9lli',
+            'password' => Hash::make('123123'),
             'role_id' => 2  ,
         ]);
 
         $address = Address::create([
             'country' => 'maroc',
-            'region' => 'California',
-            'city' => 'Los Angeles',
-            'street' => 'Sunset Blvd',
-            'neighborhood' => 'West Hollywood',
+            'region' => 'casablanca-Settat',
+            'city' => 'Casablanca',
+            'street' => '11',
+            'neighborhood' => 'Hay etissir',
+            'zipCode' => 99999,
+        ]);
+        $address = Address::create([
+            'country' => 'maroc',
+            'region' => 'Casablanca-Settat',
+            'city' => 'Casablanca',
+            'street' => '30',
+            'neighborhood' => 'mabrouka',
             'zipCode' => 99999,
         ]);
 
 
 
         $categorie1 = Categorie::create([
-            'name' => 'Electronics',
-            'description' => 'Electronic Items',
+            'name' => 'Men & women',
+            'description' => 'clothes that both men and women can wear',
         ]);
 
         $categorie2 = Categorie::create([
-            'name' => 'Clothing',
-            'description' => 'Fashion & Apparel',
+            'name' => 'Women',
+            'description' => 'only for women classy clothing',
         ]);
+        $categorie2 = Categorie::create([
+            'name' => 'men',
+            'description' => 'obly for Men classy clothing',
+        ]);
+        
 
-
-        // Create products
         $product1 = Product::create([
-            'name' => 'Laptop',
-            'image' => 'laptop.jpg',
-            'type' => 'Electronics',
+            'name' => 'v-FUT t-shirt',
+            'image' => 'test.img',
+            'type' => 'fabric',
             'price' => 1200.50,
             'quantity' => 10,
-            'description' => 'High-performance laptop',
+            'description' => 'a v neck t-shirt wad mase in ...',
             
             'categorie_id' => $categorie1->id,
         ]);
 
-
         $product2 = Product::create([
             'name' => 'T-Shirt',
             'image' => 'tshirt.jpg',
-            'type' => 'Clothing',
+            'type' => 'summery',
             'price' => 25.99,
             'quantity' => 50,
             'description' => 'Cotton t-shirt',

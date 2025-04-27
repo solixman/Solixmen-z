@@ -102,6 +102,8 @@ Route::post('/product/delete',[ProductController::class,'destroy']);
 
 //show peoducts for customer
 Route::get('/listing',[ProductController::class,'show']);
+//for women
+Route::get('/women',[ProductController::class,'women']);
 //show product details
 Route::get('/product',[ProductController::class,'showDetails']);
 //add to cart

@@ -63,8 +63,6 @@ class UserController extends Controller
                'lastName' =>'required|string|max:255',
                'role'=>'required|string|max:255',
                'email'=>'required|string|email|max:255',
-               'bio'=>'required|string|',
-               'phone'=>'numeric|required|min:10'
             ]);
         } catch (Exception $e) {
                  return back()->with('error',$e->getMessage());
@@ -82,8 +80,8 @@ class UserController extends Controller
 
             $user->firstName = $fields['firstName'];
             $user->lastName = $fields['lastName'];
-            $user->bio = $fields['bio'];
-            $user->phoneNumber = $fields['phone'];
+            $user->bio = $request['bio'];
+            $user->phoneNumber = $request['phone'];
             // dd($user);
             $user ->save();
             

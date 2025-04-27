@@ -57,7 +57,8 @@ class StripeController extends Controller
     {
         // dd($request);
 
-        Mail::to(Auth::user()->name)->send(new OrderEmail());
+        $order=Order::find($request['id']);
+        Mail::to('sousouja07@gmail.com')->send(new OrderEmail($order));
         return back()->with("succes", "Thanks for you order, You have just completed your payment. you'll find the receipt in your email");
     }
 }

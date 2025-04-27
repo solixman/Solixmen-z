@@ -56,6 +56,8 @@
                         <button class="w-full py-2 bg-stone-800 text-white hover:bg-stone-900 transition duration-150 ease-in-out rounded">Add to Cart</button>
                     </form>
                     </div>
+                    
+                    <form action="/product/Like"></form>
                     <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white flex items-center justify-center text-stone-600 hover:text-stone-900 focus:outline-none">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -81,36 +83,8 @@
             @endforeach
         </div>
         
-        <!-- Pagination -->
-        <div class="mt-12">
-            <nav class="flex items-center justify-between border-t border-stone-200 px-4 sm:px-0">
-                <div class="-mt-px flex w-0 flex-1">
-                    <a href="#" class="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-stone-500 hover:border-stone-300 hover:text-stone-700">
-                        <svg class="mr-3 h-5 w-5 text-stone-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M18 10a.75.75 0 01-.75.75H4.66l2.1 1.95a.75.75 0 11-1.02 1.1l-3.5-3.25a.75.75 0 010-1.1l3.5-3.25a.75.75 0 111.02 1.1l-2.1 1.95h12.59A.75.75 0 0118 10z" clip-rule="evenodd" />
-                        </svg>
-                        Previous
-                    </a>
-                </div>
-                <div class="hidden md:-mt-px md:flex">
-                    <a href="#" class="inline-flex items-center border-t-2 border-stone-800 px-4 pt-4 text-sm font-medium text-stone-800" aria-current="page">1</a>
-                    <a href="#" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-stone-500 hover:border-stone-300 hover:text-stone-700">2</a>
-                    <a href="#" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-stone-500 hover:border-stone-300 hover:text-stone-700">3</a>
-                    <span class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-stone-500">...</span>
-                    <a href="#" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-stone-500 hover:border-stone-300 hover:text-stone-700">8</a>
-                    <a href="#" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-stone-500 hover:border-stone-300 hover:text-stone-700">9</a>
-                    <a href="#" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-stone-500 hover:border-stone-300 hover:text-stone-700">10</a>
-                </div>
-                <div class="-mt-px flex w-0 flex-1 justify-end">
-                    <a href="#" class="inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-stone-500 hover:border-stone-300 hover:text-stone-700">
-                        Next
-                        <svg class="ml-3 h-5 w-5 text-stone-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M2 10a.75.75 0 01.75-.75h12.59l-2.1-1.95a.75.75 0 111.02-1.1l3.5 3.25a.75.75 0 010 1.1l-3.5 3.25a.75.75 0 11-1.02-1.1l2.1-1.95H2.75A.75.75 0 012 10z" clip-rule="evenodd" />
-                        </svg>
-                    </a>
-                </div>
-            </nav>
-        </div>
+        
+     
     </div>
 </div>
 @endsection

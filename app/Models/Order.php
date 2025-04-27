@@ -12,6 +12,8 @@ class Order extends Model
     protected $fillable=[
         'orderDate',
         'status',
+        'tax',
+        'paymentMethod'
     ];
     
     public function user(){
