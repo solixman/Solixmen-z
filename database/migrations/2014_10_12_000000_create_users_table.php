@@ -31,6 +31,13 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        
+        Schema::create('address_user',function (Blueprint $table){
+            $table->foreignId('address_id')->constrained();
+            $table->foreignId('user_id')->references('id')->on('addresses');
+            
+        });
+        
     }
 
     /**
@@ -41,5 +48,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('address_user');
     }
 };

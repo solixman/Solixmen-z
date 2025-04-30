@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('status');
-            $table->string('paymentMethod')->fefault('standard shipping');
+            $table->string('shipping')->default('standard shipping');
             $table->dateTime('orderDate');
-            $table->int('tax')->default(10);
+            $table->integer('tax')->default(10);
             $table->integer('user_id')->nullable();
             $table->foreign('user_id')->constrained()->references('id')->on('users');
             $table->integer('address_id')->nullable();

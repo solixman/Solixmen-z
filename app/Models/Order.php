@@ -13,7 +13,7 @@ class Order extends Model
         'orderDate',
         'status',
         'tax',
-        'paymentMethod'
+        'shipping'
     ];
     
     public function user(){

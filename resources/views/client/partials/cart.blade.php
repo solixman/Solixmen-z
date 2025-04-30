@@ -17,35 +17,64 @@
 
                         @foreach (session('cart') as $id => $item)
                             @php
-                                $subtotal += $item['price'] * $item['quantity'];
+                                $subtotal+=$item['price']*$item['quantity'];
                             @endphp
                             <!-- Cart Item -->
                             <div class="flex flex-col sm:flex-row border-b border-stone-200 py-6">
                                 <div class="sm:w-24 sm:h-24 w-full h-40 mb-4 sm:mb-0 flex-shrink-0">
-                                    <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}"
-                                        class="w-full h-full object-cover rounded-md">
+                                    <a href="/product?id={{$id}}">
+                                        <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}"
+                                            class="w-full h-full object-cover rounded-md">
+                                    </a>
                                 </div>
                                 <div class="sm:ml-6 flex-1 flex flex-col">
-                                    <div class="flex justify-between">
-                                        <div>
-                                            <h3 class="font-medium">{{ $item['name'] }}</h3>
-                                            <p class="text-sm text-stone-600 mt-1">{{ $item['color'] }} /
-                                                {{ $item['size'] }}</p>
+                                    <form action="/cart/save/changes" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{$id}}">
+                                        
+                                        <div class="flex justify-between">
+                                            <div>
+                                                <a class="text-sm font-medium text-stone-700 hover:text-stone-900" href="/product?id={{$id}}">{{ $item['name'] }}</a>
+                                                <div class="flex items-center gap-2 mt-1.5">
+                                                    <select name="color"
+                                                        class="text-xs border border-stone-300 rounded-md py-1 px-2 bg-white focus:ring-0 focus:border-stone-400">
+                                                        <option value="{{ $item['color'] }}" selected>{{ $item['color'] }}</option>
+                                                        <option value="Black">Black</option>
+                                                        <option value="White">White</option>
+                                                        <option value="Navy">Navy</option>
+                                                        <option value="Gray">Gray</option>
+                                                        <option value="Brown">Brown</option>
+                                                    </select>
+                                                    <span class="text-sm text-stone-400">/</span>
+                                                    <select name="size"
+                                                        class="text-xs border border-stone-300 rounded-md py-1 px-2 bg-white focus:ring-0 focus:border-stone-400">
+                                                        <option value="{{ $item['size'] }}" selected>{{ $item['size'] }}</option>
+                                                        <option value="XS">XS</option>
+                                                        <option value="S">S</option>
+                                                        <option value="M">M</option>
+                                                        <option value="L">L</option>
+                                                        <option value="XL">XL</option>
+                                                        <option value="XXL">XXL</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <p class="font-medium">${{ number_format($item['price'], 2) }}</p>
                                         </div>
-                                        <p class="font-medium">${{ number_format($item['price'], 2) }}</p>
-                                    </div>
-                                    <div class="mt-4 sm:mt-auto flex items-center justify-between">
-                                        <div class="flex border border-stone-300 rounded-md w-24">
-                                            <button class="px-2 py-1 text-stone-600 hover:text-stone-900 focus:outline-none">-</button>
-                                            <input type="number" value="{{ $item['quantity'] }}" min="1"
-                                                class="w-full text-center border-0 focus:ring-0" readonly>
-                                            <button class="px-2 py-1 text-stone-600 hover:text-stone-900 focus:outline-none">+</button>
+                                        
+                                        <div class="mt-4 sm:mt-auto flex items-center justify-between">
+                                            <div class="flex items-center gap-3">
+                                                <div class="flex border border-stone-300 rounded-md w-24">
+                                                    <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1"
+                                                        class="w-full text-center border-0 focus:ring-0">
+                                                </div>
+                                                <button type="submit"
+                                                    class="text-xs px-3 py-1.5 bg-stone-800 text-white rounded-md hover:bg-stone-900 transition-colors">
+                                                    Save Changes
+                                                </button>
+                                            </div>
+                                            <a class="text-xs text-stone-600 hover:text-stone-900 hover:underline" href="/product/remove/cart?id={{$id}}">Remove</a>
                                         </div>
-                                        <form action="/product/remove/cart">
-                                             <input type="hidden" name="id" value="{{$id}}">
-                                            <button type="submit" class="text-sm text-stone-600 hover:text-stone-900">Remove</button>
-                                        </form>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         @endforeach
@@ -136,17 +165,4 @@
         </div>
     </div>
 
-    <script>
-        // function updateQuantity(id, quantity) {
-        //     if (quantity < 1) return;
-
-        //     window.location.href = `/cart/update/${id}/${quantity}`;
-        // }
-
-        // function removeItem(id) {
-        //     if (confirm('Are you sure you want to remove this item?')) {
-        //         window.location.href = `/cart/remove/${id}`;
-        //     }
-        // }
-    </script>
 @endsection

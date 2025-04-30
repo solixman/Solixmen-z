@@ -4,16 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
+use App\repositories\RoleRepository;
+use App\repositories\UserRepository;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    private $userRepository;
+    private $roleRepository;
+  
+    public function __construct( UserRepository $userRepository,RoleRepository $roleRepository)
+    {
+        $this->userRepository = $userRepository;
+        $this->roleRepository = $roleRepository;
+    }
 
     public function index()
     {
         try {
-            $users = User::paginate(7);
+            $users = $this->userRepository->getAllUsers();
 
             if (count($users) == 1) {
                 throw new Exception('you have no customers now');
@@ -28,9 +39,9 @@ class UserController extends Controller
     public function suspend(Request $request)
     {
         try {
-            $user = User::findOrFail($request['id']);
+            $user = $this->userRepository->getOneUser($request['id']);
             $user->status = 'suspended';
-            $user->save();
+            $this->userRepository->saveUser($user);
             return back()->with('success', "user suspended succesfully :(  ");
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -41,13 +52,12 @@ class UserController extends Controller
     public function profileAdmin(Request $request)
     {
         try {
-            $user = User::findOrFail($request['id']);
+            $user = $this->userRepository->getOneUser($request['id']);
             if ($user == null) {
-                return back()->with('error', 'something is wrong with this user account');
+                return back()->with('error', 'something went wrong');
             }
-
-            $roles = Role::all();
-            return view('admin/partials/profile', compact('user', 'roles'));
+            $roles =$this->roleRepository->getAllRoles();
+            return view('admin.partials.profile', compact('user', 'roles'));
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -57,6 +67,8 @@ class UserController extends Controller
     public function Update(Request $request)
     {
 
+       
+        
         try {
             $fields = $request->validate([
                'firstName' =>'required|string|max:255',
@@ -64,17 +76,11 @@ class UserController extends Controller
                'role'=>'required|string|max:255',
                'email'=>'required|string|email|max:255',
             ]);
-        } catch (Exception $e) {
-                 return back()->with('error',$e->getMessage());
-                }
-        
-        
-                try {
-            
 
-            $user = User::findOrFail($request['userId']);
-            if ($user->role->name != $fields['role']) {
-                $role = Role::where('name', $fields['role'])->first();
+            $user = $this->userRepository->getOneUser($request['id']);
+
+            if ($user->role->name != $fields['role'] && Auth::user()->role->name == 'Admin') {
+                $role = $this->roleRepository->getRoleByName($fields['role']);
                 $user->role_id = $role->id;
             }
 
@@ -82,8 +88,7 @@ class UserController extends Controller
             $user->lastName = $fields['lastName'];
             $user->bio = $request['bio'];
             $user->phoneNumber = $request['phone'];
-            // dd($user);
-            $user ->save();
+            $this->userRepository->saveUser($user);
             
              
 

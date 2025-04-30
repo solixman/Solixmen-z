@@ -9,9 +9,7 @@
             <nav class="flex text-sm">
                 <a href="/" class="text-stone-500 hover:text-stone-700">Home</a>
                 <span class="mx-2 text-stone-400">/</span>
-                <a href="/collections" class="text-stone-500 hover:text-stone-700">Collections</a>
-                <span class="mx-2 text-stone-400">/</span>
-                <a href="/collections/women" class="text-stone-500 hover:text-stone-700">Women</a>
+                <a href="/listing" class="text-stone-500 hover:text-stone-700">Products</a>
                 <span class="mx-2 text-stone-400">/</span>
                 <span class="text-stone-800">Cashmere Sweater</span>
             </nav>
@@ -22,14 +20,21 @@
                 <!-- Product Images -->
                 <div>
                     <div class="mb-4 overflow-hidden rounded-lg">
-                        <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-auto object-cover"
+                        
+                        <img src="{{ $images[0]->path }}"
+                         alt="{{ $images[0]->name}}" class="w-full h-auto object-cover"
                             id="main-image">
                     </div>
+
                     <div class="grid grid-cols-4 gap-4">
+                        @foreach ($images as $image)
+                            
                         <button class="overflow-hidden rounded-lg border-2 border-stone-800">
-                            <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-24 object-cover"
-                                onclick="document.getElementById('main-image').src = this.src">
+                            <img src="{{ $image->path}}" alt="{{ $image->name }}" class="w-full h-24 object-cover"
+                            onclick="document.getElementById('main-image').src = this.src"
+                            onclick="document.getElementById('main-image').alt = this.alt">
                         </button>
+                        @endforeach
 
                     </div>
                 </div>
