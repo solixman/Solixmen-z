@@ -1,3 +1,5 @@
+
+
 @extends('admin.layout')
 
 @section('admin-title', 'Orders')
@@ -66,96 +68,67 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-stone-100">
+                @forelse($orders as $order)
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-7652</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Emily Johnson</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Mar 14, 2025</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">2 items</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">$245.00</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-{{ $order->id }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        @if($order->user)
+                            {{ $order->user->firstName ?? '' }} {{ $order->user->lastName ?? '' }}
+                            @if(!$order->user->firstName && !$order->user->lastName)
+                                {{ $order->user->name ?? 'Guest Customer' }}
+                            @endif
+                        @else
+                            Guest Customer
+                        @endif
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        {{$order->orderDate}}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        {{ $order->order_products->count() }} {{ $order->order_products->count() == 1 ? 'item' : 'items' }}
+                    </td>
+                    @php
+                    $total=0;
+                    foreach($order->order_products as $item){
+                        $total +=$item->subtotal;
+                    }
+                    
+                    @endphp
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">${{ number_format($total ?? 0, 2) }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Delivered</span>
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                            @if($order->status == 'delivered') bg-green-100 text-green-800 
+                            @elseif($order->status == 'shipped') bg-blue-100 text-blue-800 
+                            @elseif($order->status == 'processing') bg-yellow-100 text-yellow-800 
+                            @elseif($order->status == 'cancelled') bg-red-100 text-red-800 
+                            @else bg-stone-100 text-stone-800 @endif">
+                            {{ ucfirst($order->status) }}
+                        </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm">
                         <div class="flex space-x-2">
-                            <a href="admin/order/details" class="text-stone-600 hover:text-stone-900">View</a>
-                            <button class="text-stone-600 hover:text-stone-900">Print</button>
+                            {{-- <a href="{{ route('admin.orders.show', $order->id) }}" class="text-stone-600 hover:text-stone-900">View</a>
+                            <a href="{{ route('admin.orders.print', $order->id) }}" class="text-stone-600 hover:text-stone-900">Print</a> --}}
+                            <a href="" class="text-stone-600 hover:text-stone-900">View</a>
+                            <a href="" class="text-stone-600 hover:text-stone-900">Print</a>
                         </div>
                     </td>
                 </tr>
+                @empty
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-7651</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Michael Roberts</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Mar 13, 2025</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">1 item</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">$189.00</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Shipped</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        <div class="flex space-x-2">
-                            <button class="text-stone-600 hover:text-stone-900">Print</button>
-                        </div>
+                    <td colspan="7" class="px-6 py-4 text-center text-sm text-stone-500">
+                        No orders found
                     </td>
                 </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-7650</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Sophia Chen</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Mar 12, 2025</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">3 items</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">$385.50</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Processing</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        <div class="flex space-x-2">
-                            <button class="text-stone-600 hover:text-stone-900">Print</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-7649</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">David Wilson</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Mar 11, 2025</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">1 item</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">$175.00</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Delivered</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        <div class="flex space-x-2">
-                            <button class="text-stone-600 hover:text-stone-900">Print</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-7648</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Olivia Martinez</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Mar 10, 2025</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">2 items</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">$220.00</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Cancelled</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        <div class="flex space-x-2">
-                            <button class="text-stone-600 hover:text-stone-900">Print</button>
-                        </div>
-                    </td>
-                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
     <div class="px-6 py-4 border-t border-stone-100 bg-stone-50">
         <div class="flex items-center justify-between">
-            <div class="text-sm text-stone-600">
-                Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">42</span> results
-            </div>
-            <div class="flex space-x-2">
-                <button class="px-3 py-1 border border-stone-300 rounded-md text-sm bg-white text-stone-500 hover:bg-stone-50">Previous</button>
-                <button class="px-3 py-1 border border-stone-300 rounded-md text-sm bg-stone-800 text-white">1</button>
-                <button class="px-3 py-1 border border-stone-300 rounded-md text-sm bg-white text-stone-500 hover:bg-stone-50">2</button>
-                <button class="px-3 py-1 border border-stone-300 rounded-md text-sm bg-white text-stone-500 hover:bg-stone-50">3</button>
-                <button class="px-3 py-1 border border-stone-300 rounded-md text-sm bg-white text-stone-500 hover:bg-stone-50">Next</button>
+            
+            <div class="flex space-x-2" style="max-width: 10vw">
+                {{$orders->links()}}
             </div>
         </div>
     </div>

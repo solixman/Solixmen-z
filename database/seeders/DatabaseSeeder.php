@@ -18,69 +18,81 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        // Create roles
+        
         $admin = Role::create(['name' => 'Admin', 'description' => 'Administrator']);
-        $Client= Role::create(['name' => 'Client', 'description' => 'Regular Customer']);
+        $Client = Role::create(['name' => 'Client', 'description' => 'Regular Customer']);
 
-   
+
         $admin = User::create([
-            'name' => 'solix',
-            'email' => 'admin2@example.com',
-            'password' => Hash::make('password'),
-            'role_id' => $admin->id,
+            'lastName' => 'solix',
+            'firstName' => 'jfr',
+            'email' => 'solix@gmail.com',
+            'password' => Hash::make('123123'),
+            'role_id' => 1,
         ]);
 
         $customer = User::create([
-            'name' => 'hamid',
-            'email' => 'customer@example.com',
-            'password' => Hash::make('password'),
-            'role_id' => $Client->id,
+            'lastName' => 'hamid',
+            'firstName' => 's9alli',
+            'email' => 'hamid@s9lli',
+            'password' => Hash::make('123123'),
+            'role_id' => 2  ,
         ]);
 
         $address = Address::create([
             'country' => 'maroc',
-            'region' => 'California',
-            'city' => 'Los Angeles',
-            'street' => 'Sunset Blvd',
-            'neighborhood' => 'West Hollywood',
+            'region' => 'casablanca-Settat',
+            'city' => 'Casablanca',
+            'street' => '11',
+            'neighborhood' => 'Hay etissir',
             'zipCode' => 99999,
         ]);
-       
+        $address = Address::create([
+            'country' => 'maroc',
+            'region' => 'Casablanca-Settat',
+            'city' => 'Casablanca',
+            'street' => '30',
+            'neighborhood' => 'mabrouka',
+            'zipCode' => 99999,
+        ]);
 
-    
+
+
         $categorie1 = Categorie::create([
-            'name' => 'Electronics',
-             'description' => 'Electronic Items',
-            ]);
+            'name' => 'Men & women',
+            'description' => 'clothes that both men and women can wear',
+        ]);
 
         $categorie2 = Categorie::create([
-            'name' => 'Clothing',
-             'description' => 'Fashion & Apparel',
-            ]);
-             
+            'name' => 'Women',
+            'description' => 'only for women classy clothing',
+        ]);
+        $categorie2 = Categorie::create([
+            'name' => 'men',
+            'description' => 'obly for Men classy clothing',
+        ]);
+        
 
-        // Create products
         $product1 = Product::create([
-            'titre' => 'Laptop',
-            'image' => 'laptop.jpg',
-            'type' => 'Electronics',
+            'name' => 'v-FUT t-shirt',
+            'image' => 'test.img',
+            'type' => 'fabric',
             'price' => 1200.50,
             'quantity' => 10,
-            'description' => 'High-performance laptop',
-            'admin_id' => 1,
-            'categorie_id'=>$categorie1->id,
+            'description' => 'a v neck t-shirt wad mase in ...',
+            
+            'categorie_id' => $categorie1->id,
         ]);
-    
 
         $product2 = Product::create([
-            'titre' => 'T-Shirt',
+            'name' => 'T-Shirt',
             'image' => 'tshirt.jpg',
-            'type' => 'Clothing',
+            'type' => 'summery',
             'price' => 25.99,
             'quantity' => 50,
             'description' => 'Cotton t-shirt',
-            'admin_id' => 1,
-            'categorie_id'=>$categorie2->id,
+            // 'admin_id' => 1,
+            'categorie_id' => $categorie2->id,
         ]);
 
 
@@ -89,16 +101,16 @@ class DatabaseSeeder extends Seeder
             'status' => 'Pending',
             'user_id' => 2,
             'address_id' => $address->id,
-            'totalPrice' => 1226.49,
         ]);
 
-   
+
         Order_product::create([
             'product_id' => $product1->id,
             'order_id' => $order->id,
             'quantity' => 1,
             'priceAtMoment' => 1200.50,
-            'subtotal'=>1200.50,
+            'subtotal' => 1200.50,
+            'name'=>$product1->name,
         ]);
 
         Order_product::create([
@@ -106,7 +118,8 @@ class DatabaseSeeder extends Seeder
             'order_id' => $order->id,
             'quantity' => 1,
             'priceAtMoment' => 25.99,
-            'subtotal'=> 25.99,
+            'subtotal' => 25.99,
+            'name'=>$product2->name,
         ]);
     }
 }

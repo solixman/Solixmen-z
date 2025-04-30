@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<style>
+    a{
+        text-decoration: none;
+    }
+</style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,16 +47,14 @@
     </script>
 
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-
+        
         .admin-sidebar {
             height: 100vh;
             position: sticky;
             top: 0;
         }
     </style>
+    <link rel="stylesheet" href="{{asset("css/app.css")}}">
 
     @yield('styles')
 

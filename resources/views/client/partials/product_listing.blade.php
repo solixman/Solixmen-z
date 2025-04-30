@@ -43,22 +43,28 @@
             <div class="group">
                 <div class="relative overflow-hidden rounded-lg mb-4">
                     <a href="/product/{{($product->id)}}">
+                        @csrf
                         <img 
                             src="{{ $product->image }}" 
-                            alt="{{ $product->titre }}" 
+                            alt="{{ $product->name }}" 
                             class="w-full h-80 object-cover transition duration-500 group-hover:scale-105">
                     </a>
                     <div class="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/10 transition duration-300"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white bg-opacity-90">
+                        <form action="/product/add/cart">
+                            <input type="hidden" name="id" value="{{$product->id}}">
                         <button class="w-full py-2 bg-stone-800 text-white hover:bg-stone-900 transition duration-150 ease-in-out rounded">Add to Cart</button>
+                    </form>
                     </div>
+                    
+                    <form action="/product/Like"></form>
                     <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white flex items-center justify-center text-stone-600 hover:text-stone-900 focus:outline-none">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
                     </button>
                     
-                    {{-- @if($loop->index % 8 == 0)
+                    @if($loop->index % 8 == 0)
                     <div class="absolute top-3 left-3">
                         <span class="inline-block bg-stone-800 text-white text-xs px-2 py-1 rounded">New</span>
                     </div>
@@ -66,10 +72,10 @@
                     <div class="absolute top-3 left-3">
                         <span class="inline-block bg-stone-700 text-white text-xs px-2 py-1 rounded">Sale</span>
                     </div>
-                    @endif --}}
+                    @endif
                 </div>
                 <h3 class="font-medium mb-1">
-                    <a href="/product?id={{$product->id}}" class="hover:underline">{{ $product->titre }}</a>
+                    <a href="/product?id={{$product->id}}" class="hover:underline">{{ $product->name }}</a>
                 </h3>
                 <p class="text-stone-600 mb-2">{{ $product->type }}</p>
                 <p class="font-medium">${{ number_format($product->price, 2) }}</p>
@@ -77,36 +83,8 @@
             @endforeach
         </div>
         
-        <!-- Pagination -->
-        <div class="mt-12">
-            <nav class="flex items-center justify-between border-t border-stone-200 px-4 sm:px-0">
-                <div class="-mt-px flex w-0 flex-1">
-                    <a href="#" class="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-stone-500 hover:border-stone-300 hover:text-stone-700">
-                        <svg class="mr-3 h-5 w-5 text-stone-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M18 10a.75.75 0 01-.75.75H4.66l2.1 1.95a.75.75 0 11-1.02 1.1l-3.5-3.25a.75.75 0 010-1.1l3.5-3.25a.75.75 0 111.02 1.1l-2.1 1.95h12.59A.75.75 0 0118 10z" clip-rule="evenodd" />
-                        </svg>
-                        Previous
-                    </a>
-                </div>
-                <div class="hidden md:-mt-px md:flex">
-                    <a href="#" class="inline-flex items-center border-t-2 border-stone-800 px-4 pt-4 text-sm font-medium text-stone-800" aria-current="page">1</a>
-                    <a href="#" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-stone-500 hover:border-stone-300 hover:text-stone-700">2</a>
-                    <a href="#" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-stone-500 hover:border-stone-300 hover:text-stone-700">3</a>
-                    <span class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-stone-500">...</span>
-                    <a href="#" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-stone-500 hover:border-stone-300 hover:text-stone-700">8</a>
-                    <a href="#" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-stone-500 hover:border-stone-300 hover:text-stone-700">9</a>
-                    <a href="#" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-stone-500 hover:border-stone-300 hover:text-stone-700">10</a>
-                </div>
-                <div class="-mt-px flex w-0 flex-1 justify-end">
-                    <a href="#" class="inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-stone-500 hover:border-stone-300 hover:text-stone-700">
-                        Next
-                        <svg class="ml-3 h-5 w-5 text-stone-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M2 10a.75.75 0 01.75-.75h12.59l-2.1-1.95a.75.75 0 111.02-1.1l3.5 3.25a.75.75 0 010 1.1l-3.5 3.25a.75.75 0 11-1.02-1.1l2.1-1.95H2.75A.75.75 0 012 10z" clip-rule="evenodd" />
-                        </svg>
-                    </a>
-                </div>
-            </nav>
-        </div>
+        
+     
     </div>
 </div>
 @endsection

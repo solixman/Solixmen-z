@@ -13,15 +13,15 @@ class Address extends Model
         'region',
         'city',
         'street',
-        'neighbrhood',
+        'neighborhood',
         'zipCode',
     ];
 
-    public function profile(){
-        return $this->belongsTo(Profile::class);
+    public function Users(){
+        return $this->hasMany(User::class);
     }
 
     public function orders(){
-        return $this->belongsToMany(Order::class);
+        return $this->hasMany(Order::class);
     }
 }

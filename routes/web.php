@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\JwtMiddleware;
@@ -27,7 +28,7 @@ Route::get('/', function () {
 
 
 Route::get('/register',function (){
-    return view('client.partials.register');
+    return view('comon.register');
 });
 
 Route::get('/cart',function (){
@@ -41,7 +42,7 @@ Route::get('/checkout',function (){
 
 
 Route::get('/login',function (){
-    return view('client.partials.login');
+    return view('comon.login');
 })->name('login');
 
 
@@ -58,10 +59,7 @@ Route::get('/admin',function (){
 
 
 Route::get('/admin/order/details',function (){
-    return view('admin.partials.order_details');
-});
-Route::get('/admin/orders',function (){
-    return view('admin.partials.orders');
+    return view('comon.order_details');
 });
 
 
@@ -74,7 +72,7 @@ Route::get('/admin/orders',function (){
 Route::middleware(['auth'])->group(function (){
 
     Route::get('/profile',function (){
-        return view('client.partials.profile');
+        return view('comon.profile');
     });
 });
 
@@ -104,7 +102,36 @@ Route::post('/product/delete',[ProductController::class,'destroy']);
 
 //show peoducts for customer
 Route::get('/listing',[ProductController::class,'show']);
+//for women
+Route::get('/women',[ProductController::class,'women']);
 //show product details
 Route::get('/product',[ProductController::class,'showDetails']);
 //add to cart
 Route::get('/product/add/cart',[ProductController::class,'addToCart']);
+//remove from cart
+Route::get('/product/remove/cart',[ProductController::class,'removeFromCart']);
+
+//create order
+Route::get('/order/create',[OrderController::class,'store']);
+
+Route::get('/order/details/',[OrderController::class,'showOrder'])->name('order.details');
+
+Route::get('/order/update',[OrderController::class,'update'])->name('admin.orders.update');
+
+Route::get('/order/cancel',[OrderController::class,'cancelOrder'])->name('order.cancel');
+//checkout 
+
+
+//show orders for admin
+Route::get('/admin/orders',[OrderController::class,'index'])->name('admin.orders');
+//show orders for client
+Route::get('/client/orders',[OrderController::class,'ShowOrdersClient'])->name('client.orders');
+
+// Route::post('/checkout/page',[OrderController::class,'checkout'])->name('order.checkout');
+
+Route::get('/checkout', 'App\Http\Controllers\StripeController@checkout')->name('Checkout');
+Route::post('/session', 'App\Http\Controllers\StripeController@session')->name('session');
+Route::get('/success', 'App\Http\Controllers\StripeController@success')->name('checkout.success');
+
+
+
