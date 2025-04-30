@@ -12,13 +12,12 @@ class Address extends Model
         'country',
         'region',
         'city',
-        'street',
-        'neighborhood',
+        'streetAddress',
         'zipCode',
     ];
 
-    public function Users(){
-        return $this->hasMany(User::class);
+    public function users(){
+        return $this->belongsToMany(User::class);
     }
 
     public function orders(){

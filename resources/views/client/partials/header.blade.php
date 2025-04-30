@@ -1,107 +1,169 @@
-<header class="bg-stone-50 border-b border-stone-200">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-            <!-- Logo -->
-            <div class="flex-shrink-0 flex items-center">
-                <a href="/" class="text-stone-800 font-serif text-xl font-medium">SOLIXMEN'z</a>
-            </div>
+<header class="bg-stone-900 text-white">
+    <!-- Main Header -->
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/"  style="color: antiquewhite !important"class="font-serif text-2xl font-bold tracking-tight">SOLIXMEN'z</a>
+        
+        <!-- Main Navigation -->
+        <div class="hidden md:flex space-x-8">
+            <a href="/men" style="color: antiquewhite !important" class="font-medium hover:text-gray-300 transition">MEN</a>
+            <a href="/women" style="color: antiquewhite !important" class="font-medium hover:text-stone-300 transition">WOMEN</a>
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="hidden md:block flex-1 max-w-xl mx-8">
+            <form action="/search" method="get" class="relative">
+                <input 
+                    type="text" 
+                    name="q" 
+                    placeholder="Search for items and brands" 
+                    class="w-full py-2 px-4 pr-10 rounded-full bg-white text-stone-800 focus:outline-none"
+                >
+                <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-stone-500">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+        
+        <!-- User Actions -->
+        <div class="flex items-center space-x-6">
+            <!-- Mobile Search Toggle -->
+            <button class="md:hidden text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                </svg>
+            </button>
             
-            <!-- Desktop Navigation -->
-            <nav class="hidden md:flex space-x-8">
-                <a href="/" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium {{request()->is('/') ? 'active':'' }}">Home</a>
-                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium {{request()->is('listing') ? 'active':'' }}" >Women</a>
-                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium {{request()->is('listing2') ? 'active':'' }}">Men</a>
-                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium {{request()->is('/listing1') ? 'active':'' }}">Accessories</a>
-            </nav>
-            
-            <!-- Right side icons -->
-            <div class="hidden md:flex items-center space-x-4">
-                <a href="/search" class="text-stone-600 hover:text-stone-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <!-- Profile - With Dropdown -->
+            <div class="relative group">
+                <button class="flex items-center focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                </a>
-                <a href="/profile" class="text-stone-600 hover:text-stone-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                </a>
-                <a href="/cart" class="text-stone-600 hover:text-stone-900 relative">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                    </svg>
-                    <span class="absolute -top-1 -right-1 bg-stone-800 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                        {{ count(Session()->get('cart',[])) }}
-                    </span>
-                </a>
-                @if(Auth::user() !== null)
-                @if(Auth::user()->role->name=='Admin')
-             
-                <a href="/admin" class="text-stone-600 hover:text-stone-900 relative">
-                    <img src="https://imgs.search.brave.com/4TYTWCI1WyH_b-MDbqndlsy2u2vewEQDX84XB4A4S4M/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzEwLzQxLzIzLzM0/LzM2MF9GXzEwNDEy/MzM0NDJfT1BuVnZS/YkszVENIaXNjblJV/SVdGV1dReUdtbkJz/WEwuanBn" 
-                    class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" alt="partie admin">
-                </a>
+                </button>
                 
-                @endif
-                @endif
+                <!-- Dropdown Menu -->
+                <div class="absolute right-0 top-full mt-1 w-64 bg-white text-stone-800 rounded-md shadow-lg z-50 transform opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition duration-200 origin-top-right invisible group-hover:visible">
+                    <!-- Sign In / Join Section -->
+                    <div class="p-4 border-b border-stone-200 flex justify-between items-center">
+                        <div>
+                            <a href="/login" class="font-medium text-stone-800 hover:underline">Sign In</a>
+                            <span class="mx-2">|</span>
+                            <a href="/register" class="font-medium text-stone-800 hover:underline">Join</a>
+                        </div>
+                        <button class="text-stone-500 hover:text-stone-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 6 6 18"></path>
+                                <path d="m6 6 12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Account Options -->
+                    <div class="py-2">
+                        <a href="/account" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span>My Account</span>
+                        </a>
+                        
+                        <a href="/orders" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                                <path d="M3 6h18"></path>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                            <span>My Orders</span>
+                        </a>
+                        
+                        <a href="/returns" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">
+                                <path d="m9 14-4-4 4-4"></path>
+                                <path d="M5 10h11a4 4 0 1 1 0 8h-1"></path>
+                            </svg>
+                            <span>My Returns</span>
+                        </a>
+                        
+                        <a href="/returns/info" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 16v-4"></path>
+                                <path d="M12 8h.01"></path>
+                            </svg>
+                            <span>Returns Information</span>
+                        </a>
+                        
+                        <a href="/preferences" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            <span>Contact Preferences</span>
+                        </a>
+                    </div>
+                </div>
             </div>
-
-           
             
-            <!-- Mobile menu button -->
-            <div class="md:hidden flex items-center">
-                <button type="button" class="mobile-menu-button text-stone-600 hover:text-stone-900 focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+            <!-- Wishlist -->
+            <a href="/wishlist" class="text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                </svg>
+            </a>
+            
+            <!-- Shopping Bag -->
+            <a href="/cart" class="text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                    <path d="M3 6h18"></path>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+       
+</header>
+
+<!-- Mobile Search Overlay (Hidden by default) -->
+<div class="fixed inset-0 bg-stone-900 bg-opacity-95 z-50 hidden" id="mobile-search">
+    <div class="container mx-auto px-4 pt-16 pb-8">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-white text-xl font-medium">Search</h2>
+            <button class="text-white" onclick="document.getElementById('mobile-search').classList.add('hidden')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <form action="/search" method="get">
+            <div class="relative">
+                <input 
+                    type="text" 
+                    name="q" 
+                    placeholder="Search for items and brands" 
+                    class="w-full py-3 px-4 pr-10 rounded-md bg-white text-stone-800 focus:outline-none"
+                >
+                <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-stone-500">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
                     </svg>
                 </button>
             </div>
-        </div>
-        
-        <!-- Mobile menu, show/hide based on menu state -->
-        <div class="mobile-menu hidden md:hidden pb-4">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="/" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Home</a>
-                <a href="/collections" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Collections</a>
-                <a href="/women" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Women</a>
-                <a href="/men" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Men</a>
-                <a href="/accessories" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Accessories</a>
-                <a href="/about" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">About</a>
-            </div>
-            <div class="pt-4 pb-3 border-t border-stone-200">
-                <div class="flex items-center px-5">
-                    <div class="flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <div class="ml-3">
-                        <div class="text-base font-medium text-stone-800">{{ $userName ?? 'Guest' }}</div>
-                        <div class="text-sm font-medium text-stone-500">{{ $userEmail ?? '' }}</div>
-                    </div>
-                </div>
-                <div class="mt-3 px-2 space-y-1">
-                    <a href="/profile" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Your Account</a>
-                    <a href="/orders" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Orders</a>
-                    <a href="/wishlist" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Wishlist</a>
-                    <a href="/logout" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Sign out</a>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
-</header>
+</div>
 
 <script>
-    // Toggle mobile menu
-    document.addEventListener('DOMContentLoaded', function() {
-        const mobileMenuButton = document.querySelector('.mobile-menu-button');
-        const mobileMenu = document.querySelector('.mobile-menu');
-        
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
+    // Toggle mobile search
+    document.querySelector('.md\\:hidden').addEventListener('click', function() {
+        document.getElementById('mobile-search').classList.remove('hidden');
     });
 </script>
-

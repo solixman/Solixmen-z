@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorie;
+use App\repositories\CategorieRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -10,17 +11,14 @@ use Illuminate\Support\Facades\Validator;
 class CategorieController extends Controller
 {
 
-    public function index()
+    private $categorieRepository;
+
+    public function __construct(CategorieRepository $categorieRepository)
     {
-        $categories = Categorie::all();
-        return view('.admin.partials.categories', compact('categories'));
+        $this->categorieRepository=$categorieRepository;
     }
 
-    /**
-     * Show the form for creating a new category.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         return view('categories.create');
@@ -28,78 +26,58 @@ class CategorieController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255|unique:categories',
+        $fields = $request->validate([
+            'name' =>'required|string|max:255|unique:categories',
             'description' => 'nullable|string',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $category = Categorie::create([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
+        $category=new Categorie();
+        $category->name=$fields['name'];
+        $category->description=$fields['description'];
+        $this->categorieRepository->saveCategorie($category);
 
         return redirect()->back()
-            ->with('success', 'Catégory created with success!');
+            ->with('success', 'Category created succesfully');
     }
 
 
-    public function edit(Categorie $category)
+    public function update(Request $request)
     {
-        return view('categories.edit', compact('categorie'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        // dd($request['id']);
-        $category = Categorie::findOrFail($request['id']);
-        // dd($category);
+        $category = $this->categorieRepository->getOneCategorie($request['id']);       
         try {
-            $validator = Validator::make($request->all(), [
+            $fields = $request->validate([
                 'name' => 'required|string|max:255|unique:categories,name,' . $category->id . ',id',
                 'description' => 'nullable|string',
             ]);
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
-
-
-
-
-        try {
-            $category->name = $request->name;
-            $category->description = $request->description;
-            $category->save();
+       
+            $category->name = $fields['name'];
+            $category->description = $fields['description'];
+            $this->categorieRepository->saveCategorie($category);
 
         } catch (Exception $e) {
             return $e->getMessage();
         }
 
         return redirect()->back()
-            ->with('success', 'Catégorie mise à jour avec succès!');
+        ->with('success', 'category updated succesfully');
     }
 
 
-    public function destroy($id)
-    {        // Check if category has contents
+    public function destroy(Request $request)
+    {        
 
-        $category = Categorie::find($id);
-        //   return $category->activities;
-        if ($category->activities->count() > 0) {
+        $category = $this->categorieRepository->getOneCategorie($request['id']);
+
+        if ($category->products->count() > 0) {
 
             return back()
-                ->with('error', 'deleting is impossible, category has its own activities.');
+                ->with('error', 'deleting is impossible, category has its own products.');
         }
 
         $category->delete();
 
 
         return back()
-            ->with('success', 'Catégorie supprimée avec succès!');
+            ->with('success', 'category deleted succesfully');
     }
 }

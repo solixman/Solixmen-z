@@ -1,7 +1,4 @@
-@php
-use App\Models\Role;
-$roles=Role::All();
-@endphp
+
 @extends('client.layout')
 
 @section('client-title', 'My Account')
@@ -14,16 +11,16 @@ $roles=Role::All();
                 <div class="p-6 text-center border-b border-stone-100">
                     <div class="h-24 w-24 rounded-full bg-stone-200 mx-auto mb-4 overflow-hidden">
                 
-                            <img src="{{Auth::user()->image}}" alt="{{Auth::user()->name}}" class="h-full w-full object-cover rounded-full">
+                            <img src="{{$user->image}}" alt="{{$user->name}}" class="h-full w-full object-cover rounded-full">
             
                             <div class="h-full w-full flex items-center justify-center text-stone-600 text-2xl font-medium">
-                                <span>{{ strtoupper(substr(Auth::user()->name, 0, 2)) }}</span>
+                                <span>{{ strtoupper(substr($user->name, 0, 2)) }}</span>
                             </div>
                         
                     </div>
-                    <h3 class="text-lg font-medium">{{Auth::user()->name}}</h3>
-                    <p class="text-sm text-stone-500">{{Auth::user()->email}}</p>
-                    <p class="text-sm text-stone-500 mt-1">{{Auth::user()->role->name}}</p>
+                    <h3 class="text-lg font-medium">{{$user->name}}</h3>
+                    <p class="text-sm text-stone-500">{{$user->email}}</p>
+                    <p class="text-sm text-stone-500 mt-1">{{$user->role->name}}</p>
 
                     <div class="mt-4">
                         <button class="text-sm text-stone-600 hover:text-stone-900">
@@ -71,44 +68,37 @@ $roles=Role::All();
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <div>
                                 <label for="firstName" class="block text-sm font-medium text-stone-700 mb-1">firstName</label>
-                                <input type="text" id="firstName" name="firstName" value="{{ Auth::user()->firstName }}"
+                                <input type="text" id="firstName" name="firstName" value="{{ $user->firstName }}"
                                     class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">
                             </div>
                             <div>
                                 <label for="lastName" class="block text-sm font-medium text-stone-700 mb-1">lastName</label>
-                                <input type="text" id="lastName" name="lastName" value="{{ Auth::user()->lastName }}"
+                                <input type="text" id="lastName" name="lastName" value="{{ $user->lastName }}"
                                     class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">
                             </div>
-                            @if(Auth::user()->role->name == 'Admin')
+
                             <div>
                                 <label for="role"    class="block text-sm font-medium text-stone-700 mb-1">Role</label>
                                 <select id="role" name="role" 
                                     class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->name }}"
-                                            {{ Auth::user()->role->name == $role->name ? 'selected' : '' }}>
+                                            {{ $user->role->name == $role->name ? 'selected' : '' }}>
                                             {{ $role->name }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
-                            @else
-                            <div>
-                                <label for="role" class="block text-sm font-medium text-stone-700 mb-1">role</label>
-                                <input type="text" id="role" name="role" value="{{ Auth::user()->role->name }}"
-                                    class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md" readonly>
-                            </div>
-                             @endif
                             <div>
                                 <label for="email" class="block text-sm font-medium text-stone-700 mb-1">Email
                                     Address</label>
-                                <input type="email" id="email" name="email" value="{{Auth::user()->email}}"
+                                <input type="email" id="email" name="email" value="{{$user->email}}"
                                     class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">
                             </div>
                             <div>
                                 <label for="phone" class="block text-sm font-medium text-stone-700 mb-1">Phone
                                     Number</label>
-                                <input type="tel" id="phone" name="phone" value="{{Auth::user()->phoneNumber}}"
+                                <input type="tel" id="phone" name="phone" value="{{$user->phoneNumber}}"
                                     class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">
                             </div>
                         </div>
@@ -116,11 +106,11 @@ $roles=Role::All();
                         <div class="mb-6">
                             <label for="bio" class="block text-sm font-medium text-stone-700 mb-1">Bio</label>
                             <textarea id="bio" name="bio" rows="3"
-                                class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">{{Auth::user()->bio}}</textarea>
+                                class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">{{$user->bio}}</textarea>
                         </div>
 
                         <div>
-                            <input type="hidden" name="id" value={{Auth::user()->id}}>
+                            <input type="hidden" name="userId" value={{$user->id}}>
                         </div>
 
                         <div class="flex justify-end">
@@ -135,15 +125,11 @@ $roles=Role::All();
 
             <!-- Security -->
             <div id="security" class="bg-white rounded-lg shadow-sm border border-stone-100 overflow-hidden">
-                <div class="space-y-4 mb-6">
                 <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
                     <h3 class="font-medium">Security</h3>
                 </div>
                 <div class="p-6">
-                    <h1 style="color:gray ">COMING SOON</h1>
-                   </div>
-
-                    {{-- <form>
+                    <form>
                         <div class="space-y-4 mb-6">
                             <div>
                                 <label for="current_password" class="block text-sm font-medium text-stone-700 mb-1">Current
@@ -186,7 +172,7 @@ $roles=Role::All();
                                 Update Password
                             </button>
                         </div>
-                    </form> --}}
+                    </form>
                 </div>
             </div>
 
@@ -195,12 +181,8 @@ $roles=Role::All();
                 <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
                     <h3 class="font-medium">Notification Preferences</h3>
                 </div>
-             
-
                 <div class="p-6">
-                        <h1 style="color:gray ">COMING SOON</h1>
- </div>
-                {{--    <form>
+                    <form>
                         <div class="space-y-4 mb-6">
                             <div class="flex items-center justify-between">
                                 <div>
@@ -281,7 +263,7 @@ $roles=Role::All();
                             </button>
                         </div>
                     </form>
-                </div> --}}
+                </div>
             </div>
 
             <!-- Account Activity -->
@@ -291,13 +273,68 @@ $roles=Role::All();
                 </div>
                 <div class="p-6">
                     <div class="space-y-6">
-                       
-                        <h1 style="color:gray ">COMING SOON</h1>
+                        <div>
+                            <h4 class="text-sm font-medium mb-3">Recent Login Activity</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <div class="p-2 bg-green-100 rounded-full mr-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Current Session</p>
+                                        <p class="text-xs text-stone-500">Mar 14, 2025 at 10:30 AM</p>
+                                        <p class="text-xs text-stone-500">IP: 192.168.1.1 • Chrome on macOS</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="p-2 bg-stone-100 rounded-full mr-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-600"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414 0l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293a1 1 0 000-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Previous Login</p>
+                                        <p class="text-xs text-stone-500">Mar 13, 2025 at 4:15 PM</p>
+                                        <p class="text-xs text-stone-500">IP: 192.168.1.1 • Chrome on macOS</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="p-2 bg-stone-100 rounded-full mr-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-600"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414 0l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293a1 1 0 000-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Previous Login</p>
+                                        <p class="text-xs text-stone-500">Mar 12, 2025 at 9:45 AM</p>
+                                        <p class="text-xs text-stone-500">IP: 192.168.1.1 • Chrome on macOS</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="border-t border-stone-100 pt-6">
                             <h4 class="text-sm font-medium mb-3">Account Actions</h4>
-                        <h1 style="color:gray ">COMING SOON</h1>
-                            
+                            <div class="space-y-3">
+                                <button type="button" class="text-sm text-stone-600 hover:text-stone-900">
+                                    Sign out of all other sessions
+                                </button>
+                                <div class="border-t border-stone-100 pt-3">
+                                    <button type="button" class="text-sm text-red-600 hover:text-red-800">
+                                        Deactivate account
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

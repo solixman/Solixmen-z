@@ -7,66 +7,79 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <h1 class="text-3xl font-serif mb-8">Shopping Cart</h1>
 
-            <div class="lg:grid lg:grid-cols-12 lg:gap-12">
-                <!-- Cart Items -->
-                <div class="lg:col-span-8">
-                    @if (session()->has('cart') && count(session('cart')) > 0)
+            @if (session()->has('cart') && count(session('cart')) > 0)
+                <div class="lg:grid lg:grid-cols-12 lg:gap-12">
+                    <!-- Cart Items -->
+                    <div class="lg:col-span-8">
                         @php
                             $subtotal = 0;
                         @endphp
 
                         @foreach (session('cart') as $id => $item)
                             @php
-                                $subtotal += $item['price'] * $item['quantity'];
+                                $subtotal+=$item['price']*$item['quantity'];
                             @endphp
                             <!-- Cart Item -->
                             <div class="flex flex-col sm:flex-row border-b border-stone-200 py-6">
                                 <div class="sm:w-24 sm:h-24 w-full h-40 mb-4 sm:mb-0 flex-shrink-0">
-                                    <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}"
-                                        class="w-full h-full object-cover rounded-md">
+                                    <a href="/product?id={{$id}}">
+                                        <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}"
+                                            class="w-full h-full object-cover rounded-md">
+                                    </a>
                                 </div>
                                 <div class="sm:ml-6 flex-1 flex flex-col">
-                                    <div class="flex justify-between">
-                                        <div>
-                                            <h3 class="font-medium">{{ $item['name'] }}</h3>
-                                            <p class="text-sm text-stone-600 mt-1">{{ $item['color'] }} /
-                                                {{ $item['size'] }}</p>
+                                    <form action="/cart/save/changes" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{$id}}">
+                                        
+                                        <div class="flex justify-between">
+                                            <div>
+                                                <a class="text-sm font-medium text-stone-700 hover:text-stone-900" href="/product?id={{$id}}">{{ $item['name'] }}</a>
+                                                <div class="flex items-center gap-2 mt-1.5">
+                                                    <select name="color"
+                                                        class="text-xs border border-stone-300 rounded-md py-1 px-2 bg-white focus:ring-0 focus:border-stone-400">
+                                                        <option value="{{ $item['color'] }}" selected>{{ $item['color'] }}</option>
+                                                        <option value="Black">Black</option>
+                                                        <option value="White">White</option>
+                                                        <option value="Navy">Navy</option>
+                                                        <option value="Gray">Gray</option>
+                                                        <option value="Brown">Brown</option>
+                                                    </select>
+                                                    <span class="text-sm text-stone-400">/</span>
+                                                    <select name="size"
+                                                        class="text-xs border border-stone-300 rounded-md py-1 px-2 bg-white focus:ring-0 focus:border-stone-400">
+                                                        <option value="{{ $item['size'] }}" selected>{{ $item['size'] }}</option>
+                                                        <option value="XS">XS</option>
+                                                        <option value="S">S</option>
+                                                        <option value="M">M</option>
+                                                        <option value="L">L</option>
+                                                        <option value="XL">XL</option>
+                                                        <option value="XXL">XXL</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <p class="font-medium">${{ number_format($item['price'], 2) }}</p>
                                         </div>
-                                        <p class="font-medium">${{ number_format($item['price'], 2) }}</p>
-                                    </div>
-                                    <div class="mt-4 sm:mt-auto flex items-center justify-between">
-                                        <div class="flex border border-stone-300 rounded-md w-24">
-                                            <button class="px-2 py-1 text-stone-600 hover:text-stone-900 focus:outline-none">-</button>
-                                            <input type="number" value="{{ $item['quantity'] }}" min="1"
-                                                class="w-full text-center border-0 focus:ring-0" readonly>
-                                            <button class="px-2 py-1 text-stone-600 hover:text-stone-900 focus:outline-none">+</button>
+                                        
+                                        <div class="mt-4 sm:mt-auto flex items-center justify-between">
+                                            <div class="flex items-center gap-3">
+                                                <div class="flex border border-stone-300 rounded-md w-24">
+                                                    <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1"
+                                                        class="w-full text-center border-0 focus:ring-0">
+                                                </div>
+                                                <button type="submit"
+                                                    class="text-xs px-3 py-1.5 bg-stone-800 text-white rounded-md hover:bg-stone-900 transition-colors">
+                                                    Save Changes
+                                                </button>
+                                            </div>
+                                            <a class="text-xs text-stone-600 hover:text-stone-900 hover:underline" href="/product/remove/cart?id={{$id}}">Remove</a>
                                         </div>
-                                        <form action="/product/remove/cart">
-                                             <input type="hidden" name="id" value="{{$id}}">
-                                            <button type="submit" class="text-sm text-stone-600 hover:text-stone-900">Remove</button>
-                                        </form>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         @endforeach
-                    @else
-                        <!-- Empty Cart Message -->
-                        <div class="py-12 text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-stone-400" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                            </svg>
-                            <h2 class="mt-4 text-xl font-medium">Your cart is empty</h2>
-                            <p class="mt-2 text-stone-600">Looks like you haven't added any items to your cart yet.</p>
-                            <a href="/listing"
-                                class="mt-6 inline-block bg-stone-800 text-white py-3 px-6 rounded-md hover:bg-stone-900 transition duration-150 ease-in-out">Continue
-                                Shopping</a>
-                        </div>
-                    @endif
 
-                    <!-- Continue Shopping -->
-                    @if (session()->has('cart') && count(session('cart')) > 0)
+                        <!-- Continue Shopping -->
                         <div class="mt-8">
                             <a href="/listing" class="text-stone-600 hover:text-stone-900 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
@@ -77,11 +90,9 @@
                                 Continue Shopping
                             </a>
                         </div>
-                    @endif
-                </div>
+                    </div>
 
-                <!-- Order Summary -->
-                @if (session()->has('cart') && count(session('cart')) > 0)
+                    <!-- Order Summary -->
                     <div class="lg:col-span-4 mt-12 lg:mt-0">
                         <div class="bg-stone-50 rounded-lg p-6">
                             <h2 class="text-lg font-medium mb-6">Order Summary</h2>
@@ -131,22 +142,22 @@
                             </div>
                         </div>
                     </div>
-                @endif
-            </div>
+                </div>
+            @else
+                <!-- Empty Cart Message - Now centered across full width -->
+                <div class="w-full max-w-2xl mx-auto py-12 text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-stone-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    <h2 class="mt-4 text-xl font-medium">Your cart is empty</h2>
+                    <p class="mt-2 text-stone-600">Looks like you haven't added any items to your cart yet.</p>
+                    <a href="/listing"
+                        class="mt-6 inline-block bg-stone-800 text-white py-3 px-6 rounded-md hover:bg-stone-900 transition duration-150 ease-in-out">Continue
+                        Shopping</a>
+                </div>
+            @endif
         </div>
     </div>
-
-    <script>
-        // function updateQuantity(id, quantity) {
-        //     if (quantity < 1) return;
-
-        //     window.location.href = `/cart/update/${id}/${quantity}`;
-        // }
-
-        // function removeItem(id) {
-        //     if (confirm('Are you sure you want to remove this item?')) {
-        //         window.location.href = `/cart/remove/${id}`;
-        //     }
-        // }
-    </script>
 @endsection

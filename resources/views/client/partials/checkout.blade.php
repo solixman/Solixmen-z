@@ -100,40 +100,132 @@
                 <div class="px-6 py-4 border-b border-stone-200">
                     <h2 class="text-xl font-medium text-stone-800">Shipping Information</h2>
                 </div>
+                
                 <div class="p-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <h3 class="text-sm font-medium text-stone-800 mb-2">Shipping Address</h3>
-                            <address class="not-italic text-sm text-stone-600">
-                                {{ Auth::user()->name }}<br>
-                                {{ $order->address ?? '123 Elegance Street' }}<br>
-                                {{ $order->city ?? 'New York' }}, {{ $order->state ?? 'NY' }} {{ $order->zip ?? '10001' }}<br>
-                                {{ $order->country ?? 'United States' }}
-                            </address>
-                        </div>
-                        <div>
-                            <h3 class="text-sm font-medium text-stone-800 mb-2">Shipping Method</h3>
-                            <p class="text-sm text-stone-600">Standard Shipping (3-5 business days)</p>
-                            <p class="text-sm text-stone-600 mt-1">Free</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Payment Section -->
-            <div class="bg-white border border-stone-200 rounded-lg overflow-hidden shadow-sm">
-                <div class="px-6 py-4 border-b border-stone-200">
-                    <h2 class="text-xl font-medium text-stone-800">Payment Method</h2>
-                </div>
-                <div class="p-6">
-                    <p class="text-sm text-stone-600 mb-6">All transactions are secure and encrypted. Credit card information is never stored on our servers.</p>
-                    
-                    <form action="/session" method="POST" class="space-y-6">
+                    <form action="/session" method="POST">
                         @csrf
-                        <input type="hidden" name="total" value="{{ $total }}">
+                        {{-- <input type="hidden" name="total" value="{{ $total }}"> --}}
                         <input type="hidden" name="order_id" value="{{ $order->id }}">
                         
-                        <div class="flex flex-col-reverse sm:flex-row justify-between items-center space-y-4 space-y-reverse sm:space-y-0 sm:space-x-4">
+                        <!-- Address Selection -->
+                        <div class="mb-6">
+                            <h3 class="text-sm font-medium text-stone-800 mb-3">Select Shipping Address</h3>
+                            
+                            @if(count(Auth::user()->addresses ?? []) > 0)
+                                <div class="space-y-4">
+                                    @foreach(Auth::user()->addresses as $address)
+                                    <label class="flex items-start p-4 border rounded-md cursor-pointer transition-colors {{ $loop->first ? 'border-stone-800 bg-stone-50' : 'border-stone-200 hover:border-stone-400' }}">
+                                        <input type="radio" name="address_id" value="{{ $address->id }}" class="mt-1 text-stone-800 focus:ring-stone-500 h-4 w-4" {{ $loop->first ? 'checked' : '' }}>
+                                        <div class="ml-3">
+                                            <div class="text-sm font-medium text-stone-800">{{ Auth::user()->firstName }}, {{Auth::user()->id}}</div>
+                                            <address class="not-italic text-sm text-stone-600 mt-1">
+                                                {{ $address->streetAddress }}<br>
+                                                {{ $address->city }}, {{ $address->region }} {{ $address->zipCode }}<br>
+                                                {{ $address->country }}
+                                            </address>
+                                        </div>
+                                    </label>
+                                    @endforeach
+                                    
+                                    <!-- New Address Option -->
+                                    <label id="newAddressToggle" class="flex items-start p-4 border border-stone-200 rounded-md cursor-pointer hover:border-stone-400 transition-colors">
+                                        <input type="radio" name="address_id" value="new" class="mt-1 text-stone-800 focus:ring-stone-500 h-4 w-4">
+                                        <div class="ml-3">
+                                            <div class="text-sm font-medium text-stone-800">Add a new address</div>
+                                            <p class="text-sm text-stone-600 mt-1">Create a new shipping address</p>
+                                        </div>
+                                    </label>
+                                </div>
+                            @else
+                                <div class="text-sm text-stone-600 mb-4">You don't have any saved addresses. Please add one below.</div>
+                            @endif
+                            
+                            <!-- New Address Form (Hidden by default if user has addresses) -->
+                            <div id="newAddressForm" class="{{ count(Auth::user()->addresse ?? []) > 0 ? 'hidden' : '' }} mt-6 border-t border-stone-200 pt-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="firstName" class="block text-sm font-medium text-stone-700 mb-1">firstName</label>
+                                        <input type="text" id="firstName" value="{{Auth::User()->firstName}}" name="firstName" class="w-full border border-stone-300 rounded-md px-3 py-2 focus:outline-none focus:ring-0 focus:border-stone-500" readonly>
+                                    </div>
+                                    <div>
+                                        <label for="lastName" class="block text-sm font-medium text-stone-700 mb-1">lastName</label>
+                                        <input type="text" id="lastName" value="{{Auth::User()->lastName}}" name="lastName" class="w-full border border-stone-300 rounded-md px-3 py-2 focus:outline-none focus:ring-0 focus:border-stone-500" readonly>
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="email" class="block text-sm font-medium text-stone-700 mb-1">Phone Number</label>
+                                        <input type="tel" id="phone" name="phone" class="w-full border border-stone-300 rounded-md px-3 py-2 focus:outline-none focus:ring-0 focus:border-stone-500" value="{{Auth::user()->phoneNumber}}" readonly>
+                                    </div>
+                                    <div>
+                                        <label for="email" class="block text-sm font-medium text-stone-700 mb-1">email</label>
+                                        <input type="tel" id="email" name="email" class="w-full border border-stone-300 rounded-md px-3 py-2 focus:outline-none focus:ring-0 focus:border-stone-500" value="{{Auth::user()->email}}" readonly>
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label for="streetAddress" class="block text-sm font-medium text-stone-700 mb-1">Street Address</label>
+                                        <input type="text" id="streetAddress" name="streetAddress" class="w-full border border-stone-300 rounded-md px-3 py-2 focus:outline-none focus:ring-0 focus:border-stone-500" >
+                                    </div>
+                                    <div>
+                                        <label for="city" class="block text-sm font-medium text-stone-700 mb-1">City</label>
+                                        <input type="text" id="city" name="city" class="w-full border border-stone-300 rounded-md px-3 py-2 focus:outline-none focus:ring-0 focus:border-stone-500" >
+                                    </div>
+                                    <div>
+                                        <label for="Region" class="block text-sm font-medium text-stone-700 mb-1">Region/state</label>
+                                        <input type="text" id="Region" name="Region" class="w-full border border-stone-300 rounded-md px-3 py-2 focus:outline-none focus:ring-0 focus:border-stone-500" >
+                                    </div>
+                                    <div>
+                                        <label for="zipCode" class="block text-sm font-medium text-stone-700 mb-1">ZIPPostal Code</label>
+                                        <input type="text" id="zipCode" name="zipCode" class="w-full border border-stone-300 rounded-md px-3 py-2 focus:outline-none focus:ring-0 focus:border-stone-500" >
+                                    </div>
+                                    <div>
+                                        <label for="country" class="block text-sm font-medium text-stone-700 mb-1">Country</label>
+                                        <select id="country" name="country" class="w-full border border-stone-300 rounded-md px-3 py-2 focus:outline-none focus:ring-0 focus:border-stone-500" >
+                                            <option value="United States">United States</option>
+                                            <option value="Canada">Canada</option>
+                                            <option value="Morocco">Morocco</option>
+                                            <option value="United Kingdom">United Kingdom</option>
+                                            <option value="Australia">Australia</option>
+                                            <option value="France">France</option>
+                                            <option value="Germany">Germany</option>
+                                            <option value="Italy">Italy</option>
+                                            <option value="Spain">Spain</option>
+                                            <option value="Japan">Japan</option>
+                                        </select>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Shipping Method -->
+                        <div class="mb-6 border-t border-stone-200 pt-6">
+                            <h3 class="text-sm font-medium text-stone-800 mb-3">Shipping Method</h3>
+                            <div class="space-y-3">
+                                <label class="flex items-start p-3 border border-stone-800 bg-stone-50 rounded-md cursor-pointer">
+                                    <input type="radio" name="shipping_method" value="standard" class="mt-1 text-stone-800 focus:ring-stone-500 h-4 w-4" checked>
+                                    <div class="ml-3 flex justify-between w-full">
+                                        <div>
+                                            <div class="text-sm font-medium text-stone-800">Standard Shipping</div>
+                                            <p class="text-sm text-stone-600">Delivery in 3-5 business days</p>
+                                        </div>
+                                        <div class="text-sm font-medium text-stone-800">Free</div>
+                                    </div>
+                                </label>
+                                
+                                <label class="flex items-start p-3 border border-stone-200 rounded-md cursor-pointer hover:border-stone-400 transition-colors">
+                                    <input type="radio" name="shipping_method" value="express" class="mt-1 text-stone-800 focus:ring-stone-500 h-4 w-4"readonly>
+                                    <div class="ml-3 flex justify-between w-full">
+                                        <div>
+                                            <div class="text-sm font-medium text-stone-800">Express Shipping</div>
+                                            <p class="text-sm text-stone-600">Delivery in 1-2 business days</p>
+                                        </div>
+                                        <div class="text-sm font-medium text-stone-800">$12.00</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col-reverse sm:flex-row justify-between items-center space-y-4 space-y-reverse sm:space-y-0 sm:space-x-4 mt-8">
                             <a href="{{ url('/cart') }}" class="w-full sm:w-auto inline-flex justify-center items-center px-6 py-3 border border-stone-300 shadow-sm text-sm font-medium rounded-md text-stone-700 bg-white hover:bg-stone-50 focus:outline-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -144,7 +236,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
                                 </svg>
-                                Complete Payment (${!! number_format($total, 2) !!})
+                                Complete Order (${!! number_format($total, 2) !!})
                             </button>
                         </div>
                     </form>
@@ -175,4 +267,45 @@
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle new address form
+        const newAddressToggle = document.getElementById('newAddressToggle');
+        const newAddressForm = document.getElementById('newAddressForm');
+        
+        if (newAddressToggle) {
+            newAddressToggle.addEventListener('click', function() {
+                newAddressForm.classList.remove('hidden');
+            });
+        }
+        
+        // Handle address selection
+        const addressRadios = document.querySelectorAll('input[name="address_id"]');
+        addressRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Hide form if an existing address is selected
+                if (this.value !== 'new') {
+                    newAddressForm.classList.add('hidden');
+                } else {
+                    newAddressForm.classList.remove('hidden');
+                }
+                
+                // Update selected address styling
+                document.querySelectorAll('label.border').forEach(label => {
+                    if (label.contains(this)) {
+                        label.classList.add('border-stone-800', 'bg-stone-50');
+                        label.classList.remove('border-stone-200', 'hover:border-stone-400');
+                    } else {
+                        label.classList.remove('border-stone-800', 'bg-stone-50');
+                        label.classList.add('border-stone-200', 'hover:border-stone-400');
+                    }
+                });
+            });
+        });
+    });
+</script>
 @endsection

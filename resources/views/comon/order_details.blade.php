@@ -3,6 +3,10 @@
 @extends('admin.layout')
 @endif
 
+{{-- @php
+ini_set('memory_limit', '-1');
+
+@endphp --}}
 
 @section('admin-title', 'Order Details')
 
@@ -335,7 +339,7 @@
                     </div>
                     <div class="p-6">
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <form action="/checkout" class="flex-1">
+                            <form action="/checkout" class="flex-1" method="get">
                                 @csrf
                                 <input type="hidden" name="id" value="{{$order->id}}">
                                 <button type="submit"
@@ -384,8 +388,6 @@
                                     </option>
                                 </select>
                             </div>
-
-
                             <button type="submit"
                                 class="w-full px-4 py-2 bg-stone-800 hover:bg-stone-900 text-white rounded-md">Update
                                 Status</button>

@@ -12,6 +12,7 @@ use App\Models\Categorie;
 use App\Models\Order;
 use App\Models\Order_product;
 use App\Models\OrderProduct;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -19,40 +20,38 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         
-        $admin = Role::create(['name' => 'Admin', 'description' => 'Administrator']);
-        $Client = Role::create(['name' => 'Client', 'description' => 'Regular Customer']);
+        // $admin = Role::create(['name' => 'Admin', 'description' => 'Administrator']);
+        // $Client = Role::create(['name' => 'Client', 'description' => 'Regular Customer']);
 
 
-        $admin = User::create([
-            'lastName' => 'solix',
-            'firstName' => 'jfr',
-            'email' => 'solix@gmail.com',
-            'password' => Hash::make('123123'),
-            'role_id' => 1,
-        ]);
+        // $admin = User::create([
+        //     'lastName' => 'solix',
+        //     'firstName' => 'jfr',
+        //     'email' => 'solix@gmail.com',
+        //     'password' => Hash::make('123123'),
+        //     'role_id' => 1,
+        // ]);
 
-        $customer = User::create([
-            'lastName' => 'hamid',
-            'firstName' => 's9alli',
-            'email' => 'hamid@s9lli',
-            'password' => Hash::make('123123'),
-            'role_id' => 2  ,
-        ]);
+        // $customer = User::create([
+        //     'lastName' => 'hamid',
+        //     'firstName' => 's9alli',
+        //     'email' => 'hamid@s9lli',
+        //     'password' => Hash::make('123123'),
+        //     'role_id' => 2  ,
+        // ]);
 
         $address = Address::create([
             'country' => 'maroc',
             'region' => 'casablanca-Settat',
             'city' => 'Casablanca',
-            'street' => '11',
-            'neighborhood' => 'Hay etissir',
+            'streetAddress' => 'Hay etissir',
             'zipCode' => 99999,
         ]);
         $address = Address::create([
             'country' => 'maroc',
             'region' => 'Casablanca-Settat',
             'city' => 'Casablanca',
-            'street' => '30',
-            'neighborhood' => 'mabrouka',
+            'streetAddress' => 'mabrouka',
             'zipCode' => 99999,
         ]);
 
@@ -75,7 +74,7 @@ class DatabaseSeeder extends Seeder
 
         $product1 = Product::create([
             'name' => 'v-FUT t-shirt',
-            'image' => 'test.img',
+            // 'image' => 'test.img',
             'type' => 'fabric',
             'price' => 1200.50,
             'quantity' => 10,
@@ -86,15 +85,65 @@ class DatabaseSeeder extends Seeder
 
         $product2 = Product::create([
             'name' => 'T-Shirt',
-            'image' => 'tshirt.jpg',
+            // 'image' => 'tshirt.jpg',
             'type' => 'summery',
             'price' => 25.99,
             'quantity' => 50,
             'description' => 'Cotton t-shirt',
-            // 'admin_id' => 1,
             'categorie_id' => $categorie2->id,
         ]);
 
+        DB::table('images')->insert([
+            'name'=>'testing image',
+            'path'=>'https://imgs.search.brave.com/tuVXHuVFMos1veRH7THGKmIt0L9DdqDeSqahpwWURXc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/ODFoVXA3QTlQd0wu/anBn',
+            'product_id'=>$product2->id
+        ]);
+        
+        DB::table('images')->insert([
+            'name'=>'testing2image',
+            'path'=>'https://imgs.search.brave.com/tuVXHuVFMos1veRH7THGKmIt0L9DdqDeSqahpwWURXc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/ODFoVXA3QTlQd0wu/anBn',
+            'product_id'=>$product2->id
+        ]);
+        
+        DB::table('images')->insert([
+            'name'=>'testing2image',
+            'path'=>'https://imgs.search.brave.com/tuVXHuVFMos1veRH7THGKmIt0L9DdqDeSqahpwWURXc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/ODFoVXA3QTlQd0wu/anBn',
+            'product_id'=>$product1->id
+        ]);
+        
+        DB::table('images')->insert([
+            'name'=>'testing2image',
+            'path'=>'https://imgs.search.brave.com/tuVXHuVFMos1veRH7THGKmIt0L9DdqDeSqahpwWURXc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/ODFoVXA3QTlQd0wu/anBn',
+            'product_id'=>$product1->id
+        ]);
+        
+        DB::table('images')->insert([
+            'name'=>'testing image',
+            'path'=>'https://imgs.search.brave.com/tuVXHuVFMos1veRH7THGKmIt0L9DdqDeSqahpwWURXc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/ODFoVXA3QTlQd0wu/anBn',
+            'product_id'=>$product2->id
+        ]);
+        
+        DB::table('images')->insert([
+            'name'=>'testing2image',
+            'path'=>'https://imgs.search.brave.com/tuVXHuVFMos1veRH7THGKmIt0L9DdqDeSqahpwWURXc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/ODFoVXA3QTlQd0wu/anBn',
+            'product_id'=>$product2->id
+        ]);
+        
+        DB::table('images')->insert([
+            'name'=>'testing2image',
+            'path'=>'https://imgs.search.brave.com/tuVXHuVFMos1veRH7THGKmIt0L9DdqDeSqahpwWURXc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/ODFoVXA3QTlQd0wu/anBn',
+            'product_id'=>$product1->id
+        ]);
+        
+        DB::table('images')->insert([
+            'name'=>'testing2image',
+            'path'=>'https://imgs.search.brave.com/tuVXHuVFMos1veRH7THGKmIt0L9DdqDeSqahpwWURXc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/ODFoVXA3QTlQd0wu/anBn',
+            'product_id'=>$product1->id
+        ]);
+        
+
+
+    
 
         $order = Order::create([
             'orderDate' => now(),

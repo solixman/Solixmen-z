@@ -138,7 +138,7 @@
                                             </tr>
                                             <tr>
                                                 <td width="50%" style="padding-bottom: 8px; color: #78716c; font-size: 14px;">Shipping:</td>
-                                                <td width="50%" align="right" style="padding-bottom: 8px; font-size: 14px;">${{ number_format($order->shipping, 2) }}</td>
+                                                <td width="50%" align="right" style="padding-bottom: 8px; font-size: 14px;">${{ $order->shipping || rand(00000,99999) }}</td>
                                             </tr>
                                             <tr>
                                                 <td width="50%" style="padding-bottom: 8px; color: #78716c; font-size: 14px;">Tax:</td>

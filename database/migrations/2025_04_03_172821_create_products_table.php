@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('image');
             $table->string('type');
+            $table->text('image')->default('https://imgs.search.brave.com/MBTjJuEhSoJT1VJQwb59tiGM4slpJsFAGRnnfoBcy50/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAzLzk5LzU1LzU3/LzM2MF9GXzM5OTU1/NTc2OF9mYWNMWkV6/MHJENVloSnhUTzla/MlVFYUgxcjRzTWFt/cy5qcGc');
             $table->float('price');
             $table->integer('quantity');
             $table->text('description');
@@ -30,12 +30,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('path');
+            $table->foreignId('product_id')->constrained();
+
         });
 
-        Schema::create('product_images', function (Blueprint $table) {
-            $table->foreignId('product_id')->constrained();
-            $table->foreignId('image_id')->constrained();
-        });
 
 
     }
@@ -48,5 +46,7 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('products');
+        Schema::dropIfExists('product_images');
+        Schema::dropIfExists('images');
     }
 };

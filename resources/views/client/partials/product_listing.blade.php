@@ -42,14 +42,13 @@
             @foreach($products as $product)
             <div class="group">
                 <div class="relative overflow-hidden rounded-lg mb-4">
-                    <a href="/product/{{($product->id)}}">
+                    <a href="/product?id={{($product->id)}}">
                         @csrf
                         <img 
                             src="{{ $product->image }}" 
                             alt="{{ $product->name }}" 
                             class="w-full h-80 object-cover transition duration-500 group-hover:scale-105">
                     </a>
-                    <div class="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/10 transition duration-300"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white bg-opacity-90">
                         <form action="/product/add/cart">
                             <input type="hidden" name="id" value="{{$product->id}}">
