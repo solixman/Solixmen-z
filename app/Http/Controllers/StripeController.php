@@ -102,15 +102,15 @@ class StripeController extends Controller
     }
     }
 
+
+
     public function success(Request $request)
     {
-
+        // dd('here');
         $order=$this->orderRepository->getOneOrder($request['id']);
-        
-        return view('client.partials.checkout',compact('order'));
         $order->status='payed';
         $this->orderRepository->saveOrder($order);
         Mail::to('sousouja07@gmail.com')->send(new OrderEmail($order));
-        return redirect('/')->with("succes", "Thanks for you order, You have just completed your payment. you'll find a confirmation email in your boite mail");
+        return view('client.partials.payment_succes' ,compact('order'));
     }
 }

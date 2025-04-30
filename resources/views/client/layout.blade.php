@@ -2,8 +2,8 @@
 <html lang="en">
     <style>
         a{
-            text-decoration: none;
-        }
+text-decoration: none !important;
+}
     </style>
 <head>
     <meta charset="UTF-8">

@@ -7,10 +7,10 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <h1 class="text-3xl font-serif mb-8">Shopping Cart</h1>
 
-            <div class="lg:grid lg:grid-cols-12 lg:gap-12">
-                <!-- Cart Items -->
-                <div class="lg:col-span-8">
-                    @if (session()->has('cart') && count(session('cart')) > 0)
+            @if (session()->has('cart') && count(session('cart')) > 0)
+                <div class="lg:grid lg:grid-cols-12 lg:gap-12">
+                    <!-- Cart Items -->
+                    <div class="lg:col-span-8">
                         @php
                             $subtotal = 0;
                         @endphp
@@ -78,24 +78,8 @@
                                 </div>
                             </div>
                         @endforeach
-                    @else
-                        <!-- Empty Cart Message -->
-                        <div class="py-12 text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-stone-400" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                            </svg>
-                            <h2 class="mt-4 text-xl font-medium">Your cart is empty</h2>
-                            <p class="mt-2 text-stone-600">Looks like you haven't added any items to your cart yet.</p>
-                            <a href="/listing"
-                                class="mt-6 inline-block bg-stone-800 text-white py-3 px-6 rounded-md hover:bg-stone-900 transition duration-150 ease-in-out">Continue
-                                Shopping</a>
-                        </div>
-                    @endif
 
-                    <!-- Continue Shopping -->
-                    @if (session()->has('cart') && count(session('cart')) > 0)
+                        <!-- Continue Shopping -->
                         <div class="mt-8">
                             <a href="/listing" class="text-stone-600 hover:text-stone-900 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
@@ -106,11 +90,9 @@
                                 Continue Shopping
                             </a>
                         </div>
-                    @endif
-                </div>
+                    </div>
 
-                <!-- Order Summary -->
-                @if (session()->has('cart') && count(session('cart')) > 0)
+                    <!-- Order Summary -->
                     <div class="lg:col-span-4 mt-12 lg:mt-0">
                         <div class="bg-stone-50 rounded-lg p-6">
                             <h2 class="text-lg font-medium mb-6">Order Summary</h2>
@@ -160,9 +142,22 @@
                             </div>
                         </div>
                     </div>
-                @endif
-            </div>
+                </div>
+            @else
+                <!-- Empty Cart Message - Now centered across full width -->
+                <div class="w-full max-w-2xl mx-auto py-12 text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-stone-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    <h2 class="mt-4 text-xl font-medium">Your cart is empty</h2>
+                    <p class="mt-2 text-stone-600">Looks like you haven't added any items to your cart yet.</p>
+                    <a href="/listing"
+                        class="mt-6 inline-block bg-stone-800 text-white py-3 px-6 rounded-md hover:bg-stone-900 transition duration-150 ease-in-out">Continue
+                        Shopping</a>
+                </div>
+            @endif
         </div>
     </div>
-
 @endsection
