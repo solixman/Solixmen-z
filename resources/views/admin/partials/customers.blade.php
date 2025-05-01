@@ -44,6 +44,7 @@
                     <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Email</th>
                     <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Phone</th>
                     <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Role</th>
+                    <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">status</th>
                     <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Joined</th>
                     <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Actions</th>
                 </tr>
@@ -60,8 +61,10 @@
                     </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm">{{$user->email}}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm">{{$user->phoneNumber}}</td>
+                
+                <td class="px-6 py-4 whitespace-nowrap text-sm">{{$user->phoneNumber ?? 'not set'}}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm">{{$user->role->name}}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm">{{$user->status ?? 'active'}}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm">{{$user->created_at}}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm">
                     <div class="flex space-x-4">

@@ -56,8 +56,19 @@
             </div>
         </div>
         <div class="flex gap-2">
-            {{-- //maybe put a button here --}}
-           
+            <button
+                class="bg-stone-100 hover:bg-stone-200 text-stone-800 px-4 py-2.5 rounded-lg transition duration-150 ease-in-out inline-flex items-center shadow-sm border border-stone-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                </svg>
+                Generate Report
+            </button>
+            <button
+                class="bg-stone-100 hover:bg-stone-200 text-stone-800 px-4 py-2.5 rounded-lg transition duration-150 ease-in-out inline-flex items-center shadow-sm border border-stone-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+            </button>
         </div>
     </div>
 
@@ -107,27 +118,48 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span
                                         class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                @if ($order->status == 'delivered') bg-green-100 text-green-800 
-                                @elseif($order->status == 'shipped') bg-blue-100 text-blue-800 
-                                @elseif($order->status == 'processing') bg-yellow-100 text-yellow-800 
-                                @elseif($order->status == 'cancelled') bg-red-100 text-red-800 
-                                @else bg-stone-100 text-stone-800 @endif">
+                                @if ($order->status == 'delivered') bg-green-100 text-green-800 border border-green-200
+                                @elseif($order->status == 'shipped') bg-blue-100 text-blue-800 border border-blue-200
+                                @elseif($order->status == 'processing') bg-amber-100 text-amber-800 border border-amber-200
+                                @elseif($order->status == 'cancelled') bg-red-100 text-red-800 border border-red-200
+                                @elseif($order->status == 'pending') bg-purple-100 text-purple-800 border border-purple-200
+                                @elseif($order->status == 'returned') bg-pink-100 text-pink-800 border border-pink-200
+                                @elseif($order->status == 'refunded') bg-teal-100 text-teal-800 border border-teal-200
+                                @elseif($order->status == 'on_hold') bg-indigo-100 text-indigo-800 border border-indigo-200
+                                @else bg-stone-100 text-stone-800 border border-stone-200 @endif">
                                         {{ ucfirst($order->status) }}
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    <div class="flex space-x-3">
-                                        <a href="" class="text-stone-600 hover:text-stone-900 transition-colors" title="View Order">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
-                                        </a>
-                                        <a href="" class="text-red-500 hover:text-red-700 transition-colors" title="Cancel Order">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                            </svg>
-                                        </a>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="relative group">
+                                            <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST" class="flex items-center space-x-2">
+                                                @csrf
+                                                @method('PATCH')
+                                                <select name="status" class="text-xs border border-stone-300 rounded-md py-1 pl-2 pr-7 focus:outline-none focus:ring-1 focus:ring-stone-500 focus:border-stone-500 bg-white shadow-sm">
+                                                    <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Processing</option>
+                                                    <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>Shipped</option>
+                                                    <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Delivered</option>
+                                                    <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                                                </select>
+                                                <button type="submit" class="bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs px-2 py-1 rounded shadow-sm border border-stone-200 transition-colors">
+                                                    Update
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="flex space-x-2 ml-1">
+                                            <a href="" class="text-stone-600 hover:text-stone-900 transition-colors" title="View Order">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                </svg>
+                                            </a>
+                                            <a href="" class="text-red-500 hover:text-red-700 transition-colors" title="Cancel Order">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </a>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
