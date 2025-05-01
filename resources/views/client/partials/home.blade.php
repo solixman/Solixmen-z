@@ -5,6 +5,14 @@
 @section('content')
 <div>
     <!-- Hero Section -->
+    <div class="bg-yellow-200 text-stone-900 py-2 text-center">
+        <div class="container mx-auto px-4">
+            <h3>
+              Sold coming soon
+                {{-- <span class="block md:inline">Plus, get an extra 10% off– only on the app*</span> --}}
+            </h3>
+        </div>
+    </div>
     <section class="relative">
         <div class="relative h-[70vh] overflow-hidden">
             <img 

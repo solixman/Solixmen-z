@@ -6,26 +6,40 @@ use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Categorie;
+use App\repositories\interfaces\CategorieRepositoryInterface;
+use App\repositories\interfaces\productRepositoryInterface;
 use Exception;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Lcobucci\JWT\Validation\Constraint\ValidAt;
 
 class ProductController extends Controller
 {
+    private $productRepository;
+    private $categorieRepository;
+
+    public function __construct(productRepositoryInterface $productRepository,CategorieRepositoryInterface $categorieRepository)
+    {
+        $this->productRepository =$productRepository;
+        $this->categorieRepository =$categorieRepository;
+
+    }
+
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() 
+    public function index()
     {
         try {
-            $products = Product::where('deleted_at',null)->paginate(7);
-            if ($products == null) {
-                throw new Exception('there are no products');
-            }
-            return view('admin/partials/products', compact('products'));
+            $products = $this->productRepository->getAllProducts();
+            $categories = $this->categorieRepository->getAllCategories();
+            return view('admin/partials/products', compact('products', 'categories'));
         } catch (Exception $e) {
             return  back()->with('error', $e->getMessage());
         }
@@ -40,7 +54,7 @@ class ProductController extends Controller
     {
 
         try {
-            $categories = Categorie::all();
+            $categories = $this->categorieRepository->getAllCategories();
             return view('admin/partials/product_form', compact('categories'));
         } catch (Exception $e) {
             return back()->with('error', 'something went wrong');
@@ -55,54 +69,47 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request['quantity']);
         try {
-            $fields=$request->validate([
-              'name'=>'required|string|max:255',
-              'image'=>'required|string|',
-              'price'=>'required|numeric',
-              'type'=>'required|string|max:255',
-              'quantity','required|integer|min:1',
-              'description'=>'required|',
-              'categorie'=>'required|numeric|min:1'
+            $fields = $request->validate([
+                'name' => 'required|string|max:255',
+                'image' => 'required|string|',
+                'price' => 'required|numeric',
+                'type' => 'required|string|max:255',
+                //   'quantity','required|numeric|min:1',
+                'description' => 'required|',
+                'categorie' => 'required|numeric|min:1'
 
             ]);
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
 
-        try {
             if ($request['id'] != null) {
-                $product = Product::findOrFail($request['id']);
-                
+                $product = $this->productRepository->getOneProduct($request['id']);
             } else {
-                
+
                 $product = new Product();
             }
-            $product->name = $request['name'];
-            $product->image = $request['image'];
-            $product->price = $request['price'];
-            $product->type = $request['type'];
+            $product->name = $fields['name'];
+            $product->image = $fields['image'];
+            $product->price = $fields['price'];
+            $product->type = $fields['type'];
             $product->quantity = $request['quantity'];
-            $product->description = $request['description'];
-            $product->categorie_id = $request['categorie'];
-            $product->save();
+            $product->description = $fields['description'];
+            $product->categorie_id = $fields['categorie'];
+            
+            $this->productRepository->saveProduct($product);
             return redirect('/admin/products')->with('success', 'product stored succesfully');
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
 
-    public function show(Product $product)
+    
+
+    public function show()
     {
         try {
-            $products = Product::where('deleted_at',null)->paginate(10);
+            $products = Product::where('deleted_at', null)->paginate(10);  //rmmbr
             if ($products == null) {
                 throw new Exception('there are no products');
             }
@@ -121,8 +128,8 @@ class ProductController extends Controller
     public function edit(Request $request)
     {
         try {
-            $product = product::findOrFail($request['id']);
-            $categories = Categorie::all();
+            $product = $this->productRepository->getOneProduct($request['id']);
+            $categories = $this->categorieRepository->getAllCategories();
 
             return view('admin/partials/product_form', compact('categories'), compact('product'));
         } catch (Exception $e) {
@@ -130,7 +137,7 @@ class ProductController extends Controller
         }
     }
 
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -140,93 +147,110 @@ class ProductController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $product=Product::findOrFail($request->id);
-            $product->deleted_at=now();
-            $product->save();
-            return back()->with('success','product deleted succesfully');
+            $product = $this->productRepository->getOneProduct($request['id']);   
+            $product->deleted_at = now();
+            $this->productRepository->saveProduct($product);
+            return back()->with('success', 'product deleted succesfully');
         } catch (Exception $e) {
-            return  back()->with('error',$e->getMessage());
+            return  back()->with('error', $e->getMessage());
         }
     }
 
     public function showDetails(Request $request)
     {
         try {
-            $product = Product::findOrFail($request['id']);
-            if ($product == null) {
-                throw new Exception('there are no products');
-            }
-            return view('client/partials/product_details', compact('product'));
+            $product = $this->productRepository->getOneProduct($request['id']);
+
+        $images= $this->productRepository->getProductImages($product->id);
+
+            return view('client/partials/product_details', compact('product','images'));
         } catch (Exception $e) {
             return  back()->with('error', $e->getMessage());
         }
     }
 
 
-    public function addToCart(Request $request){
-        
-     
-        if(!isset($request['quantity'])){
-        $quantity=1;
-        
-        }else{
-            $quantity=$request['quantity'];
+    public function addToCart(Request $request)
+    {
+
+        if (!isset($request['quantity'])) {
+            $quantity = 1;
+        } else {
+            $quantity = $request['quantity'];
         }
 
-        if(!isset($request['color'])){
-        $color='not chosen';
-        }else{
-            $color=$request['color'];
+        if (!isset($request['color'])) {
+            $color = 'black';
+        } else {
+            $color = $request['color'];
         }
-        if(!isset($request['size'])){
-            $size='M';
-        }else{
-            $size=$request['size'];
+        if (!isset($request['size'])) {
+            $size = 'M';
+        } else {
+            $size = $request['size'];
         }
 
-            try {
+        try {
             // Session::forget('cart');
             $id = $request['id'];
-            $product = Product::findOrFail($id);
+            $product =$product = $this->productRepository->getOneProduct($request['id']); 
             $cart = session()->get('cart', []);
-            if(isset($cart[$id])) {
-                $cart[$id]['quantity']+=$request['quantity'];
+            if (isset($cart[$id])) {
+                $cart[$id]['quantity'] += $quantity;
+                $cart[$id]['color'] = $color;
+                $cart[$id]['size'] = $size;
             } else {
                 $cart[$id] = [
-                    "id"=> $product->id,
+                    "id" => $product->id,
                     "name" => $product->name,
                     "quantity" => $quantity,
-                    "color"=>$color,
-                    "size"=>$size,
+                    "color" => $color,
+                    "size" => $size,
                     "price" => $product->price,
                     "image" => $product->image
                 ];
             }
-            
+
             session()->put('cart', $cart);
-            // dd($cart[$id]['quantity']);
-            // dd(session()->get('cart'));
             return  back()->with('success', 'Product added to cart successfully!');
         } catch (Exception $e) {
-            return back()->with('error',$e->getMessage());
+            return back()->with('error', $e->getMessage());
         }
-        }
-     
+    }
 
-     public function RemoveFromCart(Request $request) {
+
+    public function RemoveFromCart(Request $request)
+    {
         try {
             $cart = session()->get('cart');
-            if(isset($cart[$request->id])) {
+
+            if (isset($cart[$request->id])) {
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
             return back()->with('success', 'Product removed successfully');
         } catch (Exception $e) {
-            return back()->with('succes',$e->getMessage());
+            return back()->with('succes', $e->getMessage());
         }
+    }
+
+    
+
+    public function updateOneInCart(Request $request)
+    {
+        try {
+            $cart = Session()->get('cart');
+            if ($cart[$request['id']] == null) {
+                return back()->with('error', 'something went wrong');
+            } else {
+                $cart[$request['id']]['quantity'] = $request['quantity'];
+                $cart[$request['id']]['color'] = $request['color'];
+                $cart[$request['id']]['size'] = $request['size'];
+            }
+            Session()->put('cart',$cart);
+            return back()->with('succes','data updated succesfully');
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
 }
-
-}
-
-
-

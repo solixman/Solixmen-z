@@ -16,7 +16,6 @@ class AuthController extends Controller
     public function register(Request $request)
     {
      
-        // dd($request['email']);
 
         
         $validator = Validator::make($request->all(), [
@@ -52,6 +51,8 @@ class AuthController extends Controller
             $user = Auth::user();
     
             return redirect('/')->with('welcome', 'Welcome back, ' . $user->firstName . '!');
+        }else{
+            return back()->with('error','wrong credentials');
         }
     }
 

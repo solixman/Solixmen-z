@@ -18,8 +18,7 @@ return new class extends Migration
             $table->string('country');
             $table->string('region');
             $table->string('city');
-            $table->string('street');
-            $table->string('neighborhood');
+            $table->string('streetAddress');
             $table->integer('zipCode');
             $table->timestamps();
         });

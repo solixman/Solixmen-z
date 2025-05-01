@@ -13,6 +13,7 @@ class Order_product extends Model
         'quantity',
         'priceAtMoment',
         'color',
+        'name',
         'size',
         'subtotal'
         

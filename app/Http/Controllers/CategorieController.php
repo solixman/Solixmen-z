@@ -3,84 +3,81 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorie;
-use App\Http\Requests\StoreCategorieRequest;
-use App\Http\Requests\UpdateCategorieRequest;
+use App\repositories\CategorieRepository;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategorieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    private $categorieRepository;
+
+    public function __construct(CategorieRepository $categorieRepository)
     {
-        //
+        $this->categorieRepository=$categorieRepository;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreCategorieRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreCategorieRequest $request)
+    public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'name' =>'required|string|max:255|unique:categories',
+            'description' => 'nullable|string',
+        ]);
+
+        $category=new Categorie();
+        $category->name=$fields['name'];
+        $category->description=$fields['description'];
+        $this->categorieRepository->saveCategorie($category);
+
+        return redirect()->back()
+            ->with('success', 'Category created succesfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Categorie  $categorie
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Categorie $categorie)
+
+    public function update(Request $request)
     {
-        //
+        $category = $this->categorieRepository->getOneCategorie($request['id']);       
+        try {
+            $fields = $request->validate([
+                'name' => 'required|string|max:255|unique:categories,name,' . $category->id . ',id',
+                'description' => 'nullable|string',
+            ]);
+       
+            $category->name = $fields['name'];
+            $category->description = $fields['description'];
+            $this->categorieRepository->saveCategorie($category);
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return redirect()->back()
+        ->with('success', 'category updated succesfully');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Categorie  $categorie
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Categorie $categorie)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateCategorieRequest  $request
-     * @param  \App\Models\Categorie  $categorie
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateCategorieRequest $request, Categorie $categorie)
-    {
-        //
-    }
+    public function destroy(Request $request)
+    {        
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Categorie  $categorie
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Categorie $categorie)
-    {
-        //
+        $category = $this->categorieRepository->getOneCategorie($request['id']);
+
+        if ($category->products->count() > 0) {
+
+            return back()
+                ->with('error', 'deleting is impossible, category has its own products.');
+        }
+
+        $category->delete();
+
+
+        return back()
+            ->with('success', 'category deleted succesfully');
     }
 }
