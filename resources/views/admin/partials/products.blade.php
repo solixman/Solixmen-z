@@ -42,11 +42,10 @@
             <thead class="bg-stone-50 text-left">
                 <tr>
                     <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Product</th>
-                    <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">SKU</th>
+                    
                     <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Category</th>
                     <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Price</th>
                     <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Stock</th>
-                    {{-- <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Status</th> --}}
                     <th class="px-6 py-3 text-xs font-medium text-stone-500 uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
@@ -62,7 +61,6 @@
                             </div>
                         </div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">BLZ-001</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm">{{$product->categorie->name}}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm">${{$product->price}}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm">{{$product->quantity}}</td>
@@ -87,7 +85,7 @@
                
             </tbody>
         </table>
-        {{$products->links()}}
+        {{ $products->links('pagination::tailwind') }}    
     </div>
 </div>
 

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class ProductRepository implements productRepositoryInterface{
 
     public function getAllProducts(){
-        return  Product::where('deleted_at', null)->paginate(7);
+        return  Product::where('deleted_at', null)->paginate(10)->setPageName('products_page');
     }
 
     public function getByCategorie($categorie){

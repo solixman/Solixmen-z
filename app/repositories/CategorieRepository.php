@@ -26,6 +26,6 @@ class CategorieRepository implements CategorieRepositoryInterface{
 
     public function getAllCategories()
     {
-        return Categorie::all();
+        return Categorie::paginate(10);
     }
 }

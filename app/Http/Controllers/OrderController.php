@@ -62,12 +62,12 @@ class OrderController extends Controller
      * @param  \App\Http\Requests\StoreOrderRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function createOrderFromCart(Request $request)
     {
         try {
             $cart = Session::get('cart');
             if ($cart != null && count($cart) > 0) {
-                dd("test");
+                
                 //creating the order
                 $order = new Order();
                 $order->user_id = Auth::user()->id;
