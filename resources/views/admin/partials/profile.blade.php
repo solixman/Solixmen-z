@@ -123,13 +123,16 @@
                 </div>
             </div>
 
-            <!-- Security -->
             <div id="security" class="bg-white rounded-lg shadow-sm border border-stone-100 overflow-hidden">
+                <div class="space-y-4 mb-6">
                 <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
                     <h3 class="font-medium">Security</h3>
                 </div>
                 <div class="p-6">
-                    <form>
+                    <h1 style="color:gray ">COMING SOON</h1>
+                   </div>
+
+                    {{-- <form>
                         <div class="space-y-4 mb-6">
                             <div>
                                 <label for="current_password" class="block text-sm font-medium text-stone-700 mb-1">Current
@@ -172,7 +175,7 @@
                                 Update Password
                             </button>
                         </div>
-                    </form>
+                    </form> --}}
                 </div>
             </div>
 
@@ -181,8 +184,12 @@
                 <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
                     <h3 class="font-medium">Notification Preferences</h3>
                 </div>
+             
+
                 <div class="p-6">
-                    <form>
+                        <h1 style="color:gray ">COMING SOON</h1>
+ </div>
+                {{--    <form>
                         <div class="space-y-4 mb-6">
                             <div class="flex items-center justify-between">
                                 <div>
@@ -263,7 +270,7 @@
                             </button>
                         </div>
                     </form>
-                </div>
+                </div> --}}
             </div>
 
             <!-- Account Activity -->
@@ -273,68 +280,13 @@
                 </div>
                 <div class="p-6">
                     <div class="space-y-6">
-                        <div>
-                            <h4 class="text-sm font-medium mb-3">Recent Login Activity</h4>
-                            <div class="space-y-3">
-                                <div class="flex items-start">
-                                    <div class="p-2 bg-green-100 rounded-full mr-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600"
-                                            viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium">Current Session</p>
-                                        <p class="text-xs text-stone-500">Mar 14, 2025 at 10:30 AM</p>
-                                        <p class="text-xs text-stone-500">IP: 192.168.1.1 • Chrome on macOS</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start">
-                                    <div class="p-2 bg-stone-100 rounded-full mr-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-600"
-                                            viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414 0l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293a1 1 0 000-1.414z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium">Previous Login</p>
-                                        <p class="text-xs text-stone-500">Mar 13, 2025 at 4:15 PM</p>
-                                        <p class="text-xs text-stone-500">IP: 192.168.1.1 • Chrome on macOS</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start">
-                                    <div class="p-2 bg-stone-100 rounded-full mr-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-600"
-                                            viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414 0l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293a1 1 0 000-1.414z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium">Previous Login</p>
-                                        <p class="text-xs text-stone-500">Mar 12, 2025 at 9:45 AM</p>
-                                        <p class="text-xs text-stone-500">IP: 192.168.1.1 • Chrome on macOS</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                       
+                        <h1 style="color:gray ">COMING SOON</h1>
 
                         <div class="border-t border-stone-100 pt-6">
                             <h4 class="text-sm font-medium mb-3">Account Actions</h4>
-                            <div class="space-y-3">
-                                <button type="button" class="text-sm text-stone-600 hover:text-stone-900">
-                                    Sign out of all other sessions
-                                </button>
-                                <div class="border-t border-stone-100 pt-3">
-                                    <button type="button" class="text-sm text-red-600 hover:text-red-800">
-                                        Deactivate account
-                                    </button>
-                                </div>
+                        <h1 style="color:gray ">COMING SOON</h1>
+                            
                             </div>
                         </div>
                     </div>

@@ -54,7 +54,9 @@
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
-                            <div class="h-10 w-10 rounded bg-stone-100 mr-3"></div>
+                            <div class="h-10 w-10 rounded bg-stone-100 mr-3">
+                                <img src="{{$product->image}}" alt="{{$product->name}}">
+                            </div>
                             <div>
                                 <div class="text-sm font-medium">{{$product->name}}</div>
                                 <div class="text-xs text-stone-500">{{$product->type}}</div>
@@ -93,8 +95,9 @@
                
             </tbody>
         </table>
-
-        {{ $categories->onEachSide(2)->appends(request()->except('categories_page'))->links() }}    </div>
+        
+    </div>
+    {{ $products->links()}} 
 </div>
 
 {{-- <!-- Categories Toggle Button -->
@@ -172,7 +175,8 @@
                     @endforeach
                 </tbody>
             </table>
-            {{ $products->onEachSide(2)->links()}} 
+            {{ $categories->onEachSide(2)->appends(request()->except('categories_page'))->links() }}    </div>
+
         </div>
     </div>
 </div>
