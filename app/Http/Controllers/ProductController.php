@@ -37,10 +37,7 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $products = $this->productRepository->getAllProducts();  
-            if ($products == null) {
-                throw new Exception('there are no products');
-            }
+            $products = $this->productRepository->getAllProducts();
             $categories = $this->categorieRepository->getAllCategories();
             return view('admin/partials/products', compact('products', 'categories'));
         } catch (Exception $e) {
@@ -131,7 +128,7 @@ class ProductController extends Controller
     public function edit(Request $request)
     {
         try {
-            $product = $this->productRepository->getAllProducts();
+            $product = $this->productRepository->getOneProduct($request['id']);
             $categories = $this->categorieRepository->getAllCategories();
 
             return view('admin/partials/product_form', compact('categories'), compact('product'));

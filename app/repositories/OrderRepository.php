@@ -27,7 +27,7 @@ class OrderRepository implements OrderRepositoryInterface{
 
     public function getAllorders()
     {
-        return Order::paginate(7);
+        return Order::paginate(10);
     }
 
     public function saveOrderProduct(Order_product $OP){

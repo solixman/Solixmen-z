@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <style>
-    a{
+    a {
         text-decoration: none;
+
+    }
+
+    li.page-item {
+
+        display: none;
+    }
+
+    .page-item:first-child,
+    .page-item:nth-child(1),
+    .page-item:nth-last-child(2),
+    .page-item:last-child,
+    .page-item.active,
+    .page-item.disabled {
+
+        display: block;
     }
 </style>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,14 +64,13 @@
     </script>
 
     <style>
-        
         .admin-sidebar {
             height: 100vh;
             position: sticky;
             top: 0;
         }
     </style>
-    <link rel="stylesheet" href="{{asset("css/app.css")}}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     @yield('styles')
 
@@ -62,7 +78,8 @@
 
 <body class="bg-stone-50 text-stone-800">
     <!-- Mobile Header - Only visible on mobile -->
-    <div class="md:hidden bg-stone-800 text-white p-4 w-full fixed top-0 left-0 right-0 z-10 flex justify-between items-center">
+    <div
+        class="md:hidden bg-stone-800 text-white p-4 w-full fixed top-0 left-0 right-0 z-10 flex justify-between items-center">
         <h2 class="font-serif text-xl">ELEGANCE</h2>
         <button id="mobile-menu-button" class="text-white focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -143,20 +160,22 @@
         <main class="flex-1 w-full p-6 md:p-8 md:mt-0 mt-16">
             @if (session('success'))
                 <div class="mb-4">
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">{{ session('success') }}</div>
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                        {{ session('success') }}</div>
                 </div>
             @endif
 
             @if (session('error'))
                 <div class="mb-4">
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">{{ session('error') }}</div>
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">{{ session('error') }}
+                    </div>
                 </div>
             @endif
-            
+
             <div class="mb-6">
                 <h1 class="text-3xl font-serif">@yield('admin-title', 'Dashboard')</h1>
             </div>
-            
+
             @yield('admin-content')
         </main>
     </div>

@@ -1,9 +1,9 @@
 
-@extends('client.layout')
+@extends('admin.layout')
 
-@section('client-title', 'My Account')
+@section('admin-title', 'My Account')
 
-@section('content')
+@section('admin-content')
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" style="margin: 2%">
         <!-- Profile Sidebar -->    
         <div class="lg:col-span-1">
@@ -46,10 +46,7 @@
                             class="block py-2 px-4 rounded-md text-stone-600 hover:bg-stone-50 hover:text-stone-800">
                             Account Activity
                         </a>
-                        <a href="client/orders"
-                            class="block py-2 px-4 rounded-md text-stone-600 hover:bg-stone-50 hover:text-stone-800">
-                            my orders
-                        </a>
+                       
                     </nav>
                 </div>
             </div>
@@ -76,9 +73,9 @@
                                 <input type="text" id="lastName" name="lastName" value="{{ $user->lastName }}"
                                     class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">
                             </div>
-
+                    
                             <div>
-                                <label for="role"    class="block text-sm font-medium text-stone-700 mb-1">Role</label>
+                                <label for="role" class="block text-sm font-medium text-stone-700 mb-1">Role</label>
                                 <select id="role" name="role" 
                                     class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">
                                     @foreach ($roles as $role)
@@ -89,30 +86,39 @@
                                     @endforeach
                                 </select>
                             </div>
+                    
+                            <!-- Add the Status field here -->
                             <div>
-                                <label for="email" class="block text-sm font-medium text-stone-700 mb-1">Email
-                                    Address</label>
+                                <label for="status" class="block text-sm font-medium text-stone-700 mb-1">Status</label>
+                                <select id="status" name="status" class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">
+                                    <option value="active" {{ $user->status == 'active' ? 'selected' : '' }}>Active</option>
+                                    <option value="inactive" {{ $user->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                    <option value="suspended" {{ $user->status == 'suspended' ? 'selected' : '' }}>Suspended</option>
+                                </select>
+                            </div>
+                    
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-stone-700 mb-1">Email Address</label>
                                 <input type="email" id="email" name="email" value="{{$user->email}}"
                                     class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">
                             </div>
                             <div>
-                                <label for="phone" class="block text-sm font-medium text-stone-700 mb-1">Phone
-                                    Number</label>
+                                <label for="phone" class="block text-sm font-medium text-stone-700 mb-1">Phone Number</label>
                                 <input type="tel" id="phone" name="phone" value="{{$user->phoneNumber}}"
                                     class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">
                             </div>
                         </div>
-
+                    
                         <div class="mb-6">
                             <label for="bio" class="block text-sm font-medium text-stone-700 mb-1">Bio</label>
                             <textarea id="bio" name="bio" rows="3"
                                 class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">{{$user->bio}}</textarea>
                         </div>
-
+                    
                         <div>
-                            <input type="hidden" name="userId" value={{$user->id}}>
+                            <input type="hidden" name="id" value={{$user->id}}>
                         </div>
-
+                    
                         <div class="flex justify-end">
                             <button type="submit"
                                 class="px-4 py-2 bg-stone-800 hover:bg-stone-900 text-white rounded-md transition duration-150 ease-in-out">
@@ -120,16 +126,20 @@
                             </button>
                         </div>
                     </form>
+                    
                 </div>
             </div>
 
-            <!-- Security -->
             <div id="security" class="bg-white rounded-lg shadow-sm border border-stone-100 overflow-hidden">
+                <div class="space-y-4 mb-6">
                 <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
                     <h3 class="font-medium">Security</h3>
                 </div>
                 <div class="p-6">
-                    <form>
+                    <h1 style="color:gray ">COMING SOON</h1>
+                   </div>
+
+                    {{-- <form>
                         <div class="space-y-4 mb-6">
                             <div>
                                 <label for="current_password" class="block text-sm font-medium text-stone-700 mb-1">Current
@@ -172,7 +182,7 @@
                                 Update Password
                             </button>
                         </div>
-                    </form>
+                    </form> --}}
                 </div>
             </div>
 
@@ -181,8 +191,12 @@
                 <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
                     <h3 class="font-medium">Notification Preferences</h3>
                 </div>
+             
+
                 <div class="p-6">
-                    <form>
+                        <h1 style="color:gray ">COMING SOON</h1>
+ </div>
+                {{--    <form>
                         <div class="space-y-4 mb-6">
                             <div class="flex items-center justify-between">
                                 <div>
@@ -263,7 +277,7 @@
                             </button>
                         </div>
                     </form>
-                </div>
+                </div> --}}
             </div>
 
             <!-- Account Activity -->
@@ -273,68 +287,13 @@
                 </div>
                 <div class="p-6">
                     <div class="space-y-6">
-                        <div>
-                            <h4 class="text-sm font-medium mb-3">Recent Login Activity</h4>
-                            <div class="space-y-3">
-                                <div class="flex items-start">
-                                    <div class="p-2 bg-green-100 rounded-full mr-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600"
-                                            viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium">Current Session</p>
-                                        <p class="text-xs text-stone-500">Mar 14, 2025 at 10:30 AM</p>
-                                        <p class="text-xs text-stone-500">IP: 192.168.1.1 • Chrome on macOS</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start">
-                                    <div class="p-2 bg-stone-100 rounded-full mr-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-600"
-                                            viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414 0l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293a1 1 0 000-1.414z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium">Previous Login</p>
-                                        <p class="text-xs text-stone-500">Mar 13, 2025 at 4:15 PM</p>
-                                        <p class="text-xs text-stone-500">IP: 192.168.1.1 • Chrome on macOS</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start">
-                                    <div class="p-2 bg-stone-100 rounded-full mr-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-600"
-                                            viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414 0l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293a1 1 0 000-1.414z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium">Previous Login</p>
-                                        <p class="text-xs text-stone-500">Mar 12, 2025 at 9:45 AM</p>
-                                        <p class="text-xs text-stone-500">IP: 192.168.1.1 • Chrome on macOS</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                       
+                        <h1 style="color:gray ">COMING SOON</h1>
 
                         <div class="border-t border-stone-100 pt-6">
                             <h4 class="text-sm font-medium mb-3">Account Actions</h4>
-                            <div class="space-y-3">
-                                <button type="button" class="text-sm text-stone-600 hover:text-stone-900">
-                                    Sign out of all other sessions
-                                </button>
-                                <div class="border-t border-stone-100 pt-3">
-                                    <button type="button" class="text-sm text-red-600 hover:text-red-800">
-                                        Deactivate account
-                                    </button>
-                                </div>
+                        <h1 style="color:gray ">COMING SOON</h1>
+                            
                             </div>
                         </div>
                     </div>
