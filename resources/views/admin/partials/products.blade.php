@@ -66,30 +66,38 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm">{{$product->quantity}}</td>
 
                     <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        <form action="/product/update" method="get" class="inline">
-                            @csrf
-                            <input type="hidden" for="id" name="id" value={{$product->id}} />
-                            <button type="submit" class="text-stone-600 hover:text-stone-900 transition-colors bg-transparent border-0 p-0 m-0 cursor-pointer font-sans text-sm font-normal appearance-none focus:outline-none">
-                              View/Edit
-                            </button>
-                        </form>
-                        <form action="/product/delete" method="post" class="inline">
-                            @csrf
-                            @method('delete')
-                            <input type="hidden" for="id" name="id" value="{{$product->id}}" />
-                            <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
-                        </form>
+                        <div class="flex space-x-3">
+                            <form action="/product/update" method="get" class="inline">
+                                @csrf
+                                <input type="hidden" for="id" name="id" value={{$product->id}} />
+                                <button type="submit" class="text-stone-600 hover:text-stone-900 transition-colors" title="View/Edit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
+                                </button>
+                            </form>
+                            <form action="/product/delete" method="post" class="inline">
+                                @csrf
+                                @method('delete')
+                                <input type="hidden" for="id" name="id" value="{{$product->id}}" />
+                                <button type="submit" class="text-red-600 hover:text-red-900" title="Delete">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @endforeach
                
             </tbody>
         </table>
-        {{ $products->links('pagination::tailwind') }}    
-    </div>
+
+        {{ $categories->onEachSide(2)->appends(request()->except('categories_page'))->links() }}    </div>
 </div>
 
-<!-- Categories Toggle Button -->
+{{-- <!-- Categories Toggle Button -->
 <div class="flex justify-center mb-6">
     <button id="toggleCategoriesBtn" class="group relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-medium transition duration-300 ease-out border-2 border-stone-500 rounded-md shadow-md">
         <span class="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-stone-800 group-hover:translate-x-0 ease">
@@ -105,10 +113,10 @@
         </span>
         <span class="relative invisible">Manage Categories</span>
     </button>
-</div>
+</div> --}}
 
 <!-- Categories Management Section (Hidden by default) -->
-<div id="categoriesSection" class="mb-6 hidden">
+<div id="categoriesSection" class="mb-6">
     <div class="bg-white rounded-lg shadow-sm border border-stone-100 overflow-hidden">
         <div class="flex items-center justify-between px-6 py-4 border-b border-stone-100">
             <h3 class="text-lg font-medium text-stone-800">Categories Management</h3>
@@ -136,25 +144,35 @@
                         <td class="px-6 py-3 text-sm max-w-xs truncate">{{ $category->description }}</td>
                         <td class="px-6 py-3 whitespace-nowrap text-sm">{{ $category->products_count ?? 0 }}</td>
                         <td class="px-6 py-3 whitespace-nowrap text-sm">
-                            <button 
-                                class="text-stone-600 hover:text-stone-900 transition-colors mr-3 edit-category-btn" 
-                                data-id="{{ $category->id }}" 
-                                data-name="{{ $category->name }}"
-                                data-description="{{ $category->description }}"
-                            >
-                                View/Edit
-                            </button>
-                            <form action="/category/delete" class="inline" method="POST">
-                                @csrf
-                                @method('delete')
-                                <input type="hidden" name="id" value="{{ $category->id }}" />
-                                <button type="submit" class="text-red-600 hover:text-red-900 transition-colors">Delete</button>
-                            </form>
+                            <div class="flex space-x-3">
+                                <button 
+                                    class="text-stone-600 hover:text-stone-900 transition-colors edit-category-btn" 
+                                    data-id="{{ $category->id }}" 
+                                    data-name="{{ $category->name }}"
+                                    data-description="{{ $category->description }}"
+                                    title="View/Edit"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
+                                </button>
+                                <form action="/category/delete" class="inline" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <input type="hidden" name="id" value="{{ $category->id }}" />
+                                    <button type="submit" class="text-red-600 hover:text-red-900 transition-colors" title="Delete">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
+            {{ $products->onEachSide(2)->links()}} 
         </div>
     </div>
 </div>
@@ -206,18 +224,20 @@
         const toggleButtonIcon = document.getElementById('toggleButtonIcon');
         const toggleButtonText = document.getElementById('toggleButtonText');
         
-        toggleCategoriesBtn.addEventListener('click', function() {
-            categoriesSection.classList.toggle('hidden');
-            
-            // Rotate icon and change text when toggled
-            if (categoriesSection.classList.contains('hidden')) {
-                toggleButtonIcon.style.transform = 'rotate(0deg)';
-                toggleButtonText.textContent = 'Manage Categories';
-            } else {
-                toggleButtonIcon.style.transform = 'rotate(180deg)';
-                toggleButtonText.textContent = 'Hide Categories';
-            }
-        });
+        if (toggleCategoriesBtn) {
+            toggleCategoriesBtn.addEventListener('click', function() {
+                categoriesSection.classList.toggle('hidden');
+                
+                // Rotate icon and change text when toggled
+                if (categoriesSection.classList.contains('hidden')) {
+                    toggleButtonIcon.style.transform = 'rotate(0deg)';
+                    toggleButtonText.textContent = 'Manage Categories';
+                } else {
+                    toggleButtonIcon.style.transform = 'rotate(180deg)';
+                    toggleButtonText.textContent = 'Hide Categories';
+                }
+            });
+        }
         
         // Modal Functionality
         const categoryModal = document.getElementById('categoryModal');
@@ -275,4 +295,4 @@
         });
     });
 </script>
-@endsection 
+@endsection
