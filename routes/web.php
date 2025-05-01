@@ -117,9 +117,11 @@ Route::post('/cart/save/changes',[ProductController::class,'updateOneInCart']);
 //create order
 Route::get('/order/create',[OrderController::class,'createOrderFromCart']);
 
-Route::get('/order/details/',[OrderController::class,'showOrder'])->name('order.details');
+Route::get('/order/details',[OrderController::class,'showOrder'])->name('order.details');
 
-Route::get('/order/update',[OrderController::class,'update'])->name('admin.orders.update');
+Route::get('/order/delete',[OrderController::class,'destroy'])->name('admin.orders.delete');
+
+Route::post('order/update/status',[OrderController::class,'changeStatus'])->name('order.status.update');
 
 Route::get('/order/cancel',[OrderController::class,'cancelOrder'])->name('order.cancel');
 

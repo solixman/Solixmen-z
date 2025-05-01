@@ -56,19 +56,7 @@
             </div>
         </div>
         <div class="flex gap-2">
-            <button
-                class="bg-stone-100 hover:bg-stone-200 text-stone-800 px-4 py-2.5 rounded-lg transition duration-150 ease-in-out inline-flex items-center shadow-sm border border-stone-200">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
-                </svg>
-                Generate Report
-            </button>
-            <button
-                class="bg-stone-100 hover:bg-stone-200 text-stone-800 px-4 py-2.5 rounded-lg transition duration-150 ease-in-out inline-flex items-center shadow-sm border border-stone-200">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-            </button>
+         
         </div>
     </div>
 
@@ -92,14 +80,7 @@
                             <tr class="hover:bg-stone-50 transition-colors">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-stone-700">#ORD-{{ $order->id }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-stone-600">
-                                    @if ($order->user)
-                                        {{ $order->user->firstName ?? '' }} {{ $order->user->lastName ?? '' }}
-                                        @if (!$order->user->firstName && !$order->user->lastName)
-                                            {{ $order->user->name ?? 'Guest Customer' }}
-                                        @endif
-                                    @else
-                                        Guest Customer
-                                    @endif
+                                        {{ $order->user->firstName ?? '' }} {{ $order->user->lastName ?? ''  }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-stone-600">
                                     {{ $order->orderDate }}
@@ -116,50 +97,54 @@
                                 @endphp
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-stone-700">${{ number_format($total ?? 0, 2) }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span
-                                        class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                @if ($order->status == 'delivered') bg-green-100 text-green-800 border border-green-200
-                                @elseif($order->status == 'shipped') bg-blue-100 text-blue-800 border border-blue-200
-                                @elseif($order->status == 'processing') bg-amber-100 text-amber-800 border border-amber-200
-                                @elseif($order->status == 'cancelled') bg-red-100 text-red-800 border border-red-200
-                                @elseif($order->status == 'pending') bg-purple-100 text-purple-800 border border-purple-200
-                                @elseif($order->status == 'returned') bg-pink-100 text-pink-800 border border-pink-200
-                                @elseif($order->status == 'refunded') bg-teal-100 text-teal-800 border border-teal-200
-                                @elseif($order->status == 'on_hold') bg-indigo-100 text-indigo-800 border border-indigo-200
-                                @else bg-stone-100 text-stone-800 border border-stone-200 @endif">
-                                        {{ ucfirst($order->status) }}
-                                    </span>
+                                    @php
+                                        $statusOptions = [
+                                            'processing' => ['label' => 'Processing', 'class' => 'bg-amber-100 text-amber-800 border border-amber-200'],
+                                            'shipped' => ['label' => 'Shipped', 'class' => 'bg-blue-100 text-blue-800 border border-blue-200'],
+                                            'delivered' => ['label' => 'Delivered', 'class' => 'bg-green-100 text-green-800 border border-green-200'],
+                                            'cancelled' => ['label' => 'Cancelled', 'class' => 'bg-red-100 text-red-800 border border-red-200'],
+                                            'pending' => ['label' => 'Pending', 'class' => 'bg-purple-100 text-purple-800 border border-purple-200'],
+                                            'returned' => ['label' => 'Returned', 'class' => 'bg-pink-100 text-pink-800 border border-pink-200'],
+                                            'refunded' => ['label' => 'Refunded', 'class' => 'bg-teal-100 text-teal-800 border border-teal-200'],
+                                            'on_hold' => ['label' => 'On Hold', 'class' => 'bg-indigo-100 text-indigo-800 border border-indigo-200']
+                                        ];
+                                        $currentStatusClass = $statusOptions[$order->status]['class'] ?? 'bg-stone-100 text-stone-800 border border-stone-200';
+                                    @endphp
+                                    <div class="relative">
+                                        <form action="/order/update/status" method="POST" class="status-update-form">
+                                            @csrf
+                                            <select name="status" onchange="this.form.submit()" 
+                                                class="appearance-none w-full px-3 py-1 text-xs leading-5 font-semibold rounded-full pr-8 {{ $currentStatusClass }}">
+                                                @foreach($statusOptions as $value => $option)
+                                                    <option value="{{ $value }}" {{ $order->status == $value ? 'selected' : '' }}
+                                                        data-class="{{ $option['class'] }}">
+                                                        {{ $option['label'] }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <input type="hidden" name="id" value="{{$order->id}}">
+                                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="relative group">
-                                            <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST" class="flex items-center space-x-2">
-                                                @csrf
-                                                @method('PATCH')
-                                                <select name="status" class="text-xs border border-stone-300 rounded-md py-1 pl-2 pr-7 focus:outline-none focus:ring-1 focus:ring-stone-500 focus:border-stone-500 bg-white shadow-sm">
-                                                    <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Processing</option>
-                                                    <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>Shipped</option>
-                                                    <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Delivered</option>
-                                                    <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
-                                                </select>
-                                                <button type="submit" class="bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs px-2 py-1 rounded shadow-sm border border-stone-200 transition-colors">
-                                                    Update
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <div class="flex space-x-2 ml-1">
-                                            <a href="" class="text-stone-600 hover:text-stone-900 transition-colors" title="View Order">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                                </svg>
-                                            </a>
-                                            <a href="" class="text-red-500 hover:text-red-700 transition-colors" title="Cancel Order">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                                </svg>
-                                            </a>
-                                        </div>
+                                    <div class="flex space-x-2">
+                                        <a href="/order/details?id={{ $order->id }}" class="text-stone-600 hover:text-stone-900 transition-colors" title="View Order">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                        </a>
+                                        <a href="/order/cancel?id={{$order->id}}" class="text-red-500 hover:text-red-700 transition-colors" title="Cancel Order">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </a>
+                                        
                                     </div>
                                 </td>
                             </tr>
@@ -186,4 +171,41 @@
             @endif
         </div>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Update dropdown styling when selection changes
+        const statusDropdowns = document.querySelectorAll('.status-update-form select');
+        statusDropdowns.forEach(dropdown => {
+            dropdown.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const newClass = selectedOption.getAttribute('data-class');
+                
+                // Remove all existing status classes
+                const classesToRemove = [
+                    'bg-amber-100', 'text-amber-800', 'border-amber-200',
+                    'bg-blue-100', 'text-blue-800', 'border-blue-200', 
+                    'bg-green-100', 'text-green-800', 'border-green-200',
+                    'bg-red-100', 'text-red-800', 'border-red-200',
+                    'bg-purple-100', 'text-purple-800', 'border-purple-200',
+                    'bg-pink-100', 'text-pink-800', 'border-pink-200',
+                    'bg-teal-100', 'text-teal-800', 'border-teal-200',
+                    'bg-indigo-100', 'text-indigo-800', 'border-indigo-200',
+                    'bg-stone-100', 'text-stone-800', 'border-stone-200'
+                ];
+                
+                classesToRemove.forEach(cls => {
+                    this.classList.remove(cls);
+                });
+                
+                // Add new classes
+                if (newClass) {
+                    newClass.split(' ').forEach(cls => {
+                        this.classList.add(cls);
+                    });
+                }
+            });
+        });
+    });
+    </script>
 @endsection

@@ -43,23 +43,22 @@ class CategorieController extends Controller
 
     public function update(Request $request)
     {
-        $category = $this->categorieRepository->getOneCategorie($request['id']);       
         try {
-            $fields = $request->validate([
-                'name' => 'required|string|max:255|unique:categories,name,' . $category->id . ',id',
+        $category = $this->categorieRepository->getOneCategorie($request['id']);       
+        $fields = $request->validate([
+                'name' => 'required|string|max:255',
                 'description' => 'nullable|string',
             ]);
-       
             $category->name = $fields['name'];
             $category->description = $fields['description'];
-            $this->categorieRepository->saveCategorie($category);
+            $this->categorieRepository->saveCategorie($category);            
+            
+            return redirect()->back()
+            ->with('success', 'category updated succesfully');
 
         } catch (Exception $e) {
             return $e->getMessage();
         }
-
-        return redirect()->back()
-        ->with('success', 'category updated succesfully');
     }
 
 

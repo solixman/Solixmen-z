@@ -367,7 +367,7 @@ ini_set('memory_limit', '-1');
                         <h3 class="font-medium">Update Order Status</h3>
                     </div>
                     <div class="p-6">
-                        <form action="{{ route('admin.orders.update', $order->id) }}" method="POST">
+                        <form action="order/update/status" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="mb-4">
@@ -387,6 +387,7 @@ ini_set('memory_limit', '-1');
                                     <option value="refunded" {{ $order->status == 'refunded' ? 'selected' : '' }}>Refunded
                                     </option>
                                 </select>
+                                <input type="hidden" name="id" id="id" value="{{$order->id}}">
                             </div>
                             <button type="submit"
                                 class="w-full px-4 py-2 bg-stone-800 hover:bg-stone-900 text-white rounded-md">Update
