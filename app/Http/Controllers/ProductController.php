@@ -20,11 +20,10 @@ class ProductController extends Controller
     private $productRepository;
     private $categorieRepository;
 
-    public function __construct(productRepositoryInterface $productRepository,CategorieRepositoryInterface $categorieRepository)
+    public function __construct(productRepositoryInterface $productRepository, CategorieRepositoryInterface $categorieRepository)
     {
-        $this->productRepository =$productRepository;
-        $this->categorieRepository =$categorieRepository;
-
+        $this->productRepository = $productRepository;
+        $this->categorieRepository = $categorieRepository;
     }
 
 
@@ -76,7 +75,7 @@ class ProductController extends Controller
                 'image' => 'required|string|',
                 'price' => 'required|numeric',
                 'type' => 'required|string|max:255',
-                //   'quantity','required|numeric|min:1',
+
                 'description' => 'required|',
                 'categorie' => 'required|numeric|min:1'
 
@@ -95,7 +94,7 @@ class ProductController extends Controller
             $product->quantity = $request['quantity'];
             $product->description = $fields['description'];
             $product->categorie_id = $fields['categorie'];
-            
+
             $this->productRepository->saveProduct($product);
             return redirect('/admin/products')->with('success', 'product stored succesfully');
         } catch (Exception $e) {
@@ -104,15 +103,23 @@ class ProductController extends Controller
     }
 
 
-    
 
-    public function show()
+
+    public function show(Request $request)
     {
+        // dd( $request['categorie']);
         try {
-            $products = Product::where('deleted_at', null)->paginate(10);  //rmmbr
-            if ($products == null) {
-                throw new Exception('there are no products');
+            if ($request['categorie']) {
+                $products = $this->productRepository->getByCategorie($request['categorie']);
+
+            } elseif($request['searchign_word']) {
+                $products = $this->productRepository->searchByword($request['searchign_word']);
+            }else{
+                $products = $this->productRepository->getAllProducts();
+                
             }
+
+
             return view('client/partials/product_listing', compact('products'));
         } catch (Exception $e) {
             return  back()->with('error', $e->getMessage());
@@ -147,7 +154,7 @@ class ProductController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $product = $this->productRepository->getOneProduct($request['id']);   
+            $product = $this->productRepository->getOneProduct($request['id']);
             $product->deleted_at = now();
             $this->productRepository->saveProduct($product);
             return back()->with('success', 'product deleted succesfully');
@@ -161,9 +168,9 @@ class ProductController extends Controller
         try {
             $product = $this->productRepository->getOneProduct($request['id']);
 
-        $images= $this->productRepository->getProductImages($product->id);
+            $images = $this->productRepository->getProductImages($product->id);
 
-            return view('client/partials/product_details', compact('product','images'));
+            return view('client/partials/product_details', compact('product', 'images'));
         } catch (Exception $e) {
             return  back()->with('error', $e->getMessage());
         }
@@ -193,7 +200,7 @@ class ProductController extends Controller
         try {
             // Session::forget('cart');
             $id = $request['id'];
-            $product =$product = $this->productRepository->getOneProduct($request['id']); 
+            $product = $product = $this->productRepository->getOneProduct($request['id']);
             $cart = session()->get('cart', []);
             if (isset($cart[$id])) {
                 $cart[$id]['quantity'] += $quantity;
@@ -234,7 +241,7 @@ class ProductController extends Controller
         }
     }
 
-    
+
 
     public function updateOneInCart(Request $request)
     {
@@ -247,8 +254,8 @@ class ProductController extends Controller
                 $cart[$request['id']]['color'] = $request['color'];
                 $cart[$request['id']]['size'] = $request['size'];
             }
-            Session()->put('cart',$cart);
-            return back()->with('succes','data updated succesfully');
+            Session()->put('cart', $cart);
+            return back()->with('succes', 'data updated succesfully');
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }

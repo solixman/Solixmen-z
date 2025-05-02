@@ -66,15 +66,15 @@ class UserController extends Controller
 
     public function Update(Request $request)
     {
-
        
-        
+    
         try {
             $fields = $request->validate([
                'firstName' =>'required|string|max:255',
                'lastName' =>'required|string|max:255',
                'role'=>'required|string|max:255',
                'email'=>'required|string|email|max:255',
+            //    'status'=>'required|string|max:255',
             ]);
 
             $user = $this->userRepository->getOneUser($request['id']);
@@ -87,6 +87,7 @@ class UserController extends Controller
             $user->firstName = $fields['firstName'];
             $user->lastName = $fields['lastName'];
             $user->bio = $request['bio'];
+            $user->status = $request['status'];
             $user->phoneNumber = $request['phone'];
             $this->userRepository->saveUser($user);
             

@@ -144,9 +144,14 @@ class OrderController extends Controller
      */
     public function destroy(Request $request)
     {
-        $order = $this->orderRepository->getOneOrder($request['id']);
-        $this->orderRepository->deleteOrder($order);
-        return back()->with('order deleted succesfully');
+
+        try{
+            $order = $this->orderRepository->getOneOrder($request['id']);
+            $this->orderRepository->deleteOrder($order);
+            return back()->with('order deleted succesfully');
+        }catch(Exception $e){
+            return back()->with('error',$e->getMessage());
+        }
     }
 
     public function ShowOrdersClient()
@@ -178,15 +183,16 @@ class OrderController extends Controller
                 return back()->with('success', 'Order cancelled successfully.');
             }
         } catch (Exception $e) {
-            return back()->with('error', 'failed to cancel', 'something went wrong');
+            // return back()->with('error', 'failed to cancel, something went wrong');
+            return back()->with('error', $e->getMessage());
         }
     }
 
 
-    public function updateOrderStatus(Request $request)
+    public function changeStatus(Request $request)
     {
         $order = $this->orderRepository->getOneOrder($request['id']);
-        $order->status = $request->input('status');
+        $order->status = $request['status'];
         $this->orderRepository->saveOrder($order);
 
         return redirect()->back()->with('success', 'Order status updated successfully.');

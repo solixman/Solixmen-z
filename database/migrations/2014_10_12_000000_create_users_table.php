@@ -26,7 +26,7 @@ return new class extends Migration
             $table->foreign ('address_id')->constrained()->references('id')->on('addresses');
             $table->bigInteger('phoneNumber')->nullable();
             $table->text('image')->default('https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg');
-            $table->string('status')->nullable();
+            $table->string('status')->default('active');
             $table->text('bio')->nullable();
             $table->rememberToken();
             $table->timestamps();

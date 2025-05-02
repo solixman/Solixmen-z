@@ -12,7 +12,7 @@ interface productRepositoryInterface{
     public function saveProduct(Product $product);
     public function getOneProduct($id);
     public function getProductImages($id);
-    // public function SaveCategorie(Categorie $categorie);
+    public function searchByword($word);
 }
 
 ?>
