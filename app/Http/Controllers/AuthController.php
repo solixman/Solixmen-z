@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Exception;
-use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
@@ -58,10 +55,14 @@ class AuthController extends Controller
 
 
 
-    // User logout
-    public function logout()
+
+    public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/')->with('Success','Successfully logged out');
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('success', 'You have been logged out!');
     }
 }

@@ -1,8 +1,4 @@
 
-@php
-use App\Models\Product;
-
-@endphp
 @extends('client.layout')
 
 @section('title', 'My Orders | ELEGANCE')
@@ -77,7 +73,7 @@ use App\Models\Product;
                                         <td class="px-6 py-4">
                                             <div class="flex items-center">
                                                 @php
-                                                  $product = Product::find( $item->product_id);
+                                                  $product = App\Models\Product::find( $item->product_id);
                                                 @endphp
                                                     <img src=" {{$product->image}}"
                                                         alt="{{ $item->product->name }}"

@@ -11,6 +11,5 @@ class AddressRepository implements AddressRepositoryInterface{
 
     public function saveAddress(Address $address){
         return $address->save();
-        
     }
 }

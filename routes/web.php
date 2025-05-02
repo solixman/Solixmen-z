@@ -78,10 +78,10 @@ Route::middleware(['auth'])->group(function (){
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 
-Route::middleware([JwtMiddleware::class])->group(function () {
+
     Route::get('/user', [AuthController::class, 'getUser']);
     Route::get('/logout', [AuthController::class, 'logout']);
-});
+
 
 
 Route::get('/admin/customers',[UserController::class,'index']);
