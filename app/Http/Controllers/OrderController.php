@@ -90,7 +90,7 @@ class OrderController extends Controller
             }
 
             // Session::forget('cart');
-            return $this->show($order);
+            return redirect('/client/order/details?id='.$order->id);
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -102,16 +102,19 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
-    {
-        return view('comon.order_details', compact('order'));
-    }
+
+     public function showForClient(Request $request)
+     {
+         $order = $this->orderRepository->getOneOrder($request['id']);
+         return view('client.partials.order_details', compact('order'));
+         }
+
 
     public function showOrder(Request $request)
     {
         $order = $this->orderRepository->getOneOrder($request['id']);
-        return $this->show($order);
-    }
+        return view('admin.partials.order_details', compact('order'));
+        }
 
     /**
      * Show the form for editing the specified resource.

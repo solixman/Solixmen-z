@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StripeController;
@@ -50,9 +51,7 @@ Route::get('/login',function (){
 
 
 
-Route::get('/admin',function (){
-    return view('admin.partials.dashboard');
-});
+Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
 
 
 
@@ -118,6 +117,8 @@ Route::post('/cart/save/changes',[ProductController::class,'updateOneInCart']);
 Route::get('/order/create',[OrderController::class,'createOrderFromCart']);
 
 Route::get('/order/details',[OrderController::class,'showOrder'])->name('order.details');
+
+Route::get('/client/order/details',[OrderController::class,'showForClient'])->name('client.order.details');
 
 Route::get('/order/delete',[OrderController::class,'destroy'])->name('admin.orders.delete');
 
