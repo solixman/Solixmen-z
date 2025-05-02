@@ -6,16 +6,16 @@
         
         <!-- Main Navigation -->
         <div class="hidden md:flex space-x-8">
-            <a href="/men" style="color: antiquewhite !important" class="font-medium hover:text-gray-300 transition">MEN</a>
-            <a href="/women" style="color: antiquewhite !important" class="font-medium hover:text-stone-300 transition">WOMEN</a>
+            <a href="listing?categorie=men" style="color: antiquewhite !important" class="font-medium hover:text-gray-300 transition">MEN</a>
+            <a href="listing?categorie=Women" style="color: antiquewhite !important" class="font-medium hover:text-stone-300 transition">WOMEN</a>
         </div>
         
         <!-- Search Bar -->
         <div class="hidden md:block flex-1 max-w-xl mx-8">
-            <form action="/search" method="get" class="relative">
+            <form action="/listing" method="get" class="relative">
                 <input 
                     type="text" 
-                    name="q" 
+                    name="searchign_word" 
                     placeholder="Search for items and brands" 
                     class="w-full py-2 px-4 pr-10 rounded-full bg-white text-stone-800 focus:outline-none"
                 >
@@ -141,8 +141,12 @@
                             </svg>
                             <span>My Returns</span>
                         </a>
+
+                        <a href="/preferences" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <img src="https://cdn-icons-png.flaticon.com/128/2789/2789609.png" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600" alt="our products">
+                            <span>Our products</span>
                         
-                        @if(Auth::user() !== null)
+                        
                 @if(Auth::user()->role->name=='Admin')
                         <a href="/admin" class="flex items-center px-4 py-3 hover:bg-stone-100">
                             <img src="https://imgs.search.brave.com/4TYTWCI1WyH_b-MDbqndlsy2u2vewEQDX84XB4A4S4M/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzEwLzQxLzIzLzM0/LzM2MF9GXzEwNDEy/MzM0NDJfT1BuVnZS/YkszVENIaXNjblJV/SVdGV1dReUdtbkJz/WEwuanBn" 
@@ -152,7 +156,7 @@
                             <span>  Admin</span>
                         </a>
                         @endif
-                        @endif
+
                         
                         <a href="/preferences" class="flex items-center px-4 py-3 hover:bg-stone-100">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">

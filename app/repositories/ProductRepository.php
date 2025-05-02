@@ -14,9 +14,12 @@ class ProductRepository implements productRepositoryInterface{
     }
 
     public function getByCategorie($categorie){
-        // return  Product::where('deleted_at', null)->paginate(7);
-    }
+        return Product::where('deleted_at', null)
+        ->join('categories','categories.id','products.categorie_id')
+        ->where('categories.name',$categorie)->paginate(10);
 
+    }
+ 
 
     public function saveProduct(Product $product){
       $product->save();
@@ -31,8 +34,11 @@ class ProductRepository implements productRepositoryInterface{
         return DB::table('images')->where('product_id',$id)->select('*')->get();
     }
 
-    public function SaveCategorie(Categorie $categorie)
-    {
-        $categorie->save();
+   
+
+    public function searchByword($word){
+
+        return Product::where('deleted_at', null)
+        ->where('name','like','%'.$word.'%')->paginate(10);
     }
 }

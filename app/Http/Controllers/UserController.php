@@ -74,7 +74,7 @@ class UserController extends Controller
                'lastName' =>'required|string|max:255',
                'role'=>'required|string|max:255',
                'email'=>'required|string|email|max:255',
-               'status'=>'required|string|max:255',
+            //    'status'=>'required|string|max:255',
             ]);
 
             $user = $this->userRepository->getOneUser($request['id']);
