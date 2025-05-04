@@ -9,7 +9,7 @@
         <div class="flex justify-between items-start mb-4">
             <div>
                 <h3 class="text-lg font-medium text-stone-800">Total Sales</h3>
-                <p class="text-stone-500 text-sm">Last 30 days</p>
+                <p class="text-stone-500 text-sm">All time</p>
             </div>
             <div class="p-2 bg-stone-100 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-600" viewBox="0 0 20 20" fill="currentColor">
@@ -18,8 +18,7 @@
             </div>
         </div>
         <div class="flex items-baseline">
-            <span class="text-2xl font-semibold">$24,780</span>
-            <span class="ml-2 text-sm text-green-600">+12.5%</span>
+            <span class="text-2xl font-semibold">${{ number_format($totalSales, 2) }}</span>
         </div>
     </div>
 
@@ -28,7 +27,7 @@
         <div class="flex justify-between items-start mb-4">
             <div>
                 <h3 class="text-lg font-medium text-stone-800">Orders</h3>
-                <p class="text-stone-500 text-sm">Last 30 days</p>
+                <p class="text-stone-500 text-sm">Completed orders</p>
             </div>
             <div class="p-2 bg-stone-100 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-600" viewBox="0 0 20 20" fill="currentColor">
@@ -38,8 +37,7 @@
             </div>
         </div>
         <div class="flex items-baseline">
-            <span class="text-2xl font-semibold">186</span>
-            <span class="ml-2 text-sm text-green-600">+8.2%</span>
+            <span class="text-2xl font-semibold">{{ $orderCount }}</span>
         </div>
     </div>
 
@@ -48,7 +46,7 @@
         <div class="flex justify-between items-start mb-4">
             <div>
                 <h3 class="text-lg font-medium text-stone-800">Customers</h3>
-                <p class="text-stone-500 text-sm">Total registered</p>
+                <p class="text-stone-500 text-sm">Total with purchases</p>
             </div>
             <div class="p-2 bg-stone-100 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-stone-600" viewBox="0 0 20 20" fill="currentColor">
@@ -57,8 +55,7 @@
             </div>
         </div>
         <div class="flex items-baseline">
-            <span class="text-2xl font-semibold">1,254</span>
-            <span class="ml-2 text-sm text-green-600">+3.1%</span>
+            <span class="text-2xl font-semibold">{{ $customers }}</span>
         </div>
     </div>
 
@@ -76,8 +73,7 @@
             </div>
         </div>
         <div class="flex items-baseline">
-            <span class="text-2xl font-semibold">248</span>
-            <span class="ml-2 text-sm text-stone-600">+5 this week</span>
+            <span class="text-2xl font-semibold">{{ $productsCount }}</span>
         </div>
     </div>
 </div>
@@ -103,73 +99,77 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-stone-100">
+                @forelse($orders as $order)
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-7652</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Emily Johnson</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Mar 14, 2025</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">$245.00</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-{{ $order->id }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $order->user->firstName .' '. $order->user->lastName ?? 'Guest' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $order->created_at->format('M d, Y') }}</td>
+
+                    @php
+                    $total =0;
+                    foreach ($order->order_products as $OP) {
+                        $total += $OP->subtotal;
+                    }
+                    @endphp
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">${{ number_format($total, 2) }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Delivered</span>
+                        @php
+                            $statusClass = [
+                                'pending' => 'bg-yellow-100 text-yellow-800',
+                                'processing' => 'bg-blue-100 text-blue-800',
+                                'shipped' => 'bg-blue-100 text-blue-800',
+                                'delivered' => 'bg-green-100 text-green-800',
+                                'cancelled' => 'bg-red-100 text-red-800',
+                                'paid' => 'bg-green-100 text-green-800',
+                            ][$order->status] ?? 'bg-stone-100 text-stone-800';
+                        @endphp
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClass }}">
+                            {{ ucfirst($order->status) }}
+                        </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-stone-600">
-                        <a href="#" class="hover:text-stone-900">View</a>
+                        <a href="/order/details?id={{$order->id}}" class="hover:text-stone-900">View</a>
                     </td>
                 </tr>
+                @empty
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-7651</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Michael Roberts</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Mar 13, 2025</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">$189.00</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Shipped</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-stone-600">
-                        <a href="#" class="hover:text-stone-900">View</a>
-                    </td>
+                    <td colspan="6" class="px-6 py-4 text-center text-sm text-stone-500">No orders found</td>
                 </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-7650</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Sophia Chen</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Mar 12, 2025</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">$385.50</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Processing</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-stone-600">
-                        <a href="#" class="hover:text-stone-900">View</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-7649</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">David Wilson</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Mar 11, 2025</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">$175.00</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Delivered</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-stone-600">
-                        <a href="#" class="hover:text-stone-900">View</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">#ORD-7648</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Olivia Martinez</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">Mar 10, 2025</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">$220.00</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Cancelled</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-stone-600">
-                        <a href="#" class="hover:text-stone-900">View</a>
-                    </td>
-                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
 </div>
 
-<!-- Sales Analytics -->
+<!-- Analytics Section -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Top Products -->
+    <div class="bg-white rounded-lg shadow-sm border border-stone-100">
+        <div class="p-6 border-b border-stone-100">
+            <h3 class="text-lg font-medium text-stone-800">Top Selling Products</h3>
+        </div>
+        <div class="p-6">
+            <ul class="divide-y divide-stone-100">
+                @forelse($products as $product)
+                <li class="py-3 flex items-center">
+                    <div class="h-10 w-10 rounded bg-stone-100 mr-4">
+                        @if($product->image)
+                        <img src="{{$product->image}}" alt="{{ $product->name }}" class="h-10 w-10 object-cover rounded">
+                        @endif
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-sm font-medium">{{ $product->name }}</h4>
+                        <p class="text-xs text-stone-500">{{ $product->order_products_count }} sold</p>
+                    </div>
+                    <div class="text-sm font-medium">${{ number_format($product->price, 2) }}</div>
+                </li>
+                @empty
+                <li class="py-3 text-center text-sm text-stone-500">No products found</li>
+                @endforelse
+            </ul>
+        </div>
+    </div>
+
     <!-- Sales Chart -->
     <div class="bg-white rounded-lg shadow-sm border border-stone-100">
         <div class="p-6 border-b border-stone-100">
@@ -179,57 +179,6 @@
             <div class="h-64 flex items-center justify-center text-stone-400">
                 <p>Sales chart visualization would appear here</p>
             </div>
-        </div>
-    </div>
-
-    <!-- Top Products -->
-    <div class="bg-white rounded-lg shadow-sm border border-stone-100">
-        <div class="p-6 border-b border-stone-100">
-            <h3 class="text-lg font-medium text-stone-800">Top Selling Products</h3>
-        </div>
-        <div class="p-6">
-            <ul class="divide-y divide-stone-100">
-                <li class="py-3 flex items-center">
-                    <div class="h-10 w-10 rounded bg-stone-100 mr-4"></div>
-                    <div class="flex-1">
-                        <h4 class="text-sm font-medium">Silk Midi Dress</h4>
-                        <p class="text-xs text-stone-500">165 sold</p>
-                    </div>
-                    <div class="text-sm font-medium">$165.00</div>
-                </li>
-                <li class="py-3 flex items-center">
-                    <div class="h-10 w-10 rounded bg-stone-100 mr-4"></div>
-                    <div class="flex-1">
-                        <h4 class="text-sm font-medium">Cashmere Sweater</h4>
-                        <p class="text-xs text-stone-500">142 sold</p>
-                    </div>
-                    <div class="text-sm font-medium">$220.00</div>
-                </li>
-                <li class="py-3 flex items-center">
-                    <div class="h-10 w-10 rounded bg-stone-100 mr-4"></div>
-                    <div class="flex-1">
-                        <h4 class="text-sm font-medium">Tailored Wool Blazer</h4>
-                        <p class="text-xs text-stone-500">128 sold</p>
-                    </div>
-                    <div class="text-sm font-medium">$189.00</div>
-                </li>
-                <li class="py-3 flex items-center">
-                    <div class="h-10 w-10 rounded bg-stone-100 mr-4"></div>
-                    <div class="flex-1">
-                        <h4 class="text-sm font-medium">Leather Tote Bag</h4>
-                        <p class="text-xs text-stone-500">112 sold</p>
-                    </div>
-                    <div class="text-sm font-medium">$175.00</div>
-                </li>
-                <li class="py-3 flex items-center">
-                    <div class="h-10 w-10 rounded bg-stone-100 mr-4"></div>
-                    <div class="flex-1">
-                        <h4 class="text-sm font-medium">Linen Shirt</h4>
-                        <p class="text-xs text-stone-500">98 sold</p>
-                    </div>
-                    <div class="text-sm font-medium">$95.00</div>
-                </li>
-            </ul>
         </div>
     </div>
 </div>
