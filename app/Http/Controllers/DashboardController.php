@@ -6,49 +6,50 @@ use App\Models\Order;
 use App\Models\Order_product;
 use App\Models\Product;
 use App\Models\User;
+use App\repositories\interfaces\OrderRepositoryInterface;
+use App\repositories\interfaces\productRepositoryInterface;
+use App\repositories\interfaces\UserRepositoryInterface;
+use App\repositories\UserRepository;
+use Illuminate\Cache\Repository;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+
+    private $orderRepository;
+    private $productRepository;
+    private $userRepository;
+
+    public function __construct(OrderRepositoryInterface $orderRepository, productRepositoryInterface $productRepository, UserRepositoryInterface $userRepository)
+    {
+        $this->orderRepository= $orderRepository;
+        $this->productRepository= $productRepository;
+        $this->userRepository= $userRepository;
+    }
+
     public function index()
     {
         //getting top orders;
-        $orders = Order::take(5)->get();
+        $orders = $this->orderRepository->getLast5();
 
-        //getting top selloing products
-        $products = Product::withCount('order_products')
-        ->orderBy('order_products_count', 'desc')
-        ->take(5)->get();
+        //getting top selling products 
+        $products = $this->productRepository->getTop5();
 
         //getting top users
-        $users = User::withCount('orders')
-        ->orderBy('orders_count', 'desc')
-        ->take(5)->get();
+        $users = $this->userRepository->getTop5();
+
 
         //getting total sales
-        $totalSales = Order_product::join('orders','orders.id','order_products.order_id')
-        ->where('orders.status','paid')
-        ->orWhere('orders.status','shipped')
-        ->orWhere('orders.status','delivered')
-        ->get()->sum('subtotal');
+        $totalSales = $this->orderRepository->getTotalSales();
 
         //getting orders count
-        $orderCount= Order::where('status','paid')
-        ->orWhere('status','shipped')
-        ->orWhere('status','delivered')
-        ->get()->count();
+        $orderCount= $this->orderRepository->getorderCount();
 
         // getting customers count
-
-        $customers= User::join('orders','orders.user_id','users.id')
-        ->where('orders.status','paid')
-        ->orWhere('orders.status','shipped')
-        ->orWhere('orders.status','delivered')
-        ->select('users.id')->groupBy('users.id')
-        ->get()->count();
+        $customers= $this->userRepository->getActiveCustomersCount();
 
         //getting products count
-        $productsCount=Product::where('deleted_at', null)->count();
+        $productsCount= $this->productRepository->getProductCount();
 
         //returning view 
         return view('admin.partials.dashboard',

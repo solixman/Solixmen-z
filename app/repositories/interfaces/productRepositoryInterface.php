@@ -13,6 +13,8 @@ interface productRepositoryInterface{
     public function getOneProduct($id);
     public function getProductImages($id);
     public function searchByword($word);
+    public function getTop5();
+    public function getProductCount();
 }
 
 ?>

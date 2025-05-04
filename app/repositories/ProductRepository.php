@@ -41,4 +41,14 @@ class ProductRepository implements productRepositoryInterface{
         return Product::where('deleted_at', null)
         ->where('name','like','%'.$word.'%')->paginate(10);
     }
+
+    public function getTop5(){
+       return Product::withCount('order_products')
+        ->orderBy('order_products_count', 'desc')
+        ->take(5)->get(); 
+    }
+    public function getProductCount(){
+       return  Product::where('deleted_at', null)->count();
+    }
+
 }

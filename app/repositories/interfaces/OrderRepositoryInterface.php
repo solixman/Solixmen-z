@@ -13,6 +13,10 @@ interface OrderRepositoryInterface{
     public function getAllorders();
     public function saveOrderProduct(Order_product $OP);
     public function deleteOrder(Order $order);
+    public function getLast5();
+    public function getTotalSales();
+    public function getorderCount();
 
 
+    
 }
