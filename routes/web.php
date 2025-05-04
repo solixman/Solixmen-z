@@ -144,4 +144,6 @@ Route::post('/category/store/', [CategorieController::class, 'store'])->name('ca
 Route::post('/category/update', [CategorieController::class, 'update'])->name('categories.update');
 Route::delete('/category/delete', [CategorieController::class, 'destroy'])->name('categories.delete');
 
+Route::post('/user/photo/update', [UserController::class, 'updatePhoto'])->name('update.profile.photo');
+
 

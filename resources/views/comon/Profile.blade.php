@@ -26,7 +26,7 @@ $roles=Role::All();
                     <p class="text-sm text-stone-500 mt-1">{{Auth::user()->role->name}}</p>
 
                     <div class="mt-4">
-                        <button class="text-sm text-stone-600 hover:text-stone-900">
+                        <button id="changeProfilePhotoBtn" class="text-sm text-stone-600 hover:text-stone-900">
                             Change Profile Photo
                         </button>
                     </div>
@@ -306,6 +306,74 @@ $roles=Role::All();
         </div>
     </div>
 
+    <!-- Profile Photo Modal -->
+    <div id="profilePhotoModal" class="fixed inset-0 z-50 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Background overlay -->
+        <div class="fixed inset-0 bg-stone-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        
+        <!-- Modal panel -->
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                <h3 class="text-lg leading-6 font-medium text-stone-900" id="modal-title">
+                  Change Profile Photo
+                </h3>
+                
+                <div class="mt-4">
+                  <form action="/user/photo/update" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="space-y-6">
+                      <!-- Current profile photo -->
+                      <div class="flex flex-col items-center justify-center">
+                        <h4 class="text-sm font-medium text-stone-700 mb-2">Current Photo</h4>
+                        <div class="h-32 w-32 rounded-full bg-stone-200 overflow-hidden">
+                          <img id="currentProfilePhoto" src="{{Auth::user()->image}}" alt="{{Auth::user()->name}}" 
+                               class="h-full w-full object-cover">
+                          <div class="h-full w-full flex items-center justify-center text-stone-600 text-3xl font-medium">
+                            <span>{{ strtoupper(substr(Auth::user()->name, 0, 2)) }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Upload new photo -->
+                      <div>
+                        <label for="profilePhoto" class="block text-sm font-medium text-stone-700 mb-2">Upload New Photo</label>
+                        <input type="text" id="profilePhoto" name="profilePhoto" 
+                               class="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-500"
+                               value="{{Auth::user()->photo}}" onchange="previewImage(this)">                      </div>
+                      
+                      <!-- Preview new photo -->
+                      <div class="flex flex-col items-center justify-center hidden" id="previewContainer">
+                        <h4 class="text-sm font-medium text-stone-700 mb-2">Preview</h4>
+                        <div class="h-32 w-32 rounded-full bg-stone-200 overflow-hidden">
+                          <img id="photoPreview" src="#" alt="Preview" class="h-full w-full object-cover">
+                        </div>
+                      </div>
+                      
+                      <input type="hidden" name="id" value="{{Auth::user()->id}}">
+                      <input type="hidden" name="current_image" value="{{Auth::user()->image}}">
+                    </div>
+                    
+                    <!-- Modal actions -->
+                    <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+                      <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-stone-800 text-base font-medium text-white hover:bg-stone-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-stone-500 sm:col-start-2 sm:text-sm">
+                        Save Photo
+                      </button>
+                      <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-stone-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-stone-700 hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-stone-500 sm:mt-0 sm:col-start-1 sm:text-sm" onclick="closeModal()">
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 @section('scripts')
     <script>
         // Smooth scrolling for anchor links
@@ -334,6 +402,44 @@ $roles=Role::All();
                 }
             });
         });
+
+        // Profile Photo Modal functionality
+        function openModal() {
+            document.getElementById('profilePhotoModal').classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('profilePhotoModal').classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function previewImage(input) {
+            const previewContainer = document.getElementById('previewContainer');
+            const preview = document.getElementById('photoPreview');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.src = '';
+                previewContainer.classList.add('hidden');
+            }
+        }
+
+        // Open the modal when the "Change Profile Photo" button is clicked
+        document.addEventListener('DOMContentLoaded', function() {
+            const changePhotoBtn = document.getElementById('changeProfilePhotoBtn');
+            if (changePhotoBtn) {
+                changePhotoBtn.addEventListener('click', openModal);
+            }
+        });
     </script>
 @endsection
-@endsection     
+@endsection
