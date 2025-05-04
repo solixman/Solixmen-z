@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StripeController;
@@ -50,9 +51,7 @@ Route::get('/login',function (){
 
 
 
-Route::get('/admin',function (){
-    return view('admin.partials.dashboard');
-});
+Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
 
 
 
@@ -79,10 +78,10 @@ Route::middleware(['auth'])->group(function (){
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 
-Route::middleware([JwtMiddleware::class])->group(function () {
+
     Route::get('/user', [AuthController::class, 'getUser']);
     Route::get('/logout', [AuthController::class, 'logout']);
-});
+
 
 
 Route::get('/admin/customers',[UserController::class,'index']);
@@ -119,6 +118,8 @@ Route::get('/order/create',[OrderController::class,'createOrderFromCart']);
 
 Route::get('/order/details',[OrderController::class,'showOrder'])->name('order.details');
 
+Route::get('/client/order/details',[OrderController::class,'showForClient'])->name('client.order.details');
+
 Route::get('/order/delete',[OrderController::class,'destroy'])->name('admin.orders.delete');
 
 Route::post('order/update/status',[OrderController::class,'changeStatus'])->name('order.status.update');
@@ -142,5 +143,7 @@ Route::get('/success', [StripeController::class,'success'])->name('checkout.succ
 Route::post('/category/store/', [CategorieController::class, 'store'])->name('categories.store');
 Route::post('/category/update', [CategorieController::class, 'update'])->name('categories.update');
 Route::delete('/category/delete', [CategorieController::class, 'destroy'])->name('categories.delete');
+
+Route::post('/user/photo/update', [UserController::class, 'updatePhoto'])->name('update.profile.photo');
 
 

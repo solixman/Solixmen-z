@@ -58,7 +58,7 @@ class AddressController extends Controller
             $address->region = $data['Region'];
             $address->streetAddress = $data['streetAddress'];
             $address->zipCode = $data['zipCode'];
-            $this->AddressRepository->saveAddress($address);                 
+            $this->AddressRepository->saveAddress($address);               
             return $address;
             }catch(Exception $e){
                 return back()->with('error',$e->getMessage());

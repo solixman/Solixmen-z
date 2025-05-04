@@ -1,12 +1,5 @@
-
-@if(Auth::user()->role->name==="Admin")
 @extends('admin.layout')
-@endif
 
-{{-- @php
-ini_set('memory_limit', '-1');
-
-@endphp --}}
 
 @section('admin-title', 'Order Details')
 
@@ -68,40 +61,41 @@ ini_set('memory_limit', '-1');
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-stone-100">
-                            @php $subtotal = 0; @endphp
-                            @foreach ($order->order_products as $item)
-                                <tr>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center">
-                                            @if ($item->product && $item->product->image)
-                                                <img src="{{ asset('storage/' . $item->product->image) }}"
-                                                    alt="{{ $item->product->name }}"
-                                                    class="h-10 w-10 rounded object-cover mr-3">
-                                            @else
-                                                <div class="h-10 w-10 rounded bg-stone-100 mr-3"></div>
-                                            @endif
-                                            <div>
-                                                <div class="text-sm font-medium">
-                                                    {{ $item->product->name ?? 'Product Unavailable' }}</div>
-                                                @if ($item->product && ($item->product->size || $item->product->color))
-                                                    <div class="text-xs text-stone-500">
-                                                        @if ($item->product->size)
-                                                            Size: {{ $item->product->size }},
-                                                        @endif
-                                                        @if ($item->product->color)
-                                                            Color: {{ $item->product->color }}
-                                                        @endif
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">${{ number_format($item->priceAtMoment, 2) }}</td>
-                                    <td class="px-6 py-4 text-sm">{{ $item->quantity }}</td>
-                                    <td class="px-6 py-4 text-sm font-medium">${{ number_format($item->subtotal, 2) }}</td>
-                                </tr>
-                                @php $subtotal += $item->subtotal; @endphp
-                            @endforeach
+                            @php $subtotal = 0; 
+                            @endphp
+                             @foreach ($order->order_products as $item)
+                             <tr>
+                                 <td class="px-6 py-4">
+                                     <div class="flex items-center">
+                                         @php
+                                           $product = App\Models\Product::find( $item->product_id);
+                                         @endphp
+                                             <img src=" {{$product->image}}"
+                                                 alt="{{ $item->product->name }}"
+                                                 class="h-10 w-10 rounded object-cover mr-3">
+                                         <div>
+                                             <div class="text-sm font-medium">
+                                                 {{ $item->product->name ?? 'Product Unavailable' }}</div>
+                                             @if ($item->product && ($item->product->size || $item->product->color))
+                                                 <div class="text-xs text-stone-500">
+                                                     @if ($item->product->size)
+                                                         Size: {{ $item->product->size }},
+                                                     @endif
+                                                     @if ($item->product->color)
+                                                         Color: {{ $item->product->color }}
+                                                     @endif
+                                                 </div>
+                                             @endif
+                                         </div>
+                                     </div>
+                                 </td>
+                                 <td class="px-6 py-4 text-sm">${{ number_format($item->priceAtMoment, 2) }}</td>
+                                 <td class="px-6 py-4 text-sm">{{ $item->quantity }}</td>
+                                 <td class="px-6 py-4 text-sm font-medium">${{ number_format($item->subtotal, 2) }}
+                                 </td>
+                             </tr>
+                             @php $subtotal += $item->subtotal; @endphp
+                         @endforeach
                         </tbody>
                         <tfoot class="bg-stone-50">
                             <tr>
@@ -283,7 +277,6 @@ ini_set('memory_limit', '-1');
                 </div>
             </div>
 
-            @if (Auth::user()->role->name == 'Admin')
                 <div class="bg-white rounded-lg shadow-sm border border-stone-100">
                     <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
                         <h3 class="font-medium">Customer Information</h3>
@@ -293,9 +286,6 @@ ini_set('memory_limit', '-1');
                             <div class="text-sm text-stone-500">Customer</div>
                             <div class="font-medium">
                                 {{ $order->user->firstName ?? '' }} {{ $order->user->lastName ?? '' }}
-                                @if (!$order->user->firstName && !$order->user->lastName)
-                                    {{ $order->user->name ?? 'Guest Customer' }}
-                                @endif
                             </div>
                             <div class="text-sm">Email: {{ $order->user->email ?? 'No email provided' }}</div>
                             <div class="text-sm">Phone: {{ $order->user->phoneNumber ?? 'No phone provided' }}</div>
@@ -332,7 +322,7 @@ ini_set('memory_limit', '-1');
                         </div>
                     </div>
                 </div>
-                @endif
+            
                 <div class="bg-white rounded-lg shadow-sm border border-stone-100">
                     <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
                         <h3 class="font-medium">Actions</h3>
@@ -360,7 +350,6 @@ ini_set('memory_limit', '-1');
                     </div>
                 </div>
                 
-                @if(Auth::user()->role->name == 'Admin')
 
                 <div class="bg-white rounded-lg shadow-sm border border-stone-100">
                     <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
@@ -396,7 +385,7 @@ ini_set('memory_limit', '-1');
 
                     </div>
                 </div>
-            @endif
+            
         </div>
     </div>
 

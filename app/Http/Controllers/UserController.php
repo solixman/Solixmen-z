@@ -98,4 +98,20 @@ class UserController extends Controller
             return back()->with('error', $e->getMessage());
         }
     }
+
+    public function updatePhoto(Request $request){
+        try{
+            $fields= $request->validate([
+                'profilePhoto' => 'required|string',
+            ]);
+            
+            $user = $this->userRepository->getOneUser($request['id']);
+            
+            $user->image=$fields['profilePhoto'];
+            $this->userRepository->saveUser($user);
+            return back()->with('success','profile photo updated succefully');
+        }catch(Exception $e){
+          return back()->with('error',$e->getMessage());
+        }
+    }
 }
