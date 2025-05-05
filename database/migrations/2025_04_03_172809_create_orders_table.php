@@ -16,11 +16,12 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('status');
-            $table->date('orderDate');
-            $table->float('totalPrice');
-            $table->integer('user_id');
+            $table->string('shipping')->default('standard shipping');
+            $table->dateTime('orderDate');
+            $table->integer('tax')->default(10);
+            $table->integer('user_id')->nullable();
             $table->foreign('user_id')->constrained()->references('id')->on('users');
-            $table->integer('address_id');
+            $table->integer('address_id')->nullable();
             $table->foreign('address_id')->constrained()->references('id')->on('addresses');
             $table->timestamps();
         });

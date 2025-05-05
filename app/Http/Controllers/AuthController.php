@@ -3,24 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Exception;
-use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
     public function register(Request $request)
     {
-
-        // dd($request['email']);
+     
 
         
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -30,14 +27,15 @@ class AuthController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->get('name'),
+            'firstName' => $request->get('firstName'),
+            'lastName' => $request->get('lastName'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
         ]);
 
         Auth::login($user);
 
-        return redirect("/")->with('welcome', 'Welcome, ' . $user->name . '!');
+        return redirect("/")->with('welcome', 'Welcome, ' . $user->firstName . '!');
     }
 
 
@@ -49,18 +47,22 @@ class AuthController extends Controller
             
             $user = Auth::user();
     
-            return redirect('/')->with('welcome', 'Welcome back, ' . $user->name . '!');
+            return redirect('/')->with('welcome', 'Welcome back, ' . $user->firstName . '!');
+        }else{
+            return back()->with('error','wrong credentials');
         }
-    
-        return back()->with('error','Invalid credentials. Please check your email and password.')->withInput();
     }
 
 
 
-    // User logout
-    public function logout()
+
+    public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/')->with('Success','Successfully logged out');
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('success', 'You have been logged out!');
     }
 }

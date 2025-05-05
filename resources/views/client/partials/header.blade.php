@@ -1,107 +1,306 @@
-<header class="bg-stone-50 border-b border-stone-200">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-            <!-- Logo -->
-            <div class="flex-shrink-0 flex items-center">
-                <a href="/" class="text-stone-800 font-serif text-xl font-medium">SOLIXMEN'z</a>
-            </div>
+<header class="bg-stone-900 text-white">
+    <!-- Main Header -->
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/" style="color: antiquewhite !important" class="font-serif text-2xl font-bold tracking-tight">SOLIXMEN'z</a>
+        
+        <!-- Main Navigation -->
+        <div class="hidden md:flex space-x-8">
+            <a href="listing?categorie=men" style="color: antiquewhite !important" class="font-medium hover:text-gray-300 transition">MEN</a>
+            <a href="listing?categorie=Women" style="color: antiquewhite !important" class="font-medium hover:text-stone-300 transition">WOMEN</a>
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="hidden md:block flex-1 max-w-xl mx-8">
+            <form action="/listing" method="get" class="relative">
+                <input 
+                    type="text" 
+                    name="searchign_word" 
+                    placeholder="Search for items and brands" 
+                    class="w-full py-2 px-4 pr-10 rounded-full bg-white text-stone-800 focus:outline-none"
+                >
+                <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-stone-500">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+        
+        <!-- User Actions -->
+        <div class="flex items-center space-x-6">
+            <!-- Mobile Search Toggle -->
+            <button class="md:hidden text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                </svg>
+            </button>
             
-            <!-- Desktop Navigation -->
-            <nav class="hidden md:flex space-x-8">
-                <a href="/" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Home</a>
-                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Women</a>
-                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Men</a>
-                <a href="/listing" class="text-stone-600 hover:text-stone-900 px-3 py-2 text-sm font-medium">Accessories</a>
-            </nav>
-            
-            <!-- Right side icons -->
-            <div class="hidden md:flex items-center space-x-4">
-                <a href="/search" class="text-stone-600 hover:text-stone-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <!-- Profile - With Dropdown -->
+            <div class="relative" id="profile-dropdown">
+                <button class="flex items-center focus:outline-none" id="profile-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                </a>
-                <a href="/profile" class="text-stone-600 hover:text-stone-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                </a>
-                <a href="/cart" class="text-stone-600 hover:text-stone-900 relative">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                    </svg>
-                    <span class="absolute -top-1 -right-1 bg-stone-800 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                        {{ $cartCount ?? 0 }}
-                    </span>
-                </a>
-                @if(Auth::user() !== null)
-                @if(Auth::user()->role->name=='Admin')
-             
-                <a href="/admin" class="text-stone-600 hover:text-stone-900 relative">
-                    <img src="https://imgs.search.brave.com/4TYTWCI1WyH_b-MDbqndlsy2u2vewEQDX84XB4A4S4M/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzEwLzQxLzIzLzM0/LzM2MF9GXzEwNDEy/MzM0NDJfT1BuVnZS/YkszVENIaXNjblJV/SVdGV1dReUdtbkJz/WEwuanBn" 
-                    class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" alt="partie admin">
-                </a>
+                </button>
                 
-                @endif
+                <!-- Dropdown Menu - Not Logged In (Guest) -->
+                @if(!Auth::check())
+                <div id="guest-dropdown" class="absolute right-0 top-full mt-1 w-64 bg-white text-stone-800 rounded-md shadow-lg z-50 hidden">
+                    <!-- Sign In / Join Section -->
+                    <div class="p-4 border-b border-stone-200 flex justify-between items-center">
+                        <div>
+                            <a href="/login" class="font-medium text-stone-800 hover:underline">Sign In</a>
+                            <span class="mx-2">|</span>
+                            <a href="/register" class="font-medium text-stone-800 hover:underline">Join</a>
+                        </div>
+                        <button class="text-stone-500 hover:text-stone-700" id="close-guest-dropdown">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 6 6 18"></path>
+                                <path d="m6 6 12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Options for Guests -->
+                    <div class="py-2">
+                        <a href="/register" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="8.5" cy="7" r="4"></circle>
+                                <line x1="20" y1="8" x2="20" y2="14"></line>
+                                <line x1="23" y1="11" x2="17" y2="11"></line>
+                            </svg>
+                            <span>Create Account</span>
+                        </a>
+                        
+                        <a href="/login" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                                <polyline points="10 17 15 12 10 7"></polyline>
+                                <line x1="15" y1="12" x2="3" y2="12"></line>
+                            </svg>
+                            <span>Sign In</span>
+                        </a>
+                        
+                        <a href="/products" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">
+                                <path d="m7 21 4-4 4 4"></path>
+                                <path d="M7 3v18"></path>
+                                <path d="M21 12H7"></path>
+                                <path d="M21 6H7"></path>
+                                <path d="M21 18H7"></path>
+                            </svg>
+                            <span>Our Products</span>
+                        </a>
+                    </div>
+                </div>
+                @else
+                <!-- Dropdown Menu - Logged In User -->
+                <div id="user-dropdown" class="absolute right-0 top-full mt-1 w-64 bg-white text-stone-800 rounded-md shadow-lg z-50 hidden">
+                    <!-- User Info Section -->
+                    <div class="p-4 border-b border-stone-200 flex justify-between items-center">
+                        <div>
+                            <p class="font-medium text-stone-800">My Account</p>
+                            <p class="text-sm text-stone-600" id="user-email">{{ Auth::user()->email }}</p>
+                        </div>
+                        <button class="text-stone-500 hover:text-stone-700" id="close-user-dropdown">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 6 6 18"></path>
+                                <path d="m6 6 12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Account Options for Users -->
+                    <div class="py-2">
+                        <a href="/profile" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span>My Profile</span>
+                        </a>
+                        
+                        <a href="/client/orders" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                                <path d="M3 6h18"></path>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                            <span>My Orders</span>
+                        </a>
+                        
+                        <a href="/returns" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">
+                                <path d="m9 14-4-4 4-4"></path>
+                                <path d="M5 10h11a4 4 0 1 1 0 8h-1"></path>
+                            </svg>
+                            <span>My Returns</span>
+                        </a>
+
+                        <a href="/preferences" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <img src="https://cdn-icons-png.flaticon.com/128/2789/2789609.png" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600" alt="our products">
+                            <span>Our products</span>
+                        
+                        
+                @if(Auth::user()->role->name=='Admin')
+                        <a href="/admin" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <img src="https://imgs.search.brave.com/4TYTWCI1WyH_b-MDbqndlsy2u2vewEQDX84XB4A4S4M/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzEwLzQxLzIzLzM0/LzM2MF9GXzEwNDEy/MzM0NDJfT1BuVnZS/YkszVENIaXNjblJV/SVdGV1dReUdtbkJz/WEwuanBn" 
+                            width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">                                
+                                <path d="M5 10h11a4 4 0 1 1 0 8h-1"></path>
+                            </svg>
+                            <span>  Admin</span>
+                        </a>
+                        @endif
+
+                        
+                        <a href="/preferences" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">
+                                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            <span>Settings</span>
+                        </a>
+                        
+                        <div class="border-t border-stone-200 mt-2 pt-2">
+                            <a href="/logout" class="flex items-center px-4 py-3 hover:bg-stone-100 text-rose-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                                </svg>
+                                <span>Sign Out</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 @endif
             </div>
-
-           
             
-            <!-- Mobile menu button -->
-            <div class="md:hidden flex items-center">
-                <button type="button" class="mobile-menu-button text-stone-600 hover:text-stone-900 focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+            <!-- Wishlist -->
+            <a href="/wishlist" class="text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                </svg>
+            </a>
+            
+            <!-- Shopping Bag -->
+            <a href="/cart" class="text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                    <path d="M3 6h18"></path>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+       
+</header>
+
+<!-- Mobile Search Overlay (Hidden by default) -->
+<div class="fixed inset-0 bg-stone-900 bg-opacity-95 z-50 hidden" id="mobile-search">
+    <div class="container mx-auto px-4 pt-16 pb-8">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-white text-xl font-medium">Search</h2>
+            <button class="text-white" onclick="document.getElementById('mobile-search').classList.add('hidden')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <form action="/search" method="get">
+            <div class="relative">
+                <input 
+                    type="text" 
+                    name="q" 
+                    placeholder="Search for items and brands" 
+                    class="w-full py-3 px-4 pr-10 rounded-md bg-white text-stone-800 focus:outline-none"
+                >
+                <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-stone-500">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
                     </svg>
                 </button>
             </div>
-        </div>
-        
-        <!-- Mobile menu, show/hide based on menu state -->
-        <div class="mobile-menu hidden md:hidden pb-4">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="/" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Home</a>
-                <a href="/collections" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Collections</a>
-                <a href="/women" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Women</a>
-                <a href="/men" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Men</a>
-                <a href="/accessories" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Accessories</a>
-                <a href="/about" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">About</a>
-            </div>
-            <div class="pt-4 pb-3 border-t border-stone-200">
-                <div class="flex items-center px-5">
-                    <div class="flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <div class="ml-3">
-                        <div class="text-base font-medium text-stone-800">{{ $userName ?? 'Guest' }}</div>
-                        <div class="text-sm font-medium text-stone-500">{{ $userEmail ?? '' }}</div>
-                    </div>
-                </div>
-                <div class="mt-3 px-2 space-y-1">
-                    <a href="/profile" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Your Account</a>
-                    <a href="/orders" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Orders</a>
-                    <a href="/wishlist" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Wishlist</a>
-                    <a href="/logout" class="block px-3 py-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md text-base font-medium">Sign out</a>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
-</header>
+</div>
 
 <script>
-    // Toggle mobile menu
     document.addEventListener('DOMContentLoaded', function() {
-        const mobileMenuButton = document.querySelector('.mobile-menu-button');
-        const mobileMenu = document.querySelector('.mobile-menu');
+        // Toggle mobile search
+        document.querySelector('.md\\:hidden').addEventListener('click', function() {
+            document.getElementById('mobile-search').classList.remove('hidden');
+        });
         
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-            });
+        // Profile dropdown elements
+        const profileButton = document.getElementById('profile-button');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        
+        // Get the appropriate dropdown based on authentication status
+        const activeDropdown = document.getElementById('guest-dropdown') || document.getElementById('user-dropdown');
+        
+        // Track dropdown state
+        let dropdownOpen = false;
+        
+        // Function to show the dropdown
+        function showDropdown() {
+            if (activeDropdown) {
+                activeDropdown.classList.remove('hidden');
+                dropdownOpen = true;
+            }
         }
+        
+        function hideDropdowns() {
+            if (activeDropdown) {
+                activeDropdown.classList.add('hidden');
+                dropdownOpen = false;
+            }
+        }
+        
+        // Toggle on click
+        profileButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            if (dropdownOpen) {
+                hideDropdowns();
+            } else {
+                showDropdown();
+            }
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            // Only close if clicking outside the dropdown area
+            if (!profileDropdown.contains(e.target)) {
+                hideDropdowns();
+            }
+        });
+        
+        // Close button functionality
+        document.getElementById('close-guest-dropdown').addEventListener('click', function(e) {
+            e.stopPropagation();
+            hideDropdowns();
+        });
+        
+        document.getElementById('close-user-dropdown').addEventListener('click', function(e) {
+            e.stopPropagation();
+            hideDropdowns();
+        });
+        
+        // Prevent dropdown from closing when clicking inside it
+        guestDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+        
+        userDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
     });
 </script>
-

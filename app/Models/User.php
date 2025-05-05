@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable 
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -19,7 +18,8 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'firstName',
+        'lastName',
         'email',
         'password',
         'phone',
@@ -32,13 +32,8 @@ class User extends Authenticatable implements JWTSubject
         return $this ->belongsto(Role::class);
     }
 
-    public function address(){
-        return $this ->hasone(Address::class);
-    }
-
-
-    public function products(){
-        return $this->hasMany(Product::class);
+    public function addresses(){
+        return $this ->belongsToMany(Address::class);
     }
 
     public function orders(){
@@ -47,7 +42,7 @@ class User extends Authenticatable implements JWTSubject
     public function reviews(){
         return $this->hasMany(Review::class);
     }
-    
+
 
     /**
      * The attributes that should be hidden for serialization.

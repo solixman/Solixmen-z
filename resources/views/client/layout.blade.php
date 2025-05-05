@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    <style>
+        a{
+text-decoration: none !important;
+}
+    </style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +13,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 
     <!-- Tailwind CSS -->
+    <style>
+        /* .active{
+            text-: gold;
+            /* background-color: aqua; */
+        
+        .active a {
+        color: goldenrod;
+        }
+    </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -45,22 +58,7 @@
         rel="stylesheet">
 
     <!-- Additional Styles -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
-        a{
-            text-decoration: none;
-        }
-    </style>
+    <link rel="stylesheet" href="{{asset("css/app.css")}}">
 
     @yield('styles')
 </head>

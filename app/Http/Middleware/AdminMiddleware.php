@@ -4,10 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Auth;
 
-class JwtMiddleware
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,14 +15,12 @@ class JwtMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        try {
-            $user = JWTAuth::parseToken()->authenticate();
-        } catch (JWTException $e) {
-            return back()->with('error', $e->getMessage());
+        if (Auth::check() && Auth::user()->role->name === 'admin') {
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect('/unauthorised');
     }
 }
