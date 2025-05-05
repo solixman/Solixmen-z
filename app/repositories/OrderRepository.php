@@ -34,6 +34,25 @@ class OrderRepository implements OrderRepositoryInterface{
         $OP->save();
     }
     public function deleteOrder(Order $order){
-    $order->delete();
+    return $order->delete();
+    }
+
+    public function getLast5(){
+    return  Order::take(5)->get();
+    }
+
+    public function getTotalSales(){
+        return Order_product::join('orders','orders.id','order_products.order_id')
+        ->where('orders.status','paid')
+        ->orWhere('orders.status','shipped')
+        ->orWhere('orders.status','delivered')
+        ->get()->sum('subtotal');
+    }
+    
+    public function getorderCount(){
+        return Order::where('status','paid')
+        ->orWhere('status','shipped')
+        ->orWhere('status','delivered')
+        ->get()->count();
     }
 }

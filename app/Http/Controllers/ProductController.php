@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Categorie;
 use App\repositories\interfaces\CategorieRepositoryInterface;
 use App\repositories\interfaces\productRepositoryInterface;
+use App\repositories\ProductRepository;
 use Exception;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Message;
@@ -68,7 +69,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request['quantity']);
         try {
             $fields = $request->validate([
                 'name' => 'required|string|max:255',
@@ -96,7 +96,15 @@ class ProductController extends Controller
             $product->categorie_id = $fields['categorie'];
 
             $this->productRepository->saveProduct($product);
-            return redirect('/admin/products')->with('success', 'product stored succesfully');
+
+            
+            $this->productRepository->deleteProductImages($product->id);
+           
+            if(isset($request['additional_images'])){
+                $this->productRepository-> saveProductImages( $request['additional_images'],$product->id,$product->name);
+            }
+            
+            return back()->with('success', 'product stored succesfully');
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -137,8 +145,8 @@ class ProductController extends Controller
         try {
             $product = $this->productRepository->getOneProduct($request['id']);
             $categories = $this->categorieRepository->getAllCategories();
-
-            return view('admin/partials/product_form', compact('categories'), compact('product'));
+            $images = $this->productRepository->getProductImages($product->id);
+            return view('admin/partials/product_form', compact('categories','product','images'));
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -167,10 +175,10 @@ class ProductController extends Controller
     {
         try {
             $product = $this->productRepository->getOneProduct($request['id']);
-
+            $products = $this->productRepository->getlast4();
             $images = $this->productRepository->getProductImages($product->id);
 
-            return view('client/partials/product_details', compact('product', 'images'));
+            return view('client/partials/product_details', compact('product', 'images','products'));
         } catch (Exception $e) {
             return  back()->with('error', $e->getMessage());
         }
@@ -259,5 +267,13 @@ class ProductController extends Controller
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
+    }
+    public function getProductsForDashboard(){
+        try {
+            $products = $this->productRepository->getlast4();
+        return view('client.partials.home', compact('products'));
+    } catch (Exception $e) {
+        return back()->with('error',$e->getMessage());
+    }
     }
 }
