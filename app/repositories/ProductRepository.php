@@ -55,4 +55,14 @@ class ProductRepository implements productRepositoryInterface{
        return  Product::where('deleted_at', null)->OrderBy('created_at')->take(4)->get();
     }
 
+    public function deleteProductImages($id){
+    return DB::table('images')->where('product_id', $id)->delete();
+
+    }
+    public function  saveProductImages(array $images,$id,$name){
+        foreach($images as $image){
+            DB::table('images')->insert(['name'=> $name,'path' => $image, 'product_id' => $id]);
+        }
+    } 
+
 }

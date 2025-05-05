@@ -16,6 +16,9 @@ interface productRepositoryInterface{
     public function getTop5();
     public function getlast4();
     public function getProductCount();
+    public function deleteProductImages($id);
+    public function saveProductImages(array $images,$id,$name);
+
 }
 
 ?>
