@@ -63,13 +63,9 @@
                         </svg>
                     </button>
                     
-                    @if($loop->index % 8 == 0)
+                    @if(Carbon\Carbon::parse($product->created_at) > Carbon\Carbon::now()->startOfWeek() )
                     <div class="absolute top-3 left-3">
                         <span class="inline-block bg-stone-800 text-white text-xs px-2 py-1 rounded">New</span>
-                    </div>
-                    @elseif($loop->index % 5 == 0)
-                    <div class="absolute top-3 left-3">
-                        <span class="inline-block bg-stone-700 text-white text-xs px-2 py-1 rounded">Sale</span>
                     </div>
                     @endif
                 </div>
@@ -80,6 +76,7 @@
                 <p class="font-medium">${{ number_format($product->price, 2) }}</p>
             </div>
             @endforeach
+            {{$products->links()}}
         </div>
         
         

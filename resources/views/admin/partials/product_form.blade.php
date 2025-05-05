@@ -100,6 +100,11 @@
                     </button>
                 </div>
                 
+                <div id="additional-images-container">
+
+
+
+                </div>
                 
             </div>
             @endif

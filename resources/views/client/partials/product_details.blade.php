@@ -225,104 +225,43 @@
                 <h2 class="text-2xl font-serif mb-8">You May Also Like</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Related Product 1 -->
-                    <div class="group">
-                        <div class="relative overflow-hidden rounded-lg mb-4">
-                            <a href="/product/wool-cardigan">
-                                <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1005&q=80"
-                                    alt="Wool Cardigan"
-                                    class="w-full h-72 object-cover transition duration-500 group-hover:scale-105">
-                            </a>
-                            <div
-                                class="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/10 transition duration-300">
-                            </div>
-                            <div
-                                class="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white bg-opacity-90">
-                                <button
-                                    class="w-full py-2 bg-stone-800 text-white hover:bg-stone-900 transition duration-150 ease-in-out rounded">Add
-                                    to Cart</button>
-                            </div>
-                        </div>
-                        <h3 class="font-medium mb-1">
-                            <a href="/product/wool-cardigan" class="hover:underline">Wool Cardigan</a>
-                        </h3>
-                        <p class="text-stone-600 mb-2">Cozy layering piece</p>
-                        <p class="font-medium">$185.00</p>
+                    @foreach($products as $product)
+            <div class="group">
+                <div class="relative overflow-hidden rounded-lg mb-4">
+                    <a href="/product?id={{($product->id)}}">
+                        @csrf
+                        <img 
+                            src="{{ $product->image }}" 
+                            alt="{{ $product->name }}" 
+                            class="w-full h-80 object-cover transition duration-500 group-hover:scale-105">
+                    </a>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white bg-opacity-90">
+                        <form action="/product/add/cart">
+                            <input type="hidden" name="id" value="{{$product->id}}">
+                        <button class="w-full py-2 bg-stone-800 text-white hover:bg-stone-900 transition duration-150 ease-in-out rounded">Add to Cart</button>
+                    </form>
                     </div>
-
-                    <!-- Related Product 2 -->
-                    <div class="group">
-                        <div class="relative overflow-hidden rounded-lg mb-4">
-                            <a href="/product/turtleneck-sweater">
-                                <img src="https://images.unsplash.com/photo-1608234807905-4466023792f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-                                    alt="Turtleneck Sweater"
-                                    class="w-full h-72 object-cover transition duration-500 group-hover:scale-105">
-                            </a>
-                            <div
-                                class="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/10 transition duration-300">
-                            </div>
-                            <div
-                                class="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white bg-opacity-90">
-                                <button
-                                    class="w-full py-2 bg-stone-800 text-white hover:bg-stone-900 transition duration-150 ease-in-out rounded">Add
-                                    to Cart</button>
-                            </div>
-                        </div>
-                        <h3 class="font-medium mb-1">
-                            <a href="/product/turtleneck-sweater" class="hover:underline">Turtleneck Sweater</a>
-                        </h3>
-                        <p class="text-stone-600 mb-2">Elegant neckline design</p>
-                        <p class="font-medium">$195.00</p>
+                    
+                    <form action="/product/Like"></form>
+                    <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white flex items-center justify-center text-stone-600 hover:text-stone-900 focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </button>
+                    
+                    @if(Carbon\Carbon::parse($product->created_at) > Carbon\Carbon::now()->startOfWeek() )
+                    <div class="absolute top-3 left-3">
+                        <span class="inline-block bg-stone-800 text-white text-xs px-2 py-1 rounded">New</span>
                     </div>
-
-                    <!-- Related Product 3 -->
-                    <div class="group">
-                        <div class="relative overflow-hidden rounded-lg mb-4">
-                            <a href="/product/merino-pullover">
-                                <img src="https://images.unsplash.com/photo-1586078130702-d208859b6223?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"
-                                    alt="Merino Pullover"
-                                    class="w-full h-72 object-cover transition duration-500 group-hover:scale-105">
-                            </a>
-                            <div
-                                class="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/10 transition duration-300">
-                            </div>
-                            <div
-                                class="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white bg-opacity-90">
-                                <button
-                                    class="w-full py-2 bg-stone-800 text-white hover:bg-stone-900 transition duration-150 ease-in-out rounded">Add
-                                    to Cart</button>
-                            </div>
-                        </div>
-                        <h3 class="font-medium mb-1">
-                            <a href="/product/merino-pullover" class="hover:underline">Merino Pullover</a>
-                        </h3>
-                        <p class="text-stone-600 mb-2">Lightweight warmth</p>
-                        <p class="font-medium">$165.00</p>
-                    </div>
-
-                    <!-- Related Product 4 -->
-                    <div class="group">
-                        <div class="relative overflow-hidden rounded-lg mb-4">
-                            <a href="/product/cashmere-scarf">
-                                <img src="https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"
-                                    alt="Cashmere Scarf"
-                                    class="w-full h-72 object-cover transition duration-500 group-hover:scale-105">
-                            </a>
-                            <div
-                                class="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/10 transition duration-300">
-                            </div>
-                            <div
-                                class="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white bg-opacity-90">
-                                <button
-                                    class="w-full py-2 bg-stone-800 text-white hover:bg-stone-900 transition duration-150 ease-in-out rounded">Add
-                                    to Cart</button>
-                            </div>
-                        </div>
-                        <h3 class="font-medium mb-1">
-                            <a href="/product/cashmere-scarf" class="hover:underline">Cashmere Scarf</a>
-                        </h3>
-                        <p class="text-stone-600 mb-2">Luxurious accessory</p>
-                        <p class="font-medium">$120.00</p>
-                    </div>
+                    @endif
+                </div>
+                <h3 class="font-medium mb-1">
+                    <a href="/product?id={{$product->id}}" class="hover:underline">{{ $product->name }}</a>
+                </h3>
+                <p class="text-stone-600 mb-2">{{ $product->type }}</p>
+                <p class="font-medium">${{ number_format($product->price, 2) }}</p>
+            </div>
+            @endforeach
                 </div>
             </div>
         </div>

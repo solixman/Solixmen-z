@@ -50,5 +50,9 @@ class ProductRepository implements productRepositoryInterface{
     public function getProductCount(){
        return  Product::where('deleted_at', null)->count();
     }
+    
+    public function getlast4(){
+       return  Product::where('deleted_at', null)->OrderBy('created_at')->take(4)->get();
+    }
 
 }

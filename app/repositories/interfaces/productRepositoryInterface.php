@@ -14,6 +14,7 @@ interface productRepositoryInterface{
     public function getProductImages($id);
     public function searchByword($word);
     public function getTop5();
+    public function getlast4();
     public function getProductCount();
 }
 

@@ -25,9 +25,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return view('client.partials.home');
-});
+Route::get('/', [ProductController::class,'getProductsForDashboard']);
 
 
 Route::get('/register', function () {

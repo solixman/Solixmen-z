@@ -167,10 +167,10 @@ class ProductController extends Controller
     {
         try {
             $product = $this->productRepository->getOneProduct($request['id']);
-
+            $products = $this->productRepository->getlast4();
             $images = $this->productRepository->getProductImages($product->id);
 
-            return view('client/partials/product_details', compact('product', 'images'));
+            return view('client/partials/product_details', compact('product', 'images','products'));
         } catch (Exception $e) {
             return  back()->with('error', $e->getMessage());
         }
@@ -259,5 +259,13 @@ class ProductController extends Controller
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
+    }
+    public function getProductsForDashboard(){
+        try {
+            $products = $this->productRepository->getlast4();
+        return view('client.partials.home', compact('products'));
+    } catch (Exception $e) {
+        return back()->with('error',$e->getMessage());
+    }
     }
 }

@@ -26,8 +26,7 @@
                     <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-medium mb-4">Timeless ELEGANCE</h1>
                     <p class="text-lg md:text-xl mb-8">Discover our new collection of sophisticated designs crafted for the modern individual</p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="/collections/new" class="bg-white text-stone-800 hover:bg-stone-100 px-6 py-3 rounded-md font-medium transition duration-150 ease-in-out">Shop New Arrivals</a>
-                        <a href="/collections" class="bg-transparent border border-white text-white hover:bg-white/10 px-6 py-3 rounded-md font-medium transition duration-150 ease-in-out">Explore Collections</a>
+                        <a href="/listing" class="bg-transparent border border-white text-white hover:bg-white/10 px-6 py-3 rounded-md font-medium transition duration-150 ease-in-out">Explore Products</a>
                     </div>
                 </div>
             </div>
@@ -48,7 +47,7 @@
                     >
                     <div class="absolute inset-0 bg-stone-900/20 group-hover:bg-stone-900/40 transition duration-300"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <a href="/women" class="bg-white text-stone-800 hover:bg-stone-100 px-6 py-3 rounded-md font-medium transition duration-150 ease-in-out">Women</a>
+                        <a href="/listing?categorie=women" class="bg-white text-stone-800 hover:bg-stone-100 px-6 py-3 rounded-md font-medium transition duration-150 ease-in-out">Women</a>
                     </div>
                 </div>
                 
@@ -61,7 +60,7 @@
                     >
                     <div class="absolute inset-0 bg-stone-900/20 group-hover:bg-stone-900/40 transition duration-300"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <a href="/men" class="bg-white text-stone-800 hover:bg-stone-100 px-6 py-3 rounded-md font-medium transition duration-150 ease-in-out">Men</a>
+                        <a href="listing?categorie=men" class="bg-white text-stone-800 hover:bg-stone-100 px-6 py-3 rounded-md font-medium transition duration-150 ease-in-out">Men</a>
                     </div>
                 </div>
                 
@@ -74,7 +73,7 @@
                     >
                     <div class="absolute inset-0 bg-stone-900/20 group-hover:bg-stone-900/40 transition duration-300"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <a href="/accessories" class="bg-white text-stone-800 hover:bg-stone-100 px-6 py-3 rounded-md font-medium transition duration-150 ease-in-out">Accessories</a>
+                        <a href="/listing?categorie=accessories" class="bg-white text-stone-800 hover:bg-stone-100 px-6 py-3 rounded-md font-medium transition duration-150 ease-in-out">Accessories</a>
                     </div>
                 </div>
             </div>
@@ -86,11 +85,11 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-end mb-12">
                 <h2 class="text-3xl font-serif">New Arrivals</h2>
-                <a href="/new-arrivals" class="text-stone-600 hover:text-stone-900 font-medium">View All</a>
+                <a href="/listing" class="text-stone-600 hover:text-stone-900 font-medium">View All</a>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Product Card 1 -->
-                <div class="group">
+                {{-- <div class="group">
                     <div class="relative overflow-hidden rounded-lg mb-4">
                         <img 
                             src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80" 
@@ -159,12 +158,50 @@
                     <h3 class="font-medium mb-1">Leather Tote Bag</h3>
                     <p class="text-stone-600 mb-2">Handcrafted, premium leather</p>
                     <p class="font-medium">$175.00</p>
+                </div> --}}
+                @foreach($products as $product)
+            <div class="group">
+                <div class="relative overflow-hidden rounded-lg mb-4">
+                    <a href="/product?id={{($product->id)}}">
+                        @csrf
+                        <img 
+                            src="{{ $product->image }}" 
+                            alt="{{ $product->name }}" 
+                            class="w-full h-80 object-cover transition duration-500 group-hover:scale-105">
+                    </a>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white bg-opacity-90">
+                        <form action="/product/add/cart">
+                            <input type="hidden" name="id" value="{{$product->id}}">
+                        <button class="w-full py-2 bg-stone-800 text-white hover:bg-stone-900 transition duration-150 ease-in-out rounded">Add to Cart</button>
+                    </form>
+                    </div>
+                    
+                    <form action="/product/Like"></form>
+                    <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white flex items-center justify-center text-stone-600 hover:text-stone-900 focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </button>
+                    @php
+                    @endphp
+                    @if(Carbon\Carbon::parse($product->created_at) > Carbon\Carbon::now()->startOfWeek() )
+                    <div class="absolute top-3 left-3">
+                        <span class="inline-block bg-stone-800 text-white text-xs px-2 py-1 rounded">New</span>
+                    </div>
+                    @endif
                 </div>
+                <h3 class="font-medium mb-1">
+                    <a href="/product?id={{$product->id}}" class="hover:underline">{{ $product->name }}</a>
+                </h3>
+                <p class="text-stone-600 mb-2">{{ $product->type }}</p>
+                <p class="font-medium">${{ number_format($product->price, 2) }}</p>
+            </div>
+            @endforeach
             </div>
         </div>
     </section>
     
-    <!-- Testimonials -->
+    {{-- <!-- Testimonials -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-serif text-center mb-12">What Our Customers Say</h2>
@@ -246,9 +283,9 @@
             </div>
         </div>
     </section>
-    
+     --}}
     <!-- Newsletter -->
-    <section class="py-16 bg-stone-100">
+    {{-- <section class="py-16 bg-stone-100">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-3xl mx-auto text-center">
                 <h2 class="text-3xl font-serif mb-4">Join Our Community</h2>
@@ -269,7 +306,7 @@
                 </form>
             </div>
         </div>
-    </section>
+    </section> --}}
 </div>
 @endsection
 
