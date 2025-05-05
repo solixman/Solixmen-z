@@ -120,7 +120,7 @@
                                 <tr>
                                     <td colspan="3" class="px-6 py-3 text-sm text-right font-medium">Total</td>
                                     <td class="px-6 py-3 text-sm font-medium">
-                                        ${{ number_format($order->Total ?? $subtotal, 2) }}</td>
+                                        ${{ number_format($order->order_products->sum('subtotal'), 2) }}</td>
                                 </tr>
                             </tfoot>
                         </table>

@@ -134,7 +134,10 @@
                             
                             <div class="flex justify-between">
                                 <span class="font-medium">Total Paid:</span>
-                                <span class="font-bold text-lg">${{ number_format($order->total, 2) }}</span>
+                                @php
+                                    
+                                @endphp
+                                <span class="font-bold text-lg"> ${{ number_format($order->order_products->sum('subtotal'), 2) }}</span>
                             </div>
                         </div>
                     </div>
