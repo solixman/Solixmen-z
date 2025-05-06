@@ -148,3 +148,8 @@ Route::prefix('')->group(function () {
     //show orders for admin
     Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders');
 })->middleware('chackAdmin')->name('for admin');
+
+
+Route::fallback(function () {
+    return redirect('/')->with('error', 'The page you are looking for does not exist.');
+});
