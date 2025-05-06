@@ -145,7 +145,7 @@
                                     <h4 class="text-sm font-medium">Order Delivered</h4>
                                     <p class="text-xs text-stone-500">
                                         {{-- {{ $order->deliveryDate ? $order->deliveryDate->format('M d, Y \a\t g:i A') : 'Date not available' }} --}}
-                                        {{$order->deliveryDate}}     
+                                        {{Carbon\Carbon::parse($order->orderDate)->addDays(5)}}     
                                     </p>
                                     <p class="text-sm mt-1">Package was delivered to the customer.</p>
                                 </div>

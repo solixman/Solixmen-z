@@ -108,7 +108,7 @@ class StripeController extends Controller
     {
         // dd('here');
         $order=$this->orderRepository->getOneOrder($request['id']);
-        $order->status='payed';
+        $order->status='paid';
         $this->orderRepository->saveOrder($order);
         Mail::to('sousouja07@gmail.com')->send(new OrderEmail($order));
         return view('client.partials.payment_succes' ,compact('order'));

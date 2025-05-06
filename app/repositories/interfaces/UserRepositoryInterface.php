@@ -3,7 +3,7 @@ namespace App\repositories\interfaces;
 
 use App\Models\User;
 
-Interface UserRepositoryInterface {
+Interface UserRepositoryInterface{
 
 
     public function saveUser(User $user);
