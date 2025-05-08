@@ -323,68 +323,9 @@
                     </div>
                 </div>
             
-                <div class="bg-white rounded-lg shadow-sm border border-stone-100">
-                    <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
-                        <h3 class="font-medium">Actions</h3>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <form action="/checkout" class="flex-1" method="get">
-                                @csrf
-                                <input type="hidden" name="id" value="{{$order->id}}">
-                                <button type="submit"
-                                    class="w-full px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-md font-medium">
-                                    Checkout
-                                </button>
-                            </form>
-                
-                            <form action="/order/cancel" method="get" class="flex-1">
-                                @csrf
-                                <input type="hidden" name="id" value="{{$order->id}}">
-                                <button type="submit"
-                                    class="w-full px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-md font-medium">
-                                    cancel
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+               
                 
 
-                <div class="bg-white rounded-lg shadow-sm border border-stone-100">
-                    <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
-                        <h3 class="font-medium">Update Order Status</h3>
-                    </div>
-                    <div class="p-6">
-                        <form action="order/update/status" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="mb-4">
-                                <label for="status" class="block text-sm font-medium text-stone-700 mb-1">Status</label>
-                                <select id="status" name="status"
-                                    class="w-full px-4 py-2 border border-stone-300 focus:border-stone-500 focus:ring-0 rounded-md">
-                                    <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending
-                                    </option>
-                                    <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>
-                                        Processing</option>
-                                    <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>Shipped
-                                    </option>
-                                    <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>
-                                        Delivered</option>
-                                    <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>
-                                        Cancelled</option>
-                                    <option value="refunded" {{ $order->status == 'refunded' ? 'selected' : '' }}>Refunded
-                                    </option>
-                                </select>
-                                <input type="hidden" name="id" id="id" value="{{$order->id}}">
-                            </div>
-                            <button type="submit"
-                                class="w-full px-4 py-2 bg-stone-800 hover:bg-stone-900 text-white rounded-md">Update
-                                Status</button>
-                        </form>
-
-                    </div>
-                </div>
             
         </div>
     </div>

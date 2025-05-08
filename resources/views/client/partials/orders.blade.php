@@ -14,29 +14,7 @@
 <div class="bg-white">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="max-w-5xl mx-auto">
-            <!-- Order Filters -->
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                <div class="flex items-center">
-                    <span class="text-sm text-stone-600 mr-2">Filter by:</span>
-                    <select class="border border-stone-300 rounded-md text-sm py-1.5 px-3 focus:outline-none focus:ring-0 focus:border-stone-500">
-                        <option value="all">All Orders</option>
-                        <option value="pending">Pending</option>
-                        <option value="processing">Processing</option>
-                        <option value="shipped">Shipped</option>
-                        <option value="delivered">Delivered</option>
-                        <option value="cancelled">Cancelled</option>
-                    </select>
-                </div>
-                
-                <div class="relative">
-                    <input type="text" placeholder="Search orders..." class="border border-stone-300 rounded-md text-sm py-1.5 pl-9 pr-3 w-full md:w-auto focus:outline-none focus:ring-0 focus:border-stone-500">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
+          
             
             <!-- Orders List -->
             @if(count($orders) > 0)

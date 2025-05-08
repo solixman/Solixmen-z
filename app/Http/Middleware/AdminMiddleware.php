@@ -17,10 +17,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role->name === 'admin') {
+        if (Auth::check() && Auth::user()->role->name === 'Admin') {
             return $next($request);
         }
 
-        return redirect('/unauthorised');
+        return redirect()->back()->with('error',"you're not authorized for this action");
     }
 }

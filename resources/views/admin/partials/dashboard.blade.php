@@ -177,7 +177,10 @@
         </div>
         <div class="p-6">
             <div class="h-64 flex items-center justify-center text-stone-400">
-                <p>Sales chart visualization would appear here</p>
+                <p>
+
+                    COMING SOON...
+                </p>
             </div>
         </div>
     </div>

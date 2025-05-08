@@ -67,35 +67,13 @@
                     
                     <!-- Options for Guests -->
                     <div class="py-2">
-                        <a href="/register" class="flex items-center px-4 py-3 hover:bg-stone-100">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="8.5" cy="7" r="4"></circle>
-                                <line x1="20" y1="8" x2="20" y2="14"></line>
-                                <line x1="23" y1="11" x2="17" y2="11"></line>
-                            </svg>
-                            <span>Create Account</span>
+                       
+                        
+                        <a href="/listing" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                            <img src="https://cdn-icons-png.flaticon.com/128/2789/2789609.png" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600" alt="our products">
+                            <span>Our products</span>
                         </a>
                         
-                        <a href="/login" class="flex items-center px-4 py-3 hover:bg-stone-100">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">
-                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                                <polyline points="10 17 15 12 10 7"></polyline>
-                                <line x1="15" y1="12" x2="3" y2="12"></line>
-                            </svg>
-                            <span>Sign In</span>
-                        </a>
-                        
-                        <a href="/products" class="flex items-center px-4 py-3 hover:bg-stone-100">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600">
-                                <path d="m7 21 4-4 4 4"></path>
-                                <path d="M7 3v18"></path>
-                                <path d="M21 12H7"></path>
-                                <path d="M21 6H7"></path>
-                                <path d="M21 18H7"></path>
-                            </svg>
-                            <span>Our Products</span>
-                        </a>
                     </div>
                 </div>
                 @else
@@ -142,10 +120,10 @@
                             <span>My Returns</span>
                         </a>
 
-                        <a href="/preferences" class="flex items-center px-4 py-3 hover:bg-stone-100">
+                        <a href="/listing" class="flex items-center px-4 py-3 hover:bg-stone-100">
                             <img src="https://cdn-icons-png.flaticon.com/128/2789/2789609.png" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-stone-600" alt="our products">
                             <span>Our products</span>
-                        
+                        </a>
                         
                 @if(Auth::user()->role->name=='Admin')
                         <a href="/admin" class="flex items-center px-4 py-3 hover:bg-stone-100">

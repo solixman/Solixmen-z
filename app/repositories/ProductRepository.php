@@ -16,8 +16,7 @@ class ProductRepository implements productRepositoryInterface{
     public function getByCategorie($categorie){
         return Product::where('deleted_at', null)
         ->join('categories','categories.id','products.categorie_id')
-        ->where('categories.name',$categorie)->paginate(10);
-
+        ->where('categories.name',$categorie)->select('products.name','products.image','products.id','products.price','products.type')->paginate(10);
     }
  
 

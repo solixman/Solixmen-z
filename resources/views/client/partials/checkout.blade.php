@@ -232,16 +232,7 @@
                                     </div>
                                 </label>
                                 
-                                <label class="flex items-start p-3 border border-stone-200 rounded-md cursor-pointer hover:border-stone-400 transition-colors">
-                                    <input type="radio" name="shipping_method" value="express" class="mt-1 text-stone-800 focus:ring-stone-500 h-4 w-4"readonly>
-                                    <div class="ml-3 flex justify-between w-full">
-                                        <div>
-                                            <div class="text-sm font-medium text-stone-800">Express Shipping</div>
-                                            <p class="text-sm text-stone-600">Delivery in 1-2 business days</p>
-                                        </div>
-                                        <div class="text-sm font-medium text-stone-800">$12.00</div>
-                                    </div>
-                                </label>
+                              
                             </div>
                         </div>
                         

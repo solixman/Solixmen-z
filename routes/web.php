@@ -69,8 +69,8 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 //show peoducts for customer
 Route::get('/listing', [ProductController::class, 'show']);
-//for women
-Route::get('/women', [ProductController::class, 'women']);
+
+
 //show product details
 Route::get('/product', [ProductController::class, 'showDetails']);
 //add to cart
@@ -82,7 +82,7 @@ Route::post('/cart/save/changes', [ProductController::class, 'updateOneInCart'])
 
 
 // gourping routes to be loged in
-Route::prefix('')->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     Route::get('/profile', function () {
         return view('comon.profile');
@@ -99,9 +99,7 @@ Route::prefix('')->group(function () {
 
 
     Route::get('/order/cancel', [OrderController::class, 'cancelOrder'])->name('order.cancel');
-
-
-    //show orders for client
+   //show orders for client
     Route::get('/client/orders', [OrderController::class, 'ShowOrdersClient'])->name('client.orders');
 
     Route::get('/checkout', [StripeController::class, 'checkout'])->name('Checkout');
@@ -109,17 +107,15 @@ Route::prefix('')->group(function () {
     Route::get('/success', [StripeController::class, 'success'])->name('checkout.success');
 
     Route::post('/user/photo/update', [UserController::class, 'updatePhoto'])->name('update.profile.photo');
-})->middleware(['auth'])->name('shouldBeLoggedIn');
+})->name('shouldBeLoggedIn');
+
 
 
 //grouping route to be an admin
-Route::prefix('')->group(function () {
+Route::middleware('chackAdmin')->group(function () {
 
 
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
-
-
-
     Route::get('/admin/products', [ProductController::class, 'index']);
     //to show the form
     Route::get('/product/create', [ProductController::class, 'create']);
@@ -147,9 +143,11 @@ Route::prefix('')->group(function () {
 
     //show orders for admin
     Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders');
-})->middleware('chackAdmin')->name('for admin');
+})->name('for admin');
+
+
 
 
 Route::fallback(function () {
-    return redirect('/')->with('error', 'The page you are looking for does not exist.');
+    return back()->with('error', 'The page you are looking for does not exist.');
 });

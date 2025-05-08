@@ -47,7 +47,7 @@ class AuthController extends Controller
             
             $user = Auth::user();
     
-            return redirect('/')->with('welcome', 'Welcome back, ' . $user->firstName . '!');
+            return redirect()->intended('/')->with('welcome', 'Welcome back, ' . $user->firstName . '!');
         }else{
             return back()->with('error','wrong credentials');
         }
@@ -63,6 +63,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success', 'You have been logged out!');
+        return redirect()->intended('/')->with('success', 'You have been logged out!');
     }
 }

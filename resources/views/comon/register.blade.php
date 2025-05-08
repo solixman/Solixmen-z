@@ -67,7 +67,7 @@
         }
     </style>
 
-    y
+    
 </head>
 
 <body class="bg-stone-50 text-stone-800 min-h-screen flex flex-col">
@@ -129,7 +129,7 @@
                                     name="firstName"
                                     type="text" 
                                     id="firstName" 
-                                    placeholder="John"
+                                    placeholder="first name"
                                     class="w-full px-3 py-2 border-2 border-stone-300 rounded-md bg-white focus:border-stone-500 transition"
                                     required
                                 >
@@ -140,7 +140,7 @@
                                     name="lastName"
                                     type="text" 
                                     id="lastName" 
-                                    placeholder="Doe"
+                                    placeholder="last name"
                                     class="w-full px-3 py-2 border-2 border-stone-300 rounded-md bg-white focus:border-stone-500 transition"
                                     required
                                 >
@@ -153,7 +153,7 @@
                                 name="email"
                                 type="email" 
                                 id="email" 
-                                placeholder="your@email.com"
+                                placeholder="email"
                                 class="w-full px-3 py-2 border-2 border-stone-300 rounded-md bg-white focus:border-stone-500 transition"
                                 required
                             >

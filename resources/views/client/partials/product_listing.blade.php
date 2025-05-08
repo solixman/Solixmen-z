@@ -76,8 +76,8 @@
                 <p class="font-medium">${{ number_format($product->price, 2) }}</p>
             </div>
             @endforeach
-            {{$products->links()}}
         </div>
+        {{$products->links()}}
         
         
      

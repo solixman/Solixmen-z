@@ -20,22 +20,30 @@
                 <!-- Product Images -->
                 <div>
                     <div class="mb-4 overflow-hidden rounded-lg">
-                        
-                        <img src="{{ $images[0]->path }}"
-                         alt="{{ $images[0]->name}}" class="w-full h-auto object-cover"
+
+                        <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-auto object-cover"
                             id="main-image">
                     </div>
 
                     <div class="grid grid-cols-4 gap-4">
-                        @foreach ($images as $image)
-                            
                         <button class="overflow-hidden rounded-lg border-2 border-stone-800">
-                            <img src="{{ $image->path}}" alt="{{ $image->name }}" class="w-full h-24 object-cover"
-                            onclick="document.getElementById('main-image').src = this.src"
-                            onclick="document.getElementById('main-image').alt = this.alt">
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-24 object-cover"
+                                onclick="document.getElementById('main-image').src = this.src"
+                                onclick="document.getElementById('main-image').alt = this.alt">
                         </button>
-                        @endforeach
+                        @if ($images)
 
+
+                            @foreach ($images as $image)
+                                <button class="overflow-hidden rounded-lg border-2 border-stone-800">
+                                    <img src="{{ $image->path }}" alt="{{ $image->name }}"
+                                        class="w-full h-24 object-cover"
+                                        onclick="document.getElementById('main-image').src = this.src"
+                                        onclick="document.getElementById('main-image').alt = this.alt">
+                                </button>
+                            @endforeach
+
+                        @endif
                     </div>
                 </div>
 
@@ -82,24 +90,29 @@
                             <div class="flex flex-wrap gap-2">
                                 <button
                                     class="w-10 h-10 rounded-full bg-stone-500 border-2 border-stone-800 focus:outline-none"
-                                    onclick="document.getElementById('selected-color').textContent = 'Stone'; document.getElementById('selected-color-input').value = 'Stone'" type="button"></button>
+                                    onclick="document.getElementById('selected-color').textContent = 'Stone'; document.getElementById('selected-color-input').value = 'Stone'"
+                                    type="button"></button>
                                 <button
                                     class="w-10 h-10 rounded-full bg-stone-700 border border-stone-300 focus:outline-none focus:border-stone-800"
-                                    onclick="document.getElementById('selected-color').textContent = 'Charcoal';document.getElementById('selected-color-input').value = 'Charcoal'" type="button"></button>
+                                    onclick="document.getElementById('selected-color').textContent = 'Charcoal';document.getElementById('selected-color-input').value = 'Charcoal'"
+                                    type="button"></button>
                                 <button
                                     class="w-10 h-10 rounded-full bg-[#e0c8a8] border border-stone-300 focus:outline-none focus:border-stone-800"
-                                    onclick="document.getElementById('selected-color').textContent = 'Camel';document.getElementById('selected-color-input').value = 'Camel'" type="button"></button>
+                                    onclick="document.getElementById('selected-color').textContent = 'Camel';document.getElementById('selected-color-input').value = 'Camel'"
+                                    type="button"></button>
                                 <button
                                     class="w-10 h-10 rounded-full bg-stone-200 border border-stone-300 focus:outline-none focus:border-stone-800"
-                                    onclick="document.getElementById('selected-color').textContent = 'Ivory';document.getElementById('selected-color-input').value = 'Ivory'" type="button"></button>
+                                    onclick="document.getElementById('selected-color').textContent = 'Ivory';document.getElementById('selected-color-input').value = 'Ivory'"
+                                    type="button"></button>
                                 <button
                                     class="w-10 h-10 rounded-full bg-black border border-stone-300 focus:outline-none focus:border-stone-800"
-                                    onclick="document.getElementById('selected-color').textContent = 'Black';document.getElementById('selected-color-input').value = 'Black'" type="button"></button>
+                                    onclick="document.getElementById('selected-color').textContent = 'Black';document.getElementById('selected-color-input').value = 'Black'"
+                                    type="button"></button>
                             </div>
                         </div>
 
                         <!-- Size Selection -->
-                        
+
                         <div class="mb-6">
                             <div class="flex justify-between items-center mb-2">
                                 <h3 class="text-sm font-medium">Size: <span id="selected-size">M</span></h3>
@@ -107,38 +120,45 @@
                             </div>
                             <input type="text" name="size" value="M" id="selected-size-input">
                             <div class="grid grid-cols-5 gap-2">
-                                <button 
+                                <button
                                     class="border border-stone-300 rounded-md py-2 text-sm text-stone-600 hover:border-stone-800 focus:outline-none focus:border-stone-800"
                                     onclick="document.getElementById('selected-size').textContent = 'XS';
-                                    document.getElementById('selected-size-input').value = 'XS'" type="button">XS</button>
+                                    document.getElementById('selected-size-input').value = 'XS'"
+                                    type="button">XS</button>
                                 <button
                                     class="border border-stone-300 rounded-md py-2 text-sm text-stone-600 hover:border-stone-800 focus:outline-none focus:border-stone-800"
                                     onclick="document.getElementById('selected-size').textContent = 'S';
-                                    document.getElementById('selected-size-input').value = 'S'" type="button">S</button>
+                                    document.getElementById('selected-size-input').value = 'S'"
+                                    type="button">S</button>
                                 <button
                                     class="border-2 border-stone-800 rounded-md py-2 text-sm font-medium text-stone-800 focus:outline-none"
                                     onclick="document.getElementById('selected-size').textContent = 'M';
-                                    document.getElementById('selected-size-input').value = 'M'" type="button">M</button>
+                                    document.getElementById('selected-size-input').value = 'M'"
+                                    type="button">M</button>
                                 <button
                                     class="border border-stone-300 rounded-md py-2 text-sm text-stone-600 hover:border-stone-800 focus:outline-none focus:border-stone-800"
                                     onclick="document.getElementById('selected-size').textContent = 'L';
-                                    document.getElementById('selected-size-input').value = 'L'" type="button">L</button>
+                                    document.getElementById('selected-size-input').value = 'L'"
+                                    type="button">L</button>
                                 <button
                                     class="border border-stone-300 rounded-md py-2 text-sm text-stone-600 hover:border-stone-800 focus:outline-none focus:border-stone-800"
                                     onclick="document.getElementById('selected-size').textContent = 'XL';
-                                    document.getElementById('selected-size-input').value = 'XL'" type="button">XL</button>
+                                    document.getElementById('selected-size-input').value = 'XL'"
+                                    type="button">XL</button>
                             </div>
                         </div>
-                           <input type="hidden" name="id" value="{{$product->id}}" >
+                        <input type="hidden" name="id" value="{{ $product->id }}">
                         <!-- Quantity -->
                         <div class="mb-6">
                             <h3 class="text-sm font-medium mb-2">Quantity</h3>
                             <div class="flex border border-stone-300 rounded-md w-32">
-                                <button type="button" class="px-3 py-2 text-stone-600 hover:text-stone-900 focus:outline-none"
+                                <button type="button"
+                                    class="px-3 py-2 text-stone-600 hover:text-stone-900 focus:outline-none"
                                     onclick="decrementQuantity()">-</button>
                                 <input type="number" id="quantity" name="quantity" value="1" min="1"
                                     class="w-full text-center border-0 focus:ring-0" readonly>
-                                <button type="button" class="px-3 py-2 text-stone-600 hover:text-stone-900 focus:outline-none"
+                                <button type="button"
+                                    class="px-3 py-2 text-stone-600 hover:text-stone-900 focus:outline-none"
                                     onclick="incrementQuantity()">+</button>
                             </div>
                         </div>
@@ -148,14 +168,6 @@
                             <button type="submit"
                                 class="flex-1 bg-stone-800 text-white py-3 px-6 rounded-md hover:bg-stone-900 transition duration-150 ease-in-out">Add
                                 to Cart</button>
-                            <button
-                                class="flex items-center justify-center border border-stone-300 rounded-md p-3 hover:border-stone-800 focus:outline-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-stone-600" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                </svg>
-                            </button>
                         </div>
                     </form>
 
@@ -225,43 +237,49 @@
                 <h2 class="text-2xl font-serif mb-8">You May Also Like</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Related Product 1 -->
-                    @foreach($products as $product)
-            <div class="group">
-                <div class="relative overflow-hidden rounded-lg mb-4">
-                    <a href="/product?id={{($product->id)}}">
-                        @csrf
-                        <img 
-                            src="{{ $product->image }}" 
-                            alt="{{ $product->name }}" 
-                            class="w-full h-80 object-cover transition duration-500 group-hover:scale-105">
-                    </a>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white bg-opacity-90">
-                        <form action="/product/add/cart">
-                            <input type="hidden" name="id" value="{{$product->id}}">
-                        <button class="w-full py-2 bg-stone-800 text-white hover:bg-stone-900 transition duration-150 ease-in-out rounded">Add to Cart</button>
-                    </form>
-                    </div>
-                    
-                    <form action="/product/Like"></form>
-                    <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white flex items-center justify-center text-stone-600 hover:text-stone-900 focus:outline-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                    </button>
-                    
-                    @if(Carbon\Carbon::parse($product->created_at) > Carbon\Carbon::now()->startOfWeek() )
-                    <div class="absolute top-3 left-3">
-                        <span class="inline-block bg-stone-800 text-white text-xs px-2 py-1 rounded">New</span>
-                    </div>
-                    @endif
-                </div>
-                <h3 class="font-medium mb-1">
-                    <a href="/product?id={{$product->id}}" class="hover:underline">{{ $product->name }}</a>
-                </h3>
-                <p class="text-stone-600 mb-2">{{ $product->type }}</p>
-                <p class="font-medium">${{ number_format($product->price, 2) }}</p>
-            </div>
-            @endforeach
+                    @foreach ($products as $product)
+                        <div class="group">
+                            <div class="relative overflow-hidden rounded-lg mb-4">
+                                <a href="/product?id={{ $product->id }}">
+                                    @csrf
+                                    <img src="{{ $product->image }}" alt="{{ $product->name }}"
+                                        class="w-full h-80 object-cover transition duration-500 group-hover:scale-105">
+                                </a>
+                                <div
+                                    class="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white bg-opacity-90">
+                                    <form action="/product/add/cart">
+                                        <input type="hidden" name="id" value="{{ $product->id }}">
+                                        <button
+                                            class="w-full py-2 bg-stone-800 text-white hover:bg-stone-900 transition duration-150 ease-in-out rounded">Add
+                                            to Cart</button>
+                                    </form>
+                                </div>
+
+                                <form action="/product/Like"></form>
+                                <button
+                                    class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white flex items-center justify-center text-stone-600 hover:text-stone-900 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                    </svg>
+                                </button>
+
+                                @if (Carbon\Carbon::parse($product->created_at) > Carbon\Carbon::now()->startOfWeek())
+                                    <div class="absolute top-3 left-3">
+                                        <span
+                                            class="inline-block bg-stone-800 text-white text-xs px-2 py-1 rounded">New</span>
+                                    </div>
+                                @endif
+                            </div>
+                            <h3 class="font-medium mb-1">
+                                <a href="/product?id={{ $product->id }}"
+                                    class="hover:underline">{{ $product->name }}</a>
+                            </h3>
+                            <p class="text-stone-600 mb-2">{{ $product->type }}</p>
+                            <p class="font-medium">${{ number_format($product->price, 2) }}</p>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

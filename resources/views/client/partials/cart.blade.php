@@ -119,17 +119,7 @@
                                 </div>
                             </div>
 
-                            <!-- Promo Code -->
-                            <div class="mt-6">
-                                <label for="promo-code" class="block text-sm font-medium mb-2">Promo Code</label>
-                                <div class="flex">
-                                    <input type="text" id="promo-code"
-                                        class="flex-grow border-stone-300 rounded-l-md focus:border-stone-500 focus:ring-stone-500"
-                                        placeholder="Enter code">
-                                    <button
-                                        class="bg-stone-800 text-white px-4 py-2 rounded-r-md hover:bg-stone-900 transition duration-150 ease-in-out">Apply</button>
-                                </div>
-                            </div>
+                           
 
                             <!-- Checkout Button -->
                             <div class="mt-6">

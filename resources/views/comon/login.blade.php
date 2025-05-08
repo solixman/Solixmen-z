@@ -184,6 +184,6 @@
     <!-- Footer (included from partials) -->
     @include('client.partials.footer')
 
-    @yield('scripts')
+   
 </body>
 </html>
